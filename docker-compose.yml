@@ -1,0 +1,107 @@
+name: arise-store
+x-api: &api
+  image: arise-store-api:local
+  build:
+    context: .
+    dockerfile: infrastructure/docker/Dockerfile.api
+  env_file: .env
+  environment:
+    DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-arise}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-arise}
+    REDIS_URL: redis://redis:6379/0
+  volumes:
+    - uploads_data:/app/uploads
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-arise}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-arise}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: [redis-server, --appendonly, 'yes', --maxmemory, 128mb, --maxmemory-policy, noeviction]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  migrate:
+    <<: *api
+    command: [sh, -c, 'alembic -c alembic.ini upgrade head && python -m app.manage seed']
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  api:
+    <<: *api
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:8000:8000'
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/ready', timeout=5)"]
+      interval: 10s
+      timeout: 6s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      API_INTERNAL_URL: http://api:8000
+      APP_ENV: ${APP_ENV:-development}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-false}
+    ports:
+      - '127.0.0.1:3000:3000'
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://localhost:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  test:
+    <<: *api
+    image: arise-store-api-test:local
+    profiles: [test]
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.api
+      target: test
+    environment:
+      APP_ENV: test
+      SEED_DEMO_DATA: 'false'
+      AUTO_CREATE_TABLES: 'false'
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-arise}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/arise_test
+      TEST_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-arise}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/arise_test
+      REDIS_URL: ''
+      PYTHONPATH: /app
+    command: [python, -m, pytest, tests, -q, --tb=short, -p, 'no:cacheprovider']
+
+volumes:
+  postgres_data:
+  redis_data:
+  uploads_data:

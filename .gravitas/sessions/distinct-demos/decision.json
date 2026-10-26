@@ -1,0 +1,5 @@
+{
+  "action": "Give Live Demos its own section using existing public store lookup; retain six theme previews under #themes",
+  "evidence": "Current #themes container is nested within #demo; seeded fashion-house and gadget-zone are existing sample stores",
+  "risk": "low; read-only availability requests and marketing UI only"
+}

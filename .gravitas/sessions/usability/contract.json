@@ -1,0 +1,25 @@
+{
+  "mode": "implement",
+  "objective": "Improve verified merchant and customer usability gaps in the running local app",
+  "allowed_write_scope": [
+    "apps/web/",
+    "services/api/",
+    "scripts/",
+    "docs/",
+    ".gravitas/"
+  ],
+  "acceptance_criteria": [
+    "Merchants can edit product details without losing existing images, variants, categories or status",
+    "Product search matches names and SKUs",
+    "All storefront themes support working category filters, search, sorting and useful empty states",
+    "Customers can discover order tracking from the storefront and order confirmation",
+    "Missing or broken product images show a clear placeholder instead of unrelated photos",
+    "Changed flows pass browser regressions and affected backend checks, build succeeds and the local stack runs the changes"
+  ],
+  "non_goals": [
+    "Hosting or new external providers",
+    "A visual redesign",
+    "Adding dependencies"
+  ],
+  "verification": "impact"
+}

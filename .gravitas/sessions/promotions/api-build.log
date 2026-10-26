@@ -1,0 +1,80 @@
+ Image arise-store-api:local Building 
+ Image arise-store-api:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.05kB done
+#1 DONE 0.0s
+
+#2 [migrate internal] load build definition from Dockerfile.api
+#2 transferring dockerfile: 614B done
+#2 DONE 0.0s
+
+#3 [migrate internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.5s
+
+#4 [api base 1/6] FROM docker.io/library/python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704
+#4 resolve docker.io/library/python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704 0.0s done
+#4 DONE 0.0s
+
+#5 [migrate internal] load .dockerignore
+#5 transferring context: 197B done
+#5 DONE 0.0s
+
+#6 [migrate internal] load build context
+#6 transferring context: 220.04kB 0.0s done
+#6 DONE 0.4s
+
+#7 [migrate base 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#7 CACHED
+
+#8 [api base 5/6] COPY services/api /app
+#8 DONE 0.1s
+
+#9 [api base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#9 DONE 0.7s
+
+#10 [api] exporting to image
+#10 exporting layers
+#10 exporting layers 0.4s done
+#10 exporting manifest sha256:98df280ef807172d2f0e87d6d00d7c196e6bd93dac4ba4c92dcfb23570d93c36 0.1s done
+#10 exporting config sha256:2dfd6d81b5af9cbc052c79d0388a6dbc1015f504339cd23c0cb23c18000f16cb
+#10 exporting config sha256:2dfd6d81b5af9cbc052c79d0388a6dbc1015f504339cd23c0cb23c18000f16cb 0.1s done
+#10 exporting attestation manifest sha256:28525d1a9e76fc174244c1811dd4417b1065dadcf26747e6ff7bdd8c5caf9846
+#10 exporting attestation manifest sha256:28525d1a9e76fc174244c1811dd4417b1065dadcf26747e6ff7bdd8c5caf9846 0.1s done
+#10 exporting manifest list sha256:f0227111837cfa01cec1b5c9220a754e1342db4848064db8a9fbaee4790cf43a 0.1s done
+#10 naming to docker.io/library/arise-store-api:local 0.0s done
+#10 unpacking to docker.io/library/arise-store-api:local 0.1s done
+#10 DONE 1.0s
+
+#11 [migrate] exporting to image
+#11 exporting layers 0.4s done
+#11 exporting manifest sha256:82d2b5e3d680bcab9a84412298320c30cf77e4909fc221ded30fee06a6bd8136 0.1s done
+#11 exporting config sha256:e2b5d7d9e4834169c2fc46f6f6b27f44f58315d8b5cc0e704b82ada9f3483d72 0.1s done
+#11 exporting attestation manifest sha256:92fe87ea39f7b72a51f27a62342b8cf04536e265c09a3de7ec30aea29627f1b5 0.1s done
+#11 exporting manifest list sha256:313c25aa0ddb62c0297c6455c831450139d0aefc64b7c4ee394b1af115eb5590 0.1s done
+#11 naming to docker.io/library/arise-store-api:local done
+#11 unpacking to docker.io/library/arise-store-api:local 0.1s done
+#11 DONE 1.0s
+
+#12 [api] resolving provenance for metadata file
+#12 DONE 0.0s
+
+#13 [migrate] resolving provenance for metadata file
+#13 DONE 0.0s
+ Image arise-store-api:local Built 
+ Image arise-store-api:local Built 
+ Container arise-store-postgres-1 Running 
+ Container arise-store-redis-1 Running 
+ Container arise-store-migrate-1 Recreate 
+ Container arise-store-migrate-1 Recreated 
+ Container arise-store-api-1 Recreate 
+ Container arise-store-api-1 Recreated 
+ Container arise-store-postgres-1 Waiting 
+ Container arise-store-redis-1 Waiting 
+ Container arise-store-redis-1 Healthy 
+ Container arise-store-postgres-1 Healthy 
+ Container arise-store-migrate-1 Starting 
+ Container arise-store-migrate-1 Started 
+ Container arise-store-migrate-1 Waiting 
+ Container arise-store-migrate-1 Exited 
+ Container arise-store-api-1 Starting 
+ Container arise-store-api-1 Started 

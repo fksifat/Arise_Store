@@ -1,0 +1,21 @@
+Language: unknown
+Command:  bash scripts/test-browser.sh e2e/operations.spec.ts
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test e2e/operations.spec.ts
+
+
+Running 2 tests using 1 worker
+
+  ✓  1 e2e/operations.spec.ts:6:5 › merchant reviews customers and reports, exports filtered orders, and prints a saved invoice (4.5s)
+  ✓  2 e2e/operations.spec.ts:94:5 › customer pagination and reporting failures are recoverable without leaking other store data (1.0s)
+
+  2 passed (6.6s)
+(node:993155) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+------------------------------------------------------------
+VERDICT: PASS

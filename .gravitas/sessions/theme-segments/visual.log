@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/theme-segments/capture.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: 18 previews at desktop/mobile sizes, matching local images and three related designs per preview; no overflow or JavaScript errors.
+
+------------------------------------------------------------
+VERDICT: PASS

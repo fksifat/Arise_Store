@@ -1,0 +1,11 @@
+{
+  "planning": "deep",
+  "context_depth": "dependency",
+  "verification_depth": "impact",
+  "delegation": "none",
+  "reason_codes": [
+    "researched-local-commerce-platforms",
+    "tenant-scoped-customer-history-and-reports",
+    "csv-and-print-order-workflows"
+  ]
+}

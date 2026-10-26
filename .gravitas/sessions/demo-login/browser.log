@@ -1,0 +1,21 @@
+Language: unknown
+Command:  env E2E_DEMO_LOGIN=true PLAYWRIGHT_BROWSERS_PATH=/tmp/arise-playwright npm --prefix apps/web run test:e2e -- e2e/demo-login.spec.ts
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test e2e/demo-login.spec.ts
+
+
+Running 2 tests using 1 worker
+
+  ✓  1 e2e/demo-login.spec.ts:9:7 › Demo Merchant quick fill signs into the correct dashboard (795ms)
+  ✓  2 e2e/demo-login.spec.ts:9:7 › Platform Admin quick fill signs into the correct dashboard (566ms)
+
+  2 passed (2.1s)
+(node:356398) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+------------------------------------------------------------
+VERDICT: PASS

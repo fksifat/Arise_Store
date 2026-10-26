@@ -1,0 +1,73 @@
+{
+  "status": "complete locally",
+  "date": "2026-10-26",
+  "postgres_tests": 89,
+  "sqlite_affected_tests": 15,
+  "browser_tests": 22,
+  "browser_targeted_tests": 4,
+  "browser_page_and_cart_cases": 47,
+  "services": "web, API, PostgreSQL and Redis healthy",
+  "criteria": [
+    {
+      "requirement": "Review public, merchant and admin pages on desktop/mobile",
+      "evidence": [
+        "inspection.json",
+        "inspection-after.json",
+        "inspection.log",
+        "docs/BROWSER_REVIEW.md"
+      ]
+    },
+    {
+      "requirement": "Accessible stock-aware cart/checkout and empty-bag recovery",
+      "evidence": [
+        "browser-full.log",
+        "browser-targeted.log",
+        "helpers.log",
+        "dev-dialog.log",
+        "checkout-mobile.png"
+      ]
+    },
+    {
+      "requirement": "Safe option management and immutable option details on orders",
+      "evidence": [
+        "backend.log",
+        "sqlite.log",
+        "browser-full.log",
+        "product-options.png",
+        "option-invoice-mobile.png"
+      ]
+    },
+    {
+      "requirement": "Usable navigation/forms/session expiry/admin feedback",
+      "evidence": [
+        "browser-full.log",
+        "inspection.log"
+      ]
+    },
+    {
+      "requirement": "Preserve tenant, checkout, inventory and promotion protections",
+      "evidence": [
+        "backend.log",
+        "browser-full.log"
+      ]
+    },
+    {
+      "requirement": "Build, dependency, schema and local runtime checks",
+      "evidence": [
+        "docker-build.log",
+        "typecheck.log",
+        "npm-audit.log",
+        "pip-audit.log",
+        "runtime.log"
+      ]
+    }
+  ],
+  "constraints": [
+    "No new dependencies or database columns",
+    "No external deployment",
+    "No live payment, courier or mail providers tested",
+    "No load test or penetration test",
+    "Catalog/order/admin store lists remain whole collections",
+    "Earlier migration adoption and backup/restore exercises were not repeated"
+  ]
+}

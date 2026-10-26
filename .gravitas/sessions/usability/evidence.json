@@ -1,0 +1,17 @@
+{
+  "date":"2026-10-25",
+  "timezone":"Asia/Dhaka",
+  "status":"PASS",
+  "changes":["Merchant product editing with exact decimal prices, safe stock changes, preserved categories/variants/status and primary image editing","SKU search in the dashboard and API","Working category/search/sort controls and empty states in all three storefront themes","Tracking links and order-number prefill without phone numbers in URLs","Shared placeholder for missing/broken product images"],
+  "checks":{
+    "backend":{"passed":43,"failed":0,"warning":"Upstream TestClient deprecation","artifact":"backend.log"},
+    "catalog_validator":{"owner":".agents/skills/gravitas/scripts/verify.py","status":"PASS","passed":3,"artifact":"catalog-verification.log"},
+    "browser":{"owner":".agents/skills/gravitas/scripts/verify.py","status":"PASS","passed":3,"failed":0,"themes":["fashion-modern","general-store","tech-cosmetics"],"viewports":["1440x1000","390x844"],"page_errors":[],"artifact":"browser.log"},
+    "build":{"status":"PASS","typecheck":"PASS","artifact":"docker.log"},
+    "schema":{"status":"PASS","output":"No new upgrade operations detected."},
+    "runtime":{"api":"healthy","web":"healthy","postgres":"healthy","redis":"healthy"}
+  },
+  "data_safety":"Browser and inspection accounts removed by exact generated email; existing merchant data retained",
+  "dependencies_added":0,
+  "not_checked":["Hosted deployment","Large-catalog load performance"]
+}

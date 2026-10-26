@@ -1,0 +1,11 @@
+{
+  "planning": "compact",
+  "context_depth": "dependency",
+  "verification_depth": "impact",
+  "delegation": "none",
+  "reason_codes": [
+    "shared-theme-manifest",
+    "twelve-visual-variants",
+    "segmented-gallery-and-previews"
+  ]
+}

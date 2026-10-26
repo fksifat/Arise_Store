@@ -1,0 +1,27 @@
+{
+  "mode": "implement",
+  "objective": "Add custom storefront banner and offer/discount controls in merchant Settings",
+  "allowed_write_scope": [
+    "apps/web/",
+    "services/api/app/",
+    "services/api/tests/",
+    "scripts/test-browser.sh",
+    "README.md",
+    "docs/",
+    ".gravitas/sessions/promotions/"
+  ],
+  "acceptance_criteria": [
+    "Settings edits banner image/copy/offer and optional 0-100 percent store-wide product discount",
+    "All six themes render saved content and offers without losing them on theme switches",
+    "Server calculates discounts on product subtotal only, including variants, with deterministic rounding",
+    "Quote, cart, checkout, stored order, tracking and retries agree; changes reject stale quotes",
+    "Invalid settings and cross-tenant mutations fail; banner/content save atomically",
+    "PostgreSQL regressions, browser workflows, production build and local stack checks pass"
+  ],
+  "non_goals": [
+    "Coupon codes",
+    "Promotion scheduling",
+    "File-storage/image-upload service"
+  ],
+  "verification": "impact"
+}

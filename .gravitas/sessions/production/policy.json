@@ -1,0 +1,11 @@
+{
+  "planning": "deep",
+  "context_depth": "dependency",
+  "verification_depth": "full",
+  "delegation": "reviewer",
+  "reason_codes": ["security", "money", "inventory-concurrency", "multiple-files", "deployment"],
+  "decisions": [
+    {"action": "harden existing modules and callers", "reason": "demo billing/domain success, missing guards and deployment defects observed in source", "risk": "high", "allowed_by_contract": true},
+    {"action": "delegate independent security review", "reason": "high risk authentication, money and stock changes need adversarial verification", "spawn_condition_met": true}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "mode": "implement",
+  "objective": "Separate theme design previews from live sample storefront demos",
+  "allowed_write_scope": [
+    "apps/web/src/app/page.tsx",
+    "apps/web/e2e/marketing.spec.ts",
+    ".gravitas/sessions/distinct-demos/"
+  ],
+  "acceptance_criteria": [
+    "Themes and Live Demos navigate to different sections with clear purposes",
+    "Themes contains six previews; Live Demos links only available sample shops",
+    "Unavailable demos have an honest empty state",
+    "Production build and targeted browser tests pass in updated local web app"
+  ]
+}

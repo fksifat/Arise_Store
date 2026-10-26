@@ -1,0 +1,20 @@
+Language: unknown
+Command:  bash scripts/test-browser.sh e2e/promotions.spec.ts
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test e2e/promotions.spec.ts
+
+
+Running 1 test using 1 worker
+
+  ✓  1 e2e/promotions.spec.ts:5:5 › merchant customizes banner and offers in Settings; every theme preserves them and checkout records the discount (8.5s)
+
+  1 passed (9.2s)
+(node:818384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+------------------------------------------------------------
+VERDICT: PASS

@@ -1,0 +1,21 @@
+Language: unknown
+Command:  env PLAYWRIGHT_BROWSERS_PATH=/tmp/arise-playwright bash scripts/test-browser.sh
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test
+
+
+Running 2 tests using 1 worker
+
+  ✓  1 e2e/commerce.spec.ts:5:5 › merchant registration uses a cookie session and opens the dashboard (1.0s)
+  ✓  2 e2e/commerce.spec.ts:19:5 › variant checkout recovers a lost successful response even after stock sells out (1.6s)
+
+  2 passed (3.5s)
+(node:225573) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+------------------------------------------------------------
+VERDICT: PASS

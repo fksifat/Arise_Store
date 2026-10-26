@@ -1,0 +1,10 @@
+{
+  "planning": "direct",
+  "context_depth": "dependency",
+  "verification_depth": "targeted",
+  "delegation": "none",
+  "reason_codes": [
+    "missing-marketing-anchor",
+    "local-browser-reproduction"
+  ]
+}

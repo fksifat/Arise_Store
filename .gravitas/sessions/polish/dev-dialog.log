@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/polish/dev-dialog.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: native cart stays open in Next development StrictMode and restores page scrolling on Escape.
+
+------------------------------------------------------------
+VERDICT: PASS

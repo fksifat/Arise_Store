@@ -1,0 +1,25 @@
+{
+  "mode": "implement",
+  "objective": "Provide multiple professional storefront designs in each existing category and let merchants browse variants within a segment",
+  "allowed_write_scope": [
+    "apps/web/",
+    "services/api/app/theme_catalog.json",
+    "services/api/tests/test_theme_catalog.py",
+    "docs/",
+    "README.md",
+    ".gravitas/sessions/theme-segments/"
+  ],
+  "acceptance_criteria": [
+    "Six segments contain three usable designs each (18 total), keeping all existing theme keys compatible",
+    "Dashboard and marketing galleries expose category counts and relevant variants; previews link to related designs",
+    "Every design has distinct responsive visuals, an actual screenshot thumbnail and appropriate sample products",
+    "Applying variants preserves merchant settings, promotion, products, stock and publication status",
+    "All-theme preview, buying, theme switching and responsive browser checks pass on rebuilt local stack"
+  ],
+  "non_goals": [
+    "New checkout functionality",
+    "New dependencies",
+    "Hosted deployment",
+    "Copying competitor assets"
+  ]
+}

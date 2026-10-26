@@ -1,0 +1,9 @@
+{
+  "action": "Add customer history, date reports, order CSV export and printable invoices using existing data",
+  "evidence": [
+    "Official platform pages emphasize customer management, analytics, exports and invoices",
+    "Current app stores customers and immutable order snapshots but has no directory/report/invoice UI",
+    "Local Python runtime has Asia/Dhaka timezone data"
+  ],
+  "risk": "Private customer records and financial reporting; scope every query by shop and label values by saved order state"
+}

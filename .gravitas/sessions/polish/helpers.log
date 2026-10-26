@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/polish/helpers-check.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: corrupt and duplicate cart storage, stock/quantity limits, exact decimal prices, available option selection, discount rounding.
+
+------------------------------------------------------------
+VERDICT: PASS

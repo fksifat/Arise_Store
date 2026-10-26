@@ -1,0 +1,11 @@
+{
+  "planning": "deep",
+  "context_depth": "dependency",
+  "verification_depth": "impact",
+  "delegation": "none",
+  "reason_codes": [
+    "all-eight-merchant-pages",
+    "shared-store-selection",
+    "mobile-navigation-and-mutation-feedback"
+  ]
+}

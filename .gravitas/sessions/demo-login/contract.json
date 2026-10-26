@@ -1,0 +1,21 @@
+{
+  "mode": "implement",
+  "objective": "Restore the explicitly requested local demo login and hide demo controls when not enabled or in production",
+  "allowed_write_scope": [
+    "apps/web/",
+    "services/api/",
+    "docker-compose.yml",
+    ".env",
+    "README.md",
+    ".gravitas/",
+    "scripts/",
+    "docs/"
+  ],
+  "acceptance_criteria": [
+    "Both local demo accounts can sign in through the quick-fill controls",
+    "Demo controls are hidden without explicit enablement and in production",
+    "Existing account passwords are not overwritten",
+    "Build and affected regression checks pass"
+  ],
+  "verification": "impact"
+}

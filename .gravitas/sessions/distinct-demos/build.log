@@ -1,0 +1,122 @@
+ Image arise-store-web Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 558B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.web
+#2 transferring dockerfile: 718B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:24-alpine
+#3 DONE 1.8s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 197B done
+#4 DONE 0.0s
+
+#5 [builder 1/7] FROM docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
+#5 resolve docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 30.10kB done
+#6 DONE 0.0s
+
+#7 [builder 2/7] WORKDIR /app
+#7 CACHED
+
+#8 [builder 3/7] COPY apps/web/package*.json ./
+#8 CACHED
+
+#9 [builder 4/7] RUN npm ci
+#9 CACHED
+
+#10 [builder 5/7] COPY apps/web ./
+#10 DONE 0.1s
+
+#11 [builder 6/7] COPY services/api/app/theme_catalog.json /services/api/app/theme_catalog.json
+#11 DONE 0.1s
+
+#12 [builder 7/7] RUN npm run build
+#12 0.423 
+#12 0.423 > arise-store-web@1.0.0 build
+#12 0.423 > next build --webpack
+#12 0.423 
+#12 0.915 ▲ Next.js 16.4.1 (webpack)
+#12 0.936 ✓ Running next.config.mjs took 21ms
+#12 0.964 
+#12 1.001   Creating an optimized production build ...
+#12 12.04 ✓ Compiled successfully in 8.1s
+#12 12.05   Running TypeScript ...
+#12 15.99   Finished TypeScript in 3.9s ...
+#12 15.99   Collecting page data using 7 workers ...
+#12 17.83   Generating static pages using 7 workers (0/20) ...
+#12 18.27   Generating static pages using 7 workers (5/20) 
+#12 18.38   Generating static pages using 7 workers (10/20) 
+#12 18.41   Generating static pages using 7 workers (15/20) 
+#12 18.46 ✓ Generating static pages using 7 workers (20/20) in 628ms
+#12 18.58   Finalizing page optimization ...
+#12 18.58   Collecting build traces ...
+#12 32.51 
+#12 32.51 Route (app)
+#12 32.51 ┌ ○ /
+#12 32.51 ├ ○ /_not-found
+#12 32.51 ├ ○ /admin
+#12 32.51 ├ ○ /dashboard
+#12 32.51 ├ ○ /dashboard/categories
+#12 32.51 ├ ○ /dashboard/domains
+#12 32.51 ├ ○ /dashboard/orders
+#12 32.51 ├ ○ /dashboard/products
+#12 32.51 ├ ○ /dashboard/settings
+#12 32.51 ├ ○ /dashboard/subscription
+#12 32.51 ├ ○ /dashboard/themes
+#12 32.51 ├ ƒ /health
+#12 32.51 ├ ƒ /login
+#12 32.51 ├ ○ /register
+#12 32.51 ├ ƒ /store/[slug]
+#12 32.51 ├ ƒ /store/[slug]/track
+#12 32.51 └   /themes/[themeKey]
+#12 32.51   ├ ● /themes/fashion-modern
+#12 32.51   ├ ● /themes/general-store
+#12 32.51   ├ ● /themes/tech-cosmetics
+#12 32.51   └ ● [+3 more paths]
+#12 32.51 
+#12 32.51 
+#12 32.52 ○  (Static)   prerendered as static content
+#12 32.52 ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+#12 32.52 ƒ  (Dynamic)  server-rendered on demand
+#12 32.52 
+#12 DONE 32.7s
+
+#7 [builder 2/7] WORKDIR /app
+#7 CACHED
+
+#13 [runner 3/5] COPY --from=builder --chown=node:node /app/.next/standalone ./
+#13 DONE 0.8s
+
+#14 [runner 4/5] COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+#14 DONE 0.2s
+
+#15 [runner 5/5] COPY --from=builder --chown=node:node /app/public ./public
+#15 DONE 0.2s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 3.1s done
+#16 exporting manifest sha256:7981cd4a350a652019eb0e0585e502c6fefaf8fe790543a1402147bf74480fdd 0.0s done
+#16 exporting config sha256:c8aeedf103a0153ab968f12f4f6fe72464bca5b043a849c597e5c3c19d65ef2a 0.0s done
+#16 exporting attestation manifest sha256:8c141b8f953f36da4b71cb8499a8548021bdd71aecca7bdbaf673c444fff541a
+#16 exporting attestation manifest sha256:8c141b8f953f36da4b71cb8499a8548021bdd71aecca7bdbaf673c444fff541a 0.1s done
+#16 exporting manifest list sha256:62073bc9f5b190b289a37bf9739ee89bdebf4c0a8c0a8e75fa43d6e0b975888c 0.0s done
+#16 naming to docker.io/library/arise-store-web:latest done
+#16 unpacking to docker.io/library/arise-store-web:latest
+#16 unpacking to docker.io/library/arise-store-web:latest 0.5s done
+#16 DONE 3.8s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image arise-store-web Built 
+ Container arise-store-web-1 Recreate 
+ Container arise-store-web-1 Recreated 
+ Container arise-store-web-1 Starting 
+ Container arise-store-web-1 Started 

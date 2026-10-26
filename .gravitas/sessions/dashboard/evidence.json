@@ -1,0 +1,60 @@
+{
+  "status": "complete",
+  "date": "2026-10-25",
+  "pages": [
+    "overview",
+    "orders",
+    "products",
+    "categories",
+    "themes",
+    "domains",
+    "subscription",
+    "settings"
+  ],
+  "build": {
+    "compilation": "PASS",
+    "typescript": "PASS",
+    "static_generation": "PASS",
+    "log": "build.log"
+  },
+  "typecheck": {
+    "verdict": "PASS",
+    "log": "typecheck.log"
+  },
+  "browser": {
+    "passed": 12,
+    "optional_demo_login_skipped": 2,
+    "log": "browser.log"
+  },
+  "walkthrough": {
+    "pages": 8,
+    "viewports": [
+      "1440x1000",
+      "390x844"
+    ],
+    "page_overflow": false,
+    "page_javascript_errors": 0,
+    "mobile_main_top_before": 599,
+    "mobile_main_top_after": 64,
+    "log": "walkthrough.log"
+  },
+  "verified_workflows": [
+    "Store creation and shared store switching",
+    "Category creation, editing and clearing optional description",
+    "Product creation and draft/active visibility",
+    "Safe stock edit regression and low-stock variant filtering",
+    "Settings name synchronization, cleared fields and 0.29 BDT delivery fee",
+    "Publication and actual store links",
+    "Order snapshot details and permitted forward fulfillment transitions",
+    "Pending manual billing request without immediate plan activation",
+    "Read failure retries and settings failure retaining unsaved edits",
+    "Controlled DNS verification failure/success with hosting still pending"
+  ],
+  "backend_rules_changed": false,
+  "dependencies_added": 0,
+  "limits": [
+    "Backend regression suite not rerun for this frontend change",
+    "Live DNS propagation, hosting and load testing not exercised"
+  ],
+  "recovery": "New test selectors were narrowed to page content to exclude the Next route announcer/hidden sidebar and API-only routes to avoid intercepting HTML navigation."
+}

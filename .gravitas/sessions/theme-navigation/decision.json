@@ -1,0 +1,7 @@
+{
+  "action": "Add id=themes and sticky-header scroll margin to the existing theme gallery",
+  "reason": "Browser reproduction: /#themes stayed at scrollY=0 because targetCount=0; all six cards already existed under #demo",
+  "risk": "low; anchor-only frontend change",
+  "allowed_by_contract": true,
+  "preserved": "Existing #demo navigation and all six preview URLs"
+}

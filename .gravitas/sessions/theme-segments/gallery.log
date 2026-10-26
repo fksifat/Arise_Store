@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/theme-segments/gallery.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: demo merchant can browse three Fashion/Electronics designs with loaded gallery thumbnails on desktop/mobile; no store changes made.
+
+------------------------------------------------------------
+VERDICT: PASS

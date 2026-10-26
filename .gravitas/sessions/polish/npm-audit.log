@@ -1,0 +1,9 @@
+Language: unknown
+Command:  npm --prefix apps/web audit
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+found 0 vulnerabilities
+
+------------------------------------------------------------
+VERDICT: PASS

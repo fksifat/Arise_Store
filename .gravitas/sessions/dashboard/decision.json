@@ -1,0 +1,10 @@
+{
+  "action": "Share the active shop across all dashboard pages and improve page states, overview, mobile shell and existing actions",
+  "evidence": [
+    "Mobile main content starts at y=599",
+    "Eight pages independently fetch and select shops",
+    "Overview counts all catalog rows as active and all non-cancelled order values as sales",
+    "Order details state is unused; settings omits cleared fields from PATCH; requests often only log errors"
+  ],
+  "risk": "Frontend workflow changes; existing server authorization and commerce rules preserved"
+}

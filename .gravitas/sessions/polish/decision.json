@@ -1,0 +1,18 @@
+{
+  "action": "Fix observed accessibility/navigation/admin feedback gaps, harden cart persistence/limits, and complete safe product-option management and snapshots",
+  "evidence": [
+    "47 browser cases: six registration inputs and admin search lack labels; billing toggle unlabeled",
+    "Cart remains open after Escape",
+    "Homepage section navigation is hidden on mobile without a replacement",
+    "Admin request errors only reach console; moderation/payment actions use prompt/alert",
+    "Product editor disables stock for options but exposes no option management; order snapshots omit option titles"
+  ],
+  "risk": "Checkout state and inventory mutations; reuse native dialogs and preserve server checks and optimistic stock protection",
+  "validator_followups": [
+    "Native Tab focus reached the browser boundary; added explicit first/last control wrapping.",
+    "Next development StrictMode reproduced immediate dialog dismissal; native cancel now delegates closure to React state without handling cleanup close events.",
+    "Full theme regression exposed unspecified option ordering after PostgreSQL stock updates; options now order by creation time and ID, and tests select a specific option by ID.",
+    "Responsive admin rendering and cart conversion required narrower browser test locators.",
+    "Browser cleanup now removes audit events belonging to the exact generated accounts/shops before deleting those accounts."
+  ]
+}

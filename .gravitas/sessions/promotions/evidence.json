@@ -1,0 +1,40 @@
+{
+  "status": "complete",
+  "date": "2026-10-25",
+  "backend": {
+    "passed": 64,
+    "log": "backend.log"
+  },
+  "browser": {
+    "passed": 14,
+    "optional_demo_login_skipped": 2,
+    "log": "browser.log"
+  },
+  "pricing_math": {
+    "verdict": "PASS",
+    "log": "pricing.log"
+  },
+  "frontend": {
+    "production_build": "PASS",
+    "typecheck": "PASS",
+    "static_generation": "PASS"
+  },
+  "verified": [
+    "Atomic owner-authorized banner and content save",
+    "Announcement-only and percentage offers",
+    "Invalid/cross-tenant/manager/staff requests denied",
+    "Current sale and variant prices, delivery exclusion, exact rounding",
+    "Quote changes rollback stock; saved checkout retries preserve totals",
+    "Promotion preserved across six themes at two viewports",
+    "Real cart/checkout/order/tracking discounts and offer disabling",
+    "Maximum-length custom banner text fits all mobile themes"
+  ],
+  "dependencies_added": 0,
+  "schema_migration_required": false,
+  "recovery": "Fixed the banner textarea label association exposed by browser automation; adjusted tenant-denial test to the existing 403 convention and added manager/staff checks. Final suites pass.",
+  "limits": [
+    "Image URLs rather than file uploads",
+    "No coupon codes or scheduled campaigns",
+    "Hosted/load testing not performed"
+  ]
+}

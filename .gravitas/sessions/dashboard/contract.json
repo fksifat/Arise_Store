@@ -1,0 +1,27 @@
+{
+  "mode": "implement",
+  "objective": "Improve all eight merchant dashboard pages with shared navigation/store state and reliable daily workflows",
+  "allowed_write_scope": [
+    "apps/web/src/app/dashboard/",
+    "apps/web/src/lib/",
+    "apps/web/e2e/",
+    "scripts/test-browser.sh",
+    "docs/",
+    "README.md",
+    ".gravitas/sessions/dashboard/"
+  ],
+  "acceptance_criteria": [
+    "Dashboard overview shows accurate and clearly labeled real metrics and actionable store information",
+    "Mobile navigation makes page content immediately usable and has accessible controls",
+    "Real store URLs and publication status stay correct across dashboard navigation",
+    "Loading and request failures are visible and recoverable",
+    "Targeted browser regressions, production build and local walkthrough pass",
+    "Orders, catalog, categories, themes, domains, billing and settings have recoverable request failures and usable mobile layouts",
+    "Settings save and publication changes update shared shop identity; order detail and permitted status actions work"
+  ],
+  "non_goals": [
+    "New analytics backend",
+    "Payment or courier integration",
+    "Unrequested features across every dashboard page"
+  ]
+}

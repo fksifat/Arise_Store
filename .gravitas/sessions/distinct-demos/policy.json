@@ -1,0 +1,10 @@
+{
+  "planning": "compact",
+  "context_depth": "dependency",
+  "verification_depth": "targeted",
+  "delegation": "none",
+  "reason_codes": [
+    "distinct-marketing-sections",
+    "public-demo-availability"
+  ]
+}

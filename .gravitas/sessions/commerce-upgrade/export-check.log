@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/commerce-upgrade/export-check.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: Unicode CSV quoting, formula neutralization and UTC-to-Dhaka date boundaries.
+
+------------------------------------------------------------
+VERDICT: PASS

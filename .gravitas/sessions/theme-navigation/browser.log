@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/theme-navigation/check.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: Themes scrolls to six previews below navbar; preview opens; Live Demos still works; no page JavaScript errors.
+
+------------------------------------------------------------
+VERDICT: PASS

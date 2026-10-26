@@ -1,0 +1,24 @@
+Language: unknown
+Command:  bash scripts/test-browser.sh polish.spec.ts
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test polish.spec.ts
+
+
+Running 4 tests using 1 worker
+
+  ✓  1 e2e/polish.spec.ts:5:5 › mobile navigation, registration labels and password visibility work (904ms)
+  ✓  2 e2e/polish.spec.ts:32:5 › expired private sessions return to sign in with an explanation (294ms)
+  ✓  3 e2e/polish.spec.ts:41:5 › options, stock conflict recovery and an empty-bag checkout recovery work end to end (2.9s)
+  ✓  4 e2e/polish.spec.ts:122:5 › admin load failures and action failures are explicit and recoverable (689ms)
+
+  4 passed (5.6s)
+Browser test cleanup: removed 1 temporary accounts and their audit events.
+(node:1129517) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+------------------------------------------------------------
+VERDICT: PASS

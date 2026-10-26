@@ -1,0 +1,228 @@
+ Image arise-store-web Building 
+ Image arise-store-api:local Building 
+ Image arise-store-api:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.52kB done
+#1 DONE 0.0s
+
+#2 [web internal] load build definition from Dockerfile.web
+#2 transferring dockerfile: 718B done
+#2 DONE 0.0s
+
+#3 [api internal] load build definition from Dockerfile.api
+#3 transferring dockerfile: 614B done
+#3 DONE 0.0s
+
+#4 [migrate internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 1.3s
+
+#5 [migrate internal] load .dockerignore
+#5 transferring context: 197B done
+#5 DONE 0.0s
+
+#6 [api base 1/6] FROM docker.io/library/python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704
+#6 resolve docker.io/library/python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704 0.0s done
+#6 DONE 0.0s
+
+#7 [migrate internal] load build context
+#7 transferring context: 17.42kB done
+#7 DONE 0.0s
+
+#8 [migrate base 2/6] WORKDIR /app
+#8 CACHED
+
+#9 [migrate base 3/6] COPY services/api/requirements.txt .
+#9 CACHED
+
+#10 [migrate base 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [api base 5/6] COPY services/api /app
+#11 DONE 0.0s
+
+#12 [api base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#12 ...
+
+#13 [web internal] load metadata for docker.io/library/node:24-alpine
+#13 DONE 1.6s
+
+#5 [web internal] load .dockerignore
+#5 transferring context: 197B done
+#5 DONE 0.0s
+
+#14 [web builder 1/7] FROM docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
+#14 resolve docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 0.0s done
+#14 DONE 0.0s
+
+#15 [web internal] load build context
+#15 transferring context: 9.66MB 0.1s done
+#15 DONE 0.1s
+
+#16 [web builder 3/7] COPY apps/web/package*.json ./
+#16 CACHED
+
+#17 [web builder 2/7] WORKDIR /app
+#17 CACHED
+
+#18 [web builder 4/7] RUN npm ci
+#18 CACHED
+
+#12 [migrate base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#12 DONE 0.4s
+
+#19 [web builder 5/7] COPY apps/web ./
+#19 DONE 0.1s
+
+#20 [migrate] exporting to image
+#20 exporting layers
+#20 ...
+
+#21 [web builder 6/7] COPY services/api/app/theme_catalog.json /services/api/app/theme_catalog.json
+#21 DONE 0.2s
+
+#20 [migrate] exporting to image
+#20 exporting layers 0.3s done
+#20 exporting manifest sha256:e4b20aba089b7801daec661a218714c9fc28a59d8a8f4c610a7bce25250a3fba
+#20 exporting manifest sha256:e4b20aba089b7801daec661a218714c9fc28a59d8a8f4c610a7bce25250a3fba 0.0s done
+#20 exporting config sha256:fbca6e204e19b685dd956405cdd0baeb3039acddf71324a4799c28e9ddf08f0f 0.0s done
+#20 exporting attestation manifest sha256:e89bcaad54dbd48343e68d863ca9f00a346cca06b5e594b7adb5cda2a61dc448 0.0s done
+#20 exporting manifest list sha256:eff143c1e2d0f4af5cebdd25bc1e42d46de5186c618e34bfd8b3aeeea048c842
+#20 exporting manifest list sha256:eff143c1e2d0f4af5cebdd25bc1e42d46de5186c618e34bfd8b3aeeea048c842 0.0s done
+#20 naming to docker.io/library/arise-store-api:local done
+#20 unpacking to docker.io/library/arise-store-api:local 0.1s done
+#20 DONE 0.5s
+
+#22 [api] exporting to image
+#22 exporting layers 0.3s done
+#22 exporting manifest sha256:342f3f55baba62d8c85130c2bce1f12cf21af1631d940a1eedf5000d16a6fa6d 0.0s done
+#22 exporting config sha256:5518bd2d50019a5436095b92e25c06e0f055f502dd72476db5ba0bfbb7cab159 0.0s done
+#22 exporting attestation manifest sha256:04d53b07deeaedbb0e2df2f3e990baa8685f2e1bad19923d0b7777223516b546 0.0s done
+#22 exporting manifest list sha256:b8d6f39a3d60a5f90b25bd40f58c307be227a33fcbd66cc18ffab86f0e1daba4 0.0s done
+#22 naming to docker.io/library/arise-store-api:local done
+#22 unpacking to docker.io/library/arise-store-api:local 0.1s done
+#22 DONE 0.5s
+
+#23 [web builder 7/7] RUN npm run build
+#23 0.446 
+#23 0.446 > arise-store-web@1.0.0 build
+#23 0.446 > next build --webpack
+#23 0.446 
+#23 ...
+
+#24 [migrate] resolving provenance for metadata file
+#24 DONE 0.0s
+
+#25 [api] resolving provenance for metadata file
+#25 DONE 0.0s
+
+#23 [web builder 7/7] RUN npm run build
+#23 0.911 ▲ Next.js 16.4.1 (webpack)
+#23 0.939 ✓ Running next.config.mjs took 27ms
+#23 0.962 
+#23 0.991   Creating an optimized production build ...
+#23 11.69 ✓ Compiled successfully in 8.1s
+#23 11.70   Running TypeScript ...
+#23 19.31   Finished TypeScript in 7.6s ...
+#23 19.31   Collecting page data using 7 workers ...
+#23 22.03   Generating static pages using 7 workers (0/22) ...
+#23 22.67   Generating static pages using 7 workers (5/22) 
+#23 22.67   Generating static pages using 7 workers (10/22) 
+#23 22.67   Generating static pages using 7 workers (16/22) 
+#23 22.87 ✓ Generating static pages using 7 workers (22/22) in 842ms
+#23 22.97   Finalizing page optimization ...
+#23 22.97   Collecting build traces ...
+#23 38.68 
+#23 38.68 Route (app)
+#23 38.68 ┌ ○ /
+#23 38.68 ├ ○ /_not-found
+#23 38.68 ├ ○ /admin
+#23 38.68 ├ ○ /dashboard
+#23 38.68 ├ ○ /dashboard/categories
+#23 38.68 ├ ○ /dashboard/customers
+#23 38.68 ├ ○ /dashboard/domains
+#23 38.68 ├ ○ /dashboard/orders
+#23 38.68 ├ ƒ /dashboard/orders/[orderId]/invoice
+#23 38.68 ├ ○ /dashboard/products
+#23 38.68 ├ ○ /dashboard/reports
+#23 38.68 ├ ○ /dashboard/settings
+#23 38.68 ├ ○ /dashboard/subscription
+#23 38.68 ├ ○ /dashboard/themes
+#23 38.68 ├ ƒ /health
+#23 38.68 ├ ƒ /login
+#23 38.68 ├ ○ /register
+#23 38.68 ├ ƒ /store/[slug]
+#23 38.68 ├ ƒ /store/[slug]/track
+#23 38.68 └   /themes/[themeKey]
+#23 38.68   ├ ● /themes/fashion-modern
+#23 38.68   ├ ● /themes/general-store
+#23 38.68   ├ ● /themes/tech-cosmetics
+#23 38.68   └ ● [+3 more paths]
+#23 38.68 
+#23 38.68 
+#23 38.68 ○  (Static)   prerendered as static content
+#23 38.68 ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+#23 38.68 ƒ  (Dynamic)  server-rendered on demand
+#23 38.68 
+#23 DONE 38.8s
+
+#17 [web builder 2/7] WORKDIR /app
+#17 CACHED
+
+#26 [web runner 3/5] COPY --from=builder --chown=node:node /app/.next/standalone ./
+#26 DONE 0.3s
+
+#27 [web runner 4/5] COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+#27 DONE 0.1s
+
+#28 [web runner 5/5] COPY --from=builder --chown=node:node /app/public ./public
+#28 DONE 0.1s
+
+#29 [web] exporting to image
+#29 exporting layers
+#29 exporting layers 1.8s done
+#29 exporting manifest sha256:75ba70ea5feedfed1468b4d0fca9de0b8609ea189f205d296ef92edca4fb0571 0.0s done
+#29 exporting config sha256:7d4dde5e7900999b9b8af28334bf120fa68f1e063e83b2664910d187fdb20e87 0.0s done
+#29 exporting attestation manifest sha256:9514e43b6de72b0127671ed455148f44bcd7c043cb58fb13c38f0bb9d6d6272a 0.0s done
+#29 exporting manifest list sha256:70842a0120558844bffb15237533b8ad7713cea1bcbc559b11a7132b7b21c1f1 0.0s done
+#29 naming to docker.io/library/arise-store-web:latest done
+#29 unpacking to docker.io/library/arise-store-web:latest
+#29 unpacking to docker.io/library/arise-store-web:latest 0.4s done
+#29 DONE 2.3s
+
+#30 [web] resolving provenance for metadata file
+#30 DONE 0.0s
+ Image arise-store-api:local Built 
+ Image arise-store-api:local Built 
+ Image arise-store-web Built 
+ Container arise-store-postgres-1 Running 
+ Container arise-store-redis-1 Running 
+ Container arise-store-migrate-1 Recreate 
+ Container arise-store-migrate-1 Recreated 
+ Container arise-store-api-1 Recreate 
+ Container arise-store-api-1 Recreated 
+ Container arise-store-web-1 Recreate 
+ Container arise-store-web-1 Recreated 
+ Container arise-store-redis-1 Waiting 
+ Container arise-store-postgres-1 Waiting 
+ Container arise-store-postgres-1 Healthy 
+ Container arise-store-redis-1 Healthy 
+ Container arise-store-migrate-1 Starting 
+ Container arise-store-migrate-1 Started 
+ Container arise-store-migrate-1 Waiting 
+ Container arise-store-migrate-1 Exited 
+ Container arise-store-api-1 Starting 
+ Container arise-store-api-1 Started 
+ Container arise-store-api-1 Waiting 
+ Container arise-store-api-1 Healthy 
+ Container arise-store-web-1 Starting 
+ Container arise-store-web-1 Started 
+ Container arise-store-postgres-1 Waiting 
+ Container arise-store-redis-1 Waiting 
+ Container arise-store-migrate-1 Waiting 
+ Container arise-store-api-1 Waiting 
+ Container arise-store-web-1 Waiting 
+ Container arise-store-migrate-1 Exited 
+ Container arise-store-api-1 Healthy 
+ Container arise-store-postgres-1 Healthy 
+ Container arise-store-redis-1 Healthy 
+ Container arise-store-web-1 Healthy 

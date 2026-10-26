@@ -1,0 +1,10 @@
+Language: unknown
+Command:  ./venv/bin/python /tmp/arise_check_demo_ui.py
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+Demo quick fill hidden: APP_ENV=production, SEED_DEMO_DATA=true: PASS
+Demo quick fill hidden: APP_ENV=development, SEED_DEMO_DATA=false: PASS
+
+------------------------------------------------------------
+VERDICT: PASS

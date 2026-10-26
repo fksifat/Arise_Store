@@ -1,0 +1,423 @@
+{
+  "findings": [
+    {
+      "label": "home",
+      "path": "/",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "login",
+      "path": "/login",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "register",
+      "path": "/register",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "fashion-store",
+      "path": "/store/fashion-house",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "tech-store",
+      "path": "/store/gadget-zone",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "tracking",
+      "path": "/store/fashion-house/track",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "fashion-modern",
+      "path": "/themes/fashion-modern",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "general-store",
+      "path": "/themes/general-store",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "tech-cosmetics",
+      "path": "/themes/tech-cosmetics",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "home-living",
+      "path": "/themes/home-living",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "beauty-studio",
+      "path": "/themes/beauty-studio",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "sport-performance",
+      "path": "/themes/sport-performance",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "home",
+      "path": "/",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "login",
+      "path": "/login",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "register",
+      "path": "/register",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "fashion-store",
+      "path": "/store/fashion-house",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "tech-store",
+      "path": "/store/gadget-zone",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "tracking",
+      "path": "/store/fashion-house/track",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "fashion-modern",
+      "path": "/themes/fashion-modern",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "general-store",
+      "path": "/themes/general-store",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "tech-cosmetics",
+      "path": "/themes/tech-cosmetics",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "home-living",
+      "path": "/themes/home-living",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "beauty-studio",
+      "path": "/themes/beauty-studio",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "sport-performance",
+      "path": "/themes/sport-performance",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "cart-escape",
+      "stayedOpen": false
+    },
+    {
+      "label": "dashboard",
+      "path": "/dashboard",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-orders",
+      "path": "/dashboard/orders",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-products",
+      "path": "/dashboard/products",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-categories",
+      "path": "/dashboard/categories",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-themes",
+      "path": "/dashboard/themes",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-domains",
+      "path": "/dashboard/domains",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-subscription",
+      "path": "/dashboard/subscription",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-settings",
+      "path": "/dashboard/settings",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-customers",
+      "path": "/dashboard/customers",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-reports",
+      "path": "/dashboard/reports",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard",
+      "path": "/dashboard",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-orders",
+      "path": "/dashboard/orders",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-products",
+      "path": "/dashboard/products",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-categories",
+      "path": "/dashboard/categories",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-themes",
+      "path": "/dashboard/themes",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-domains",
+      "path": "/dashboard/domains",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-subscription",
+      "path": "/dashboard/subscription",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-settings",
+      "path": "/dashboard/settings",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-customers",
+      "path": "/dashboard/customers",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "dashboard-reports",
+      "path": "/dashboard/reports",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "admin",
+      "path": "/admin",
+      "width": 1440,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    },
+    {
+      "label": "admin",
+      "path": "/admin",
+      "width": 390,
+      "overflow": false,
+      "unlabeledButtons": 0,
+      "unlabeledInputs": [],
+      "brokenAnchors": []
+    }
+  ],
+  "errors": []
+}

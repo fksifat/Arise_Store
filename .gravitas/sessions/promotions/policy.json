@@ -1,0 +1,11 @@
+{
+  "planning": "deep",
+  "context_depth": "dependency",
+  "verification_depth": "impact",
+  "delegation": "none",
+  "reason_codes": [
+    "merchant-banner-controls",
+    "server-authoritative-discount",
+    "shared-cart-and-order-snapshots"
+  ]
+}

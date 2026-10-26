@@ -1,0 +1,15 @@
+{
+  "action": "Extend the existing manifest and scoped storefront styles, add shared category metadata and related-preview navigation",
+  "evidence": [
+    "Manifest contains six themes in six categories",
+    "Gallery already filters category but renders only one matching design",
+    "Sample products are currently keyed by exact theme key",
+    "Seeding and preview routes derive from the manifest; existing keys can remain unchanged"
+  ],
+  "risk": "Theme defaults, previews and screenshots must stay aligned; test all variants with existing shared commerce behavior",
+  "visual_followups": [
+    "A more specific legacy grocery hero selector overrode the new variant accent; new variant hero CTA colors now use their own brand variables.",
+    "Fashion Noir punctuation wrapped onto its own line on mobile; a responsive headline size keeps the final punctuation with its word.",
+    "Screenshot capture now waits for an interactive hydrated cart before eagerly loading images, avoiding DOM mutations during hydration."
+  ]
+}

@@ -1,0 +1,9 @@
+Language: unknown
+Command:  venv/bin/pip-audit -r services/api/requirements.txt --progress-spinner off
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+No known vulnerabilities found
+
+------------------------------------------------------------
+VERDICT: PASS

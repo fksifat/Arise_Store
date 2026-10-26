@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/distinct-demos/runtime.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: distinct gallery/demo navigation, six previews, two available stocked demo stores, mobile overflow check and zero page JavaScript errors.
+
+------------------------------------------------------------
+VERDICT: PASS

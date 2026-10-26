@@ -1,0 +1,13 @@
+{
+  "status": "complete",
+  "frontend_build": "PASS; compilation, TypeScript and static generation",
+  "browser_tests": {
+    "passed": 3,
+    "log": "browser.log"
+  },
+  "runtime": "PASS; six gallery previews, two stocked live sample shops, distinct scroll targets, mobile layout and zero JavaScript errors",
+  "runtime_log": "runtime.log",
+  "limits": [
+    "Checkout and backend regressions not rerun; change only affects marketing navigation and demo availability display."
+  ]
+}

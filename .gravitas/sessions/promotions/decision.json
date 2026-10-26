@@ -1,0 +1,9 @@
+{
+  "action": "Reuse shop banner URL and theme-settings JSON, add typed atomic content update and automatic checkout percentage discount",
+  "evidence": [
+    "Banner URL already exists on Shop; hero/brand settings exist in JSON",
+    "Current cart_totals never discounts and orders always store discount_minor=0",
+    "User requests controls from Settings"
+  ],
+  "risk": "Pricing and saved orders; preserve base-price snapshots and store discount separately, no schema migration"
+}

@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/dashboard/walkthrough.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+{"reports":[{"route":"overview","width":1440,"overflow":false,"mainTop":0},{"route":"orders","width":1440,"overflow":false,"mainTop":0},{"route":"products","width":1440,"overflow":false,"mainTop":0},{"route":"categories","width":1440,"overflow":false,"mainTop":0},{"route":"themes","width":1440,"overflow":false,"mainTop":0},{"route":"domains","width":1440,"overflow":false,"mainTop":0},{"route":"subscription","width":1440,"overflow":false,"mainTop":0},{"route":"settings","width":1440,"overflow":false,"mainTop":0},{"route":"overview","width":390,"overflow":false,"mainTop":64},{"route":"orders","width":390,"overflow":false,"mainTop":64},{"route":"products","width":390,"overflow":false,"mainTop":64},{"route":"categories","width":390,"overflow":false,"mainTop":64},{"route":"themes","width":390,"overflow":false,"mainTop":64},{"route":"domains","width":390,"overflow":false,"mainTop":64},{"route":"subscription","width":390,"overflow":false,"mainTop":64},{"route":"settings","width":390,"overflow":false,"mainTop":64}],"errors":[]}
+
+------------------------------------------------------------
+VERDICT: PASS

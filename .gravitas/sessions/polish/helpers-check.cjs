@@ -1,0 +1,23 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const ts=require('../../../apps/web/node_modules/typescript');
+function load(file){const exports={};vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2021}}).outputText,{exports});return exports;}
+const {restoreCart,cartLimit}=load('apps/web/src/lib/cart-items.ts');
+const item={productId:'p',name:'Shirt',priceMinor:29,quantity:2,stockAvailable:3};
+assert.equal(restoreCart(null).length,0);
+for(const change of [{priceMinor:-1},{priceMinor:NaN},{quantity:1.5},{quantity:0},{stockAvailable:'3'},{stockAvailable:-1},{variantId:4},{productId:''}])assert.equal(restoreCart([{...item,...change}]).length,0);
+const duplicate=restoreCart([item,item]);assert.equal(duplicate.length,1);assert.equal(duplicate[0].quantity,3);
+assert.equal(restoreCart([{...item,quantity:999,stockAvailable:999}])[0].quantity,100);
+assert.equal(restoreCart([{...item,stockAvailable:0}])[0].quantity,1);
+assert.equal(cartLimit({...item,stockAvailable:999}),100);
+assert.equal(restoreCart(Array.from({length:200},(_,i)=>({...item,productId:String(i)}))).length,100);
+const {parsePrice,defaultVariant,startingPrice,percentageDiscount}=load('apps/web/src/lib/pricing.ts');
+assert.equal(parsePrice('0.29'),29);assert.equal(parsePrice('1.1'),110);assert.equal(parsePrice('1000000000'),100000000000);
+for(const value of ['-1','1.001','1e2','Infinity','1000000000.01'])assert.throws(()=>parsePrice(value));
+const product={price_minor:9000,track_inventory:true,variants:[{id:'sold-out',is_active:true,price_minor:1,stock_quantity:0},{id:'available',is_active:true,price_minor:29,stock_quantity:2},{id:'base-price',is_active:true,price_minor:null,stock_quantity:1},{id:'hidden',is_active:false,price_minor:0,stock_quantity:4}]};
+assert.equal(defaultVariant(product).id,'available');assert.equal(startingPrice(product),29);
+assert.equal(defaultVariant({...product,track_inventory:false}).id,'sold-out');
+assert.equal(startingPrice({...product,variants:[]}),9000);
+assert.equal(percentageDiscount(29,10),3);
+console.log('PASS: corrupt and duplicate cart storage, stock/quantity limits, exact decimal prices, available option selection, discount rounding.');

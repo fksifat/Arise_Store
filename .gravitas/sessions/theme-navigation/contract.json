@@ -1,0 +1,14 @@
+{
+  "mode": "debug",
+  "objective": "Repair the marketing navbar Themes link and verify gallery navigation in the local app",
+  "allowed_write_scope": [
+    "apps/web/src/app/page.tsx",
+    ".gravitas/sessions/theme-navigation/"
+  ],
+  "acceptance_criteria": [
+    "Themes click scrolls to the six-theme gallery below the sticky navbar",
+    "Existing Live Demos navigation and preview links work",
+    "Rebuilt local web app serves the fix"
+  ],
+  "verification": "targeted browser navigation and production build"
+}

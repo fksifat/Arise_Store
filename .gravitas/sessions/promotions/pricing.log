@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/promotions/pricing-check.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: client discount math matches exact integer half-up rounding, including large totals and invalid percentages.
+
+------------------------------------------------------------
+VERDICT: PASS

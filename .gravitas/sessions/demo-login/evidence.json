@@ -1,0 +1,17 @@
+{
+  "date":"2026-10-25",
+  "timezone":"Asia/Dhaka",
+  "before":{"demo_accounts_present":false,"merchant_login_status":401,"admin_login_status":401,"quick_fill_visible":true},
+  "after":{"local_environment":"development","local_demo_enabled":true,"merchant_login_status":200,"merchant_role":"merchant","admin_login_status":200,"admin_role":"platform_admin"},
+  "checks":{
+    "postgresql":{"passed":45,"failed":0,"verdict":"PASS","artifact":"backend.log"},
+    "standalone_tests":{"passed":44,"skipped":1,"verdict":"PASS","artifact":"local-tests.log"},
+    "demo_browser":{"passed":2,"failed":0,"verdict":"PASS","artifact":"browser.log"},
+    "demo_visibility":{"production_with_demo_flag":"hidden","development_without_demo_flag":"hidden","verdict":"PASS","artifact":"visibility.log"},
+    "build":{"compiled":true,"typecheck":"PASS","artifact":"docker.log"},
+    "runtime":{"api":"healthy","web":"healthy","postgres":"healthy","redis":"healthy"}
+  },
+  "data_safety":"Missing demo accounts provisioned explicitly; existing passwords and user data are preserved. Demo setup is forbidden in production. Test app startup disables demo provisioning independently of local settings.",
+  "not_checked":["Hosted deployment"],
+  "hosting_requirement":"Use a separate database or remove/deactivate known demo accounts and sample stores, then rotate the signing key. Disabling demo seeding does not remove existing accounts."
+}

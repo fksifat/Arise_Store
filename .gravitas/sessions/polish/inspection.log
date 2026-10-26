@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/polish/inspect.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: 47 desktop/mobile page and cart checks; no JavaScript errors, page overflow, unnamed controls, broken section anchors or failed Escape dismissal.
+
+------------------------------------------------------------
+VERDICT: PASS

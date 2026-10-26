@@ -1,0 +1,66 @@
+{
+  "status": "complete locally",
+  "date": "2026-10-26",
+  "theme_count": 18,
+  "category_counts": {
+    "Fashion": 3,
+    "Electronics": 3,
+    "Grocery & essentials": 3,
+    "Home & furniture": 3,
+    "Beauty & skincare": 3,
+    "Sport & outdoor": 3
+  },
+  "postgres_tests": 90,
+  "full_browser_tests": 23,
+  "targeted_browser_tests": 6,
+  "visual_cases": 36,
+  "requirements": [
+    {
+      "requirement": "Three usable designs per category with existing key compatibility",
+      "evidence": [
+        "backend.log",
+        "runtime.log",
+        "visual.log"
+      ]
+    },
+    {
+      "requirement": "Categorized merchant/marketing galleries and related previews",
+      "evidence": [
+        "browser-full.log",
+        "gallery.log",
+        "fashion-gallery-desktop.png",
+        "electronics-gallery-mobile.png"
+      ]
+    },
+    {
+      "requirement": "Distinct responsive storefronts with actual screenshot thumbnails",
+      "evidence": [
+        "visual.log",
+        "visual.json",
+        "runtime.log",
+        "docs/THEME_DESIGN.md"
+      ]
+    },
+    {
+      "requirement": "Preserve merchant settings, promotions, inventory and publication while applying variants",
+      "evidence": [
+        "backend.log",
+        "browser-full.log"
+      ]
+    },
+    {
+      "requirement": "All-theme browsing, checkout and rebuilt local runtime",
+      "evidence": [
+        "build.log",
+        "browser-full.log",
+        "typecheck.log",
+        "runtime.log"
+      ]
+    }
+  ],
+  "limits": [
+    "No new dependencies, database fields or checkout integrations",
+    "No hosting/deployment or load testing in this theme-only pass",
+    "Earlier whole-app, dependency and backup/restore results were retained rather than rerun"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Dhaka",
+  "scope": "Local production hardening for COD and manual subscription billing",
+  "baseline": {"backend_passed": 5},
+  "validators": {
+    "release": {"owner": ".agents/skills/gravitas/scripts/verify.py", "command": "bash scripts/verify-local.sh", "status": "PASS", "artifact": ".gravitas/sessions/production/release.log", "postgresql_tests_passed": 40, "failures": 0, "frontend_build": "PASS", "npm_advisories": 0, "python_advisories": 0},
+    "browser": {"owner": ".agents/skills/gravitas/scripts/verify.py", "command": "bash scripts/test-browser.sh", "status": "PASS", "artifact": ".gravitas/sessions/production/browser.log", "passed": 2, "failures": 0},
+    "runtime": {"owner": ".agents/skills/gravitas/scripts/verify.py", "status": "PASS", "observed": ["Real Redis session revocation and rate limit", "PostgreSQL backup restored into a separate database", "Core row counts match", "Four local services healthy"]},
+    "migration": {"status": "PASS", "observed": ["Fresh SQLite upgrade and schema check", "PostgreSQL migration and final schema check", "Legacy-copy migration preserves row counts and order snapshots"]}
+  },
+  "criteria": [
+    {"id": "AC-1", "status": "PASS", "evidence": ["production_configuration_fails_closed", "runtime_does_not_create_schema_or_seed", "reference_seed_is_repeatable_without_demo_accounts"]},
+    {"id": "AC-2", "status": "PASS", "evidence": ["moderation_and_roles", "expired_subscription_blocks_checkout_and_product_creation", "custom_hostname_cannot_bypass_moderation", "order_transitions_and_public_notes", "category_tenant_parent_and_cycles"]},
+    {"id": "AC-3", "status": "PASS", "evidence": ["concurrent_checkouts_and_retries", "checkout_replay_and_payload_conflict", "checkout_rolls_back_when_later_line_fails", "duplicate_lines_cannot_oversell", "variant_cancellation_restocks_once_and_terminal_state", "browser lost-response recovery"]},
+    {"id": "AC-4", "status": "PASS", "evidence": ["billing_requires_real_admin_confirmation", "domain_requires_matching_txt_and_plan"]},
+    {"id": "AC-5", "status": "PASS", "evidence": ["frontend build", "npm audit", "browser tests", "manual billing/domain/order frontend callers"]},
+    {"id": "AC-6", "status": "PASS", "evidence": ["migrations", "healthy Docker deployment", "backup/restore", "docs/OPERATIONS.md", ".github/workflows/ci.yml"]},
+    {"id": "AC-7", "status": "PASS", "evidence": ["release", "browser", "runtime", "migration", "docs/VERIFICATION.md"]}
+  ],
+  "not_verified": ["Hosted infrastructure", "Live DNS/TLS provisioning", "Online payment gateways", "Mail and password recovery", "Courier integration", "Load and penetration testing", "GitHub-hosted CI execution"],
+  "known_limit": "Collection listing endpoints need pagination before high-volume hosting; see operations and verification documentation."
+}

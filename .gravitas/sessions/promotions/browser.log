@@ -1,0 +1,36 @@
+Language: unknown
+Command:  bash scripts/test-browser.sh
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test
+
+
+Running 16 tests using 1 worker
+
+  ✓   1 e2e/commerce.spec.ts:5:5 › merchant registration uses a cookie session and opens the dashboard (983ms)
+  ✓   2 e2e/commerce.spec.ts:19:5 › variant checkout recovers a lost successful response even after stock sells out (1.7s)
+  ✓   3 e2e/dashboard.spec.ts:26:5 › overview separates delivered value, active products and low-stock options (472ms)
+  ✓   4 e2e/dashboard.spec.ts:41:5 › merchant pages recover request failures and remain usable on mobile (2.1s)
+  ✓   5 e2e/dashboard.spec.ts:81:5 › merchant completes store setup, fulfillment, billing request and store switching (4.4s)
+  ✓   6 e2e/dashboard.spec.ts:162:5 › settings preserve edits on failure and domain verification reports ownership separately from hosting (761ms)
+  -   7 e2e/demo-login.spec.ts:9:7 › Demo Merchant quick fill signs into the correct dashboard
+  -   8 e2e/demo-login.spec.ts:9:7 › Platform Admin quick fill signs into the correct dashboard
+  ✓   9 e2e/marketing.spec.ts:8:5 › Themes and Live Demos navigate to separate design and store sections (657ms)
+  ✓  10 e2e/marketing.spec.ts:36:5 › unavailable demos show an empty state without dead store links (336ms)
+  ✓  11 e2e/marketing.spec.ts:48:5 › only available sample stores are offered when one demo is missing (272ms)
+  ✓  12 e2e/promotions.spec.ts:5:5 › merchant customizes banner and offers in Settings; every theme preserves them and checkout records the discount (8.4s)
+  ✓  13 e2e/promotions.spec.ts:85:5 › custom banner text stays within every mobile theme layout (886ms)
+  ✓  14 e2e/themes.spec.ts:5:5 › all theme demos support mobile browsing, quick view and honest preview checkout (3.5s)
+  ✓  15 e2e/themes.spec.ts:37:5 › gallery applies all themes without publishing drafts or losing custom branding, then every theme checks out (4.5s)
+  ✓  16 e2e/usability.spec.ts:5:5 › merchant edits and customer browsing work across all themes on desktop and mobile (6.6s)
+
+  2 skipped
+  14 passed (36.8s)
+(node:823828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+------------------------------------------------------------
+VERDICT: PASS

@@ -1,0 +1,18 @@
+{
+  "mode": "implement",
+  "objective": "Harden the existing application for a COD production deployment with manual billing and verified domains",
+  "risk": "high",
+  "budget": "deep",
+  "allowed_write_scope": ["services/", "apps/web/", "infrastructure/", "scripts/", "docs/", ".github/", ".gravitas/", "README.md", ".env.example", "docker-compose.yml", ".gitignore", ".dockerignore"],
+  "acceptance_criteria": [
+    "Production rejects unsafe configuration and does not seed demo accounts or create tables at startup",
+    "Tenant roles, moderation, subscription expiry, domains and tracking enforce authorization",
+    "Checkout uses server totals, atomic stock updates and idempotent retries; cancellation cannot inflate stock",
+    "Billing requires administrator payment verification and custom domains require DNS ownership verification",
+    "Frontend callers reflect real payment/domain/order behavior and use supported dependencies",
+    "Versioned migrations, deployment configuration, backup/restore instructions and CI are provided",
+    "Regression tests, frontend types/build, migration checks and dependency checks have recorded results"
+  ],
+  "non_goals": ["Live deployment without hosting credentials", "Unconfigured online payment gateways", "Executing migrations on existing user databases"],
+  "verification": "full"
+}

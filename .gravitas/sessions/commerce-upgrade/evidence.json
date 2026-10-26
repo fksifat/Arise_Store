@@ -1,0 +1,59 @@
+{
+  "status": "complete",
+  "verified_at_utc": "2026-10-25 18:02:05 UTC",
+  "sources": [
+    "https://zatiqeasy.com/",
+    "https://bitcommerz.com/",
+    "https://sellsull.com/",
+    "https://www.storex.com.bd/"
+  ],
+  "features": [
+    "Tenant-scoped searchable customer directory and bounded history",
+    "Bangladesh-date reports, daily chart, breakdowns and top historical products",
+    "Filtered order/report CSV exports with formula neutralization and Unicode quoting",
+    "Authenticated snapshot-based printable order invoices"
+  ],
+  "backend": {
+    "postgresql_passed": 74,
+    "sqlite_targeted_passed": 10,
+    "logs": [
+      "backend.log",
+      "sqlite.log"
+    ]
+  },
+  "browser": {
+    "passed": 16,
+    "optional_demo_login_skipped": 2,
+    "log": "browser.log"
+  },
+  "frontend": {
+    "production_build": "PASS",
+    "typecheck": "PASS",
+    "static_pages": 22,
+    "dynamic_invoice_route": true
+  },
+  "export_date_checks": {
+    "verdict": "PASS",
+    "log": "export-check.log"
+  },
+  "privacy": [
+    "Unauthenticated and unrelated merchants denied",
+    "Foreign-customer IDs return 404 within own store",
+    "Internal merchant notes excluded from CSV and invoice"
+  ],
+  "artifacts": [
+    "reports-desktop.png",
+    "reports-mobile.png",
+    "customers-mobile.png",
+    "invoice-mobile.png",
+    "sample-invoice.pdf"
+  ],
+  "dependencies_added": 0,
+  "database_migration_required": false,
+  "limits": [
+    "Competitor findings come from public pages, not private account testing",
+    "Courier, payment and network fraud services remain provider-dependent work",
+    "No hosted load test or production deployment",
+    "Legacy catalog/order listing still returns whole collections"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "mode": "implement",
+  "objective": "Inspect the running application in desktop/mobile browsers and fix observed usability, functional and release-readiness gaps",
+  "allowed_write_scope": [
+    "apps/web/",
+    "services/api/",
+    "scripts/",
+    "docs/",
+    "README.md",
+    ".gravitas/sessions/polish/"
+  ],
+  "acceptance_criteria": [
+    "Document browser findings across public, merchant and admin pages and complete relevant fixes",
+    "Storefront/cart/checkout are keyboard accessible and respect stock and server pricing",
+    "Merchant catalog and order documents expose product option information needed to fulfill orders",
+    "Navigation/forms/errors work across tested mobile and desktop routes",
+    "Existing tenant, inventory, promotion and checkout-recovery protections are preserved",
+    "Release checks and affected browser regressions pass on the updated local stack"
+  ],
+  "non_goals": [
+    "External deployment or new payment/courier accounts",
+    "Fabricated production certification",
+    "Copying whole competitor platforms"
+  ]
+}

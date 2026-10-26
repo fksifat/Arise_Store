@@ -1,0 +1,27 @@
+{
+  "mode": "implement",
+  "objective": "Upgrade merchant operations using researched Zatiq, Bitcommerz, Sellsull and StoreX patterns",
+  "allowed_write_scope": [
+    "apps/web/",
+    "services/api/app/",
+    "services/api/tests/",
+    "scripts/test-browser.sh",
+    "docs/",
+    "README.md",
+    ".gravitas/sessions/commerce-upgrade/"
+  ],
+  "acceptance_criteria": [
+    "Document primary-source comparison and implemented/deferred features",
+    "Customer directory supports server search/pagination and bounded order history without cross-tenant access",
+    "Date-filtered reports show accurate delivered values, discounts, statuses, daily totals and top delivered products in Asia/Dhaka",
+    "Order filters/export agree; CSV escapes spreadsheet formulas and Unicode correctly",
+    "Authenticated printable invoices use saved order snapshots and totals",
+    "New routes work on desktop/mobile with loading/error/empty states",
+    "PostgreSQL regressions, browser workflows and production build pass on the updated local stack"
+  ],
+  "non_goals": [
+    "Unverified courier/payment/fraud-provider integrations",
+    "Traffic or abandoned-cart tracking without an implemented event pipeline",
+    "Copying competitor code, logos or promotional claims"
+  ]
+}

@@ -1,0 +1,12 @@
+Language: unknown
+Command:  npm --prefix apps/web run typecheck
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+
+> arise-store-web@1.0.0 typecheck
+> tsc --noEmit
+
+
+------------------------------------------------------------
+VERDICT: PASS

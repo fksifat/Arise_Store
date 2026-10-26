@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-25",
+  "status": "complete",
+  "theme_count": 6,
+  "new_themes": [
+    "home-living",
+    "beauty-studio",
+    "sport-performance"
+  ],
+  "backend": {
+    "passed": 48,
+    "log": "backend.log",
+    "verdict": "PASS"
+  },
+  "browser": {
+    "passed": 5,
+    "opt_in_skipped": 2,
+    "log": "browser.log",
+    "verdict": "PASS"
+  },
+  "demo_login": {
+    "passed": 2,
+    "log": "demo-login.log",
+    "verdict": "PASS"
+  },
+  "production_build": {
+    "compiled": true,
+    "typescript": true,
+    "static_pages": 20,
+    "log": "web-build.log"
+  },
+  "visual": {
+    "results": [
+      {
+        "key": "fashion-modern",
+        "width": 1440,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "general-store",
+        "width": 1440,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "tech-cosmetics",
+        "width": 1440,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "home-living",
+        "width": 1440,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "beauty-studio",
+        "width": 1440,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "sport-performance",
+        "width": 1440,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "fashion-modern",
+        "width": 390,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "general-store",
+        "width": 390,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "tech-cosmetics",
+        "width": 390,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "home-living",
+        "width": 390,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "beauty-studio",
+        "width": 390,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      },
+      {
+        "key": "sport-performance",
+        "width": 390,
+        "status": 200,
+        "overflow": false,
+        "broken": []
+      }
+    ],
+    "errors": [],
+    "galleryCards": 6
+  },
+  "acceptance_evidence": {
+    "six_distinct_layouts": "Six desktop and six mobile captures, visual.log; actual layout thumbnails served by the gallery.",
+    "theme_gallery": "Browser applies all six designs, refreshes default hero fields and retains custom white branding/subtitle.",
+    "data_preservation": "Backend seed/idempotency/draft tests and browser stock/draft checks pass.",
+    "commerce": "Mobile COD orders placed in all six themes at correct variant prices; existing browsing/recovery/tracking tests pass.",
+    "local_runtime": "Updated Docker web and API containers, six public preview routes HTTP 200."
+  },
+  "recovery": "Removed disposable Docker build cache after disk exhaustion; restored interrupted README, rebuilt and reran checks.",
+  "limits": [
+    "No hosted deployment or load test performed.",
+    "Preview products are sample data and cannot place real orders."
+  ],
+  "dependencies_added": 0,
+  "runtime_probe": {
+    "log": "runtime.log",
+    "verdict": "PASS",
+    "checks": [
+      "six preview routes and screenshot assets",
+      "updated plan metadata",
+      "marketing homepage",
+      "API database/Redis readiness"
+    ]
+  },
+  "containers": "web, api, postgres and redis healthy"
+}
