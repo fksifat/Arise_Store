@@ -1,0 +1,10 @@
+{
+  "users": 3,
+  "shops": 3,
+  "products": 5,
+  "orders": 1,
+  "customers": 1,
+  "themes": 18,
+  "shop_theme_settings": 3,
+  "subscriptions": 3
+}

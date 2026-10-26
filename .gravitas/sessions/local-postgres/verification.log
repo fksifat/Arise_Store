@@ -1,0 +1,11 @@
+Language: unknown
+Command:  venv/bin/python .gravitas/sessions/local-postgres/check.py
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+0003 (head)
+No new upgrade operations detected.
+PASS: host psycopg read/write/rollback and Docker API use the same PostgreSQL database at 127.0.0.1:5434; migration 0003; 8 application table counts preserved; API and website healthy.
+
+------------------------------------------------------------
+VERDICT: PASS

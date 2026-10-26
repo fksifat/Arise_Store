@@ -8,6 +8,44 @@ Compose uses PostgreSQL and Redis regardless of the standalone SQLite defaults. 
 
 Never use `docker compose down -v` to stop the app: that deletes named data volumes. Use `docker compose stop`.
 
+## Local PostgreSQL connection
+
+This workspace's `.env` connects host Python tools to the existing Docker PostgreSQL database. Its data stays in the `postgres_data` named volume. PostgreSQL is published on loopback only; ports 5432 and 5433 were already occupied on this machine, so this project uses **5434**.
+
+| Setting | Local value |
+|---|---|
+| Host | `127.0.0.1` |
+| Port | `5434` (`POSTGRES_PORT` in `.env`) |
+| Database | `arise` (`POSTGRES_DB`) |
+| Username | `arise` (`POSTGRES_USER`) |
+| Password | `POSTGRES_PASSWORD` in the private `.env` file |
+| Driver | PostgreSQL / psycopg 3 |
+
+Host `DATABASE_URL` has the form `postgresql+psycopg://<user>:<encoded-password>@127.0.0.1:5434/<database>`. Use a standard `postgresql://` URL for clients that do not accept SQLAlchemy's `+psycopg` driver suffix, or enter the fields above separately. The Docker API/migration services keep their internal `postgres:5432` connection automatically. If changing `POSTGRES_PORT`, update the host URL's port too.
+
+Start only the database:
+
+```bash
+docker compose up -d --wait postgres
+```
+
+Open a database shell without copying the password:
+
+```bash
+docker compose exec postgres sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+```
+
+Use the installed host Python tools against this same database:
+
+```bash
+venv/bin/alembic -c services/api/alembic.ini current
+venv/bin/alembic -c services/api/alembic.ini check
+```
+
+For host API/frontend development, first free their ports with `docker compose stop api web`, leave PostgreSQL running, then use `bash scripts/run-local.sh`. To return to the Docker app, stop those host processes and run `docker compose up -d --wait web`.
+
+Existing SQLite files are untouched; they are not automatically imported into PostgreSQL. Before hosting, remove this optional host database port publication if direct local database access is unnecessary.
+
 ## Billing
 
 A merchant requests a plan on the Subscription page. This creates a pending payment with a server-selected amount and leaves the subscription unchanged. The administrator checks an external receipt against actual money received, then confirms it in `/admin`. A unique transaction reference and explanation are mandatory. Repeating the same verification does not extend the subscription twice. Rejecting a request allows the merchant to submit another one.

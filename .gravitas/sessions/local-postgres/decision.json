@@ -1,0 +1,9 @@
+{
+  "action": "Publish existing PostgreSQL on 127.0.0.1:5434 and update root DATABASE_URL",
+  "evidence": [
+    "API reports PostgreSQL database arise at migration 0003 with 3 shops",
+    "Root .env currently selects SQLite",
+    "Host ports 5432 and 5433 are already occupied; do not disrupt those services"
+  ],
+  "risk": "A brief PostgreSQL container restart is needed to publish its port; preserve the existing named data volume and credentials"
+}

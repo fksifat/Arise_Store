@@ -1,0 +1,43 @@
+{
+  "status": "complete locally",
+  "host": "127.0.0.1",
+  "port": 5434,
+  "database": "arise",
+  "username": "arise",
+  "credentials": "existing private .env credentials retained; not recorded here",
+  "backup": "backups/arise-20261026T041914Z-1683398.dump",
+  "criteria": [
+    {
+      "requirement": "Publish existing database on loopback without replacing its data",
+      "evidence": [
+        "verification.log",
+        "before-counts.json",
+        "after-counts.json"
+      ]
+    },
+    {
+      "requirement": "Host and container connect to the same PostgreSQL instance",
+      "evidence": [
+        "verification.log"
+      ]
+    },
+    {
+      "requirement": "Host read/write, migrations/schema, website and API checks pass",
+      "evidence": [
+        "verification.log"
+      ]
+    },
+    {
+      "requirement": "Document local connection and developer start/stop instructions",
+      "evidence": [
+        "README.md",
+        "docs/OPERATIONS.md#local-postgresql-connection"
+      ]
+    }
+  ],
+  "limits": [
+    "Existing SQLite files were left untouched and were not imported",
+    "No remote deployment or unrelated database services changed",
+    "Full application regression suite was not rerun for this connection-only change"
+  ]
+}

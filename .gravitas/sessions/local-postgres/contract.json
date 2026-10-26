@@ -1,0 +1,24 @@
+{
+  "mode": "implement",
+  "objective": "Connect host development tools and the Docker application to the existing local PostgreSQL database",
+  "allowed_write_scope": [
+    ".env",
+    ".env.example",
+    "docker-compose.yml",
+    "README.md",
+    "docs/OPERATIONS.md",
+    ".gravitas/sessions/local-postgres/",
+    "backups/"
+  ],
+  "acceptance_criteria": [
+    "PostgreSQL published on a free loopback-only host port without replacing its data volume",
+    "Root .env DATABASE_URL connects Python tools to the same PostgreSQL database as the Docker API",
+    "Host and container SQL checks, migration/schema checks and app readiness succeed",
+    "Connection and start/stop instructions document the local setup without publishing credentials"
+  ],
+  "non_goals": [
+    "Moving or deleting existing SQLite databases",
+    "Changing unrelated local database services",
+    "Remote hosting or secret rotation"
+  ]
+}

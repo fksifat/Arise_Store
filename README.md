@@ -4,13 +4,15 @@ A multi-tenant commerce application for Bangladeshi merchants. The local stack r
 
 ## Run locally with Docker (recommended)
 
-Requirements: Docker with Compose, Python 3, and ports 3000/8000 available.
+Requirements: Docker with Compose, Python 3, and ports 3000/8000 available. PostgreSQL uses local port 5434 by default; change `POSTGRES_PORT` if needed.
 
 ```bash
 bash scripts/setup-local.sh --docker
 ```
 
-Open **http://localhost:3000** and register a merchant. The script creates a private `.env` with random secrets. Compose runs migrations and seeds the 18 themes and subscription plans before starting the API. It does not create demo accounts or products by default. Services bind to localhost; database and Redis ports are private to the Compose network.
+Open **http://localhost:3000** and register a merchant. The script creates a private `.env` with random secrets. Compose runs migrations and seeds the 18 themes and subscription plans before starting the API. It does not create demo accounts or products by default. Services bind to localhost; Redis remains private to the Compose network.
+
+For a database client such as DBeaver, pgAdmin or an IDE, connect to **127.0.0.1:5434**, database **arise**, user **arise**, with `POSTGRES_PASSWORD` from `.env`. The Docker API connects internally to `postgres:5432`. Host Python commands use `DATABASE_URL` from `.env`; this workspace now points to the same PostgreSQL database. See [local PostgreSQL instructions](docs/OPERATIONS.md#local-postgresql-connection).
 
 Create a platform administrator explicitly:
 
@@ -48,7 +50,7 @@ Before hosting, use a separate database or deactivate/remove the demo accounts a
 
 ## Run without Docker
 
-Requires Python 3.12+, Node.js 22+ and npm. This mode uses a new `.data/arise.db` SQLite database and process-local development rate limits. PostgreSQL/Redis remain the deployment target.
+Requires Python 3.12+, Node.js 22+ and npm. Host processes read `DATABASE_URL` from `.env`. The template defaults to SQLite at `.data/arise.db`; this workspace is configured to use the Docker PostgreSQL database instead. Keep PostgreSQL running and stop the Docker API/web before starting host processes on their ports. Development rate limits are process-local unless `REDIS_URL` is configured.
 
 ```bash
 bash scripts/setup-local.sh
