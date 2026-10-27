@@ -1,0 +1,32 @@
+{
+  "mode": "implement",
+  "objective": "Pivot the local commerce SaaS into a multi-purpose website builder with website types, customizable themes, structured pages and blogging while preserving existing stores",
+  "allowed_write_scope": [
+    "apps/web/",
+    "services/api/",
+    "scripts/",
+    "docs/",
+    "README.md",
+    ".gravitas/sessions/website-builder/",
+    "backups/",
+    "infrastructure/docker/Dockerfile.web",
+    ".gravitas/sessions/commerce-upgrade/",
+    ".gravitas/sessions/polish/",
+    ".gravitas/sessions/promotions/"
+  ],
+  "acceptance_criteria": [
+    "Users can create business, portfolio, blog, landing, online-store, agency and other websites with appropriate themes",
+    "Dashboard adapts to website type; pages and posts can be created, edited, previewed, published and unpublished",
+    "Structured section editor supports ordering, visibility and custom content with shared responsive rendering",
+    "Draft content stays private until publication; tenant/role/URL validation and concurrent edit protections hold",
+    "Non-commerce sites and blog articles have working public routes and metadata; stores retain all existing commerce flows",
+    "Additive migration preserves existing local data; PostgreSQL/SQLite migration checks, backend/browser tests and production build pass"
+  ],
+  "non_goals": [
+    "Free-form canvas unless user steers that choice",
+    "New payment/mail/courier providers",
+    "Arbitrary user HTML or JavaScript",
+    "External deployment",
+    "Destructive tenant/table renames"
+  ]
+}

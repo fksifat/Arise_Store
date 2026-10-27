@@ -1,0 +1,10 @@
+Language: unknown
+Command:  venv/bin/python .gravitas/sessions/website-builder/migration-check.py
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+No new upgrade operations detected.
+PASS: additive 0003-to-0004 migration preserves existing users, stores, products and order totals; existing types backfill as online_store; schema matches models.
+
+------------------------------------------------------------
+VERDICT: PASS

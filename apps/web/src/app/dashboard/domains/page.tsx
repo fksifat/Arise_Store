@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { fetchApi } from '@/lib/api';
+import { publicSitePath } from '@/lib/sites';
 import { useMerchant } from '@/lib/merchant';
 import { PageState } from '../_components/PageState';
 import { Globe, Plus, CheckCircle, Clock, Trash2, AlertCircle, Copy } from 'lucide-react';
@@ -116,7 +117,7 @@ export default function DomainsPage() {
         {/* DNS Instructions Box */}
         <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-xs text-slate-600">
           <p className="font-bold text-slate-800">Required DNS Configuration:</p>
-          <p>Add the unique TXT record shown beside your domain to prove ownership. After verification, contact the administrator to configure hosting. Local storefronts remain available under /store/your-slug.</p>
+          <p>Add the unique TXT record shown beside your domain to prove ownership. After verification, contact the administrator to configure hosting. Your local website remains available at {publicSitePath(shop)}.</p>
           <div className="bg-white p-2.5 rounded border border-slate-300 font-mono text-[11px] flex justify-between items-center">
             <span>Use the TXT hostname and value from your connected domain below.</span>
           </div>
@@ -135,7 +136,7 @@ export default function DomainsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {domains.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-slate-500">No domains connected. Your store uses its /store/ URL.</td></tr>}
+            {domains.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-slate-500">No domains connected. Your website uses {publicSitePath(shop)}.</td></tr>}
             {domains.map((d) => (
               <tr key={d.id} className="hover:bg-slate-50/50 transition">
                 <td className="py-3 px-4 font-mono font-bold text-slate-900">

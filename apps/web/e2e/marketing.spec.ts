@@ -18,7 +18,8 @@ test('Themes and Live Demos navigate to separate design and store sections', asy
   const demos = page.locator('#demo');
   await nav.getByRole('link', { name: 'Themes', exact: true }).click();
   await expect(page).toHaveURL(/#themes$/);
-  await expect(themes.getByRole('heading', { name: 'Find your store’s look.' })).toBeInViewport();
+  await expect(themes.getByRole('heading', { name: 'Find your website’s look.' })).toBeInViewport();
+  await themes.getByRole('group',{name:'Website types',exact:true}).getByRole('button',{name:'Online store',exact:true}).click();
   for (const category of themeCategories) {
     await themes.getByRole('group',{name:'Browse themes by category',exact:true}).getByRole('button',{name:category,exact:true}).click();
     await expect(themes.locator('a[href^="/themes/"]')).toHaveCount(3);
@@ -30,7 +31,7 @@ test('Themes and Live Demos navigate to separate design and store sections', asy
   const themeScroll = await page.evaluate(() => scrollY);
   await nav.getByRole('link', { name: 'Live Demos', exact: true }).click();
   await expect(page).toHaveURL(/#demo$/);
-  await expect(demos.getByRole('heading', { name: 'Take a store for a test drive.' })).toBeInViewport();
+  await expect(demos.getByRole('heading', { name: 'Visit a live example.' })).toBeInViewport();
   expect(await page.evaluate(() => scrollY)).toBeGreaterThan(themeScroll + 500);
   await expect(demos.locator('a[href="/store/fashion-house"]')).toBeVisible();
   await expect(demos.locator('a[href="/store/gadget-zone"]')).toBeVisible();

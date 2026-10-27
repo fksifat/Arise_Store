@@ -1,0 +1,271 @@
+ Image arise-store-api:local Building 
+ Image arise-store-web Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.50kB done
+#1 DONE 0.0s
+
+#2 [api internal] load build definition from Dockerfile.api
+#2 transferring dockerfile: 614B done
+#2 DONE 0.0s
+
+#3 [web internal] load build definition from Dockerfile.web
+#3 transferring dockerfile: 718B done
+#3 DONE 0.0s
+
+#4 [api internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 2.1s
+
+#5 [web internal] load metadata for docker.io/library/node:24-alpine
+#5 DONE 2.1s
+
+#6 [api internal] load .dockerignore
+#6 transferring context: 197B done
+#6 DONE 0.0s
+
+#7 [api internal] load build context
+#7 DONE 0.0s
+
+#8 [web internal] load build context
+#8 DONE 0.0s
+
+#9 [api base 1/6] FROM docker.io/library/python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704
+#9 resolve docker.io/library/python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704 0.1s done
+#9 DONE 0.1s
+
+#10 [web builder 1/7] FROM docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
+#10 resolve docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 0.0s done
+#10 DONE 0.1s
+
+#7 [api internal] load build context
+#7 transferring context: 122.43kB done
+#7 DONE 0.1s
+
+#11 [api base 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 CACHED
+
+#8 [web internal] load build context
+#8 transferring context: 6.60MB 0.1s done
+#8 DONE 0.2s
+
+#12 [api base 5/6] COPY services/api /app
+#12 DONE 0.2s
+
+#13 [web builder 2/7] WORKDIR /app
+#13 CACHED
+
+#14 [web builder 3/7] COPY apps/web/package*.json ./
+#14 CACHED
+
+#15 [web builder 4/7] RUN npm ci
+#15 CACHED
+
+#16 [web builder 5/7] COPY apps/web ./
+#16 DONE 0.2s
+
+#17 [api base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#17 ...
+
+#18 [web builder 6/7] COPY services/api/app/theme_catalog.json /services/api/app/theme_catalog.json
+#18 DONE 0.1s
+
+#19 [web builder 7/7] RUN npm run build
+#19 0.583 
+#19 0.583 > arise-store-web@1.0.0 build
+#19 0.583 > next build --webpack
+#19 0.583 
+#19 ...
+
+#17 [api base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#17 DONE 1.0s
+
+#20 [api] exporting to image
+#20 exporting layers
+#20 exporting layers 0.3s done
+#20 exporting manifest sha256:0103ee481e4aa65532710bf168d9a464534c5376da52698be26717156b181fdf 0.0s done
+#20 exporting config sha256:cb28af721ce3e1f0d088c547571a153b888a248a8a976b84f60020f452c880d6 0.0s done
+#20 exporting attestation manifest sha256:ab6fbd30f62c3f06b7777455624cbf8b4c6778277401630cb5384c2ff21abe84
+#20 exporting attestation manifest sha256:ab6fbd30f62c3f06b7777455624cbf8b4c6778277401630cb5384c2ff21abe84 0.0s done
+#20 exporting manifest list sha256:c469cf8c6ba00689a927bf91d31bbc06bc731688ba8c7cf90239ebc5dfc59bd5 0.0s done
+#20 naming to docker.io/library/arise-store-api:local done
+#20 unpacking to docker.io/library/arise-store-api:local 0.1s done
+#20 DONE 0.7s
+
+#19 [web builder 7/7] RUN npm run build
+#19 ...
+
+#21 [api] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#19 [web builder 7/7] RUN npm run build
+#19 1.630 ▲ Next.js 16.4.1 (webpack)
+#19 1.668 ✓ Running next.config.mjs took 36ms
+#19 1.731 
+#19 1.779   Creating an optimized production build ...
+#19 7.618 Failed to compile.
+#19 7.618 
+#19 7.619 ./src/lib/sites.ts
+#19 7.619 Module not found: Can't resolve '../../../../services/api/app/website_catalog.json'
+#19 7.619 
+#19 7.619 https://nextjs.org/docs/messages/module-not-found
+#19 7.619 
+#19 7.619 Import trace for requested module:
+#19 7.619 ./src/app/register/page.tsx
+#19 7.619 
+#19 7.619 ./src/lib/sites.ts
+#19 7.619 Module not found: Can't resolve '../../../../services/api/app/website_catalog.json'
+#19 7.619 
+#19 7.619 https://nextjs.org/docs/messages/module-not-found
+#19 7.619 
+#19 7.619 Import trace for requested module:
+#19 7.619 ./src/app/themes/[themeKey]/page.tsx
+#19 7.619 
+#19 7.620 
+#19 7.621 > Build failed because of webpack errors
+#19 ERROR: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+------
+ > [web builder 7/7] RUN npm run build:
+7.619 ./src/lib/sites.ts
+7.619 Module not found: Can't resolve '../../../../services/api/app/website_catalog.json'
+7.619 
+7.619 https://nextjs.org/docs/messages/module-not-found
+7.619 
+7.619 Import trace for requested module:
+7.619 ./src/app/themes/[themeKey]/page.tsx
+7.619 
+7.620 
+7.621 > Build failed because of webpack errors
+------
+Dockerfile.web:13
+
+--------------------
+
+  11 |     ARG API_INTERNAL_URL=http://api:8000
+
+  12 |     ENV API_INTERNAL_URL=$API_INTERNAL_URL
+
+  13 | >>> RUN npm run build
+
+  14 |     
+
+  15 |     FROM node:24-alpine AS runner
+
+--------------------
+
+target web: failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+
+2792  /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+github.com/moby/buildkit/executor/runcexecutor.exitError
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/executor/runcexecutor/executor.go:434
+
+github.com/moby/buildkit/executor/runcexecutor.(*runcExecutor).Run
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/executor/runcexecutor/executor.go:382
+
+github.com/moby/buildkit/solver/llbsolver/ops.(*ExecOp).Exec
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/llbsolver/ops/exec.go:524
+
+github.com/moby/buildkit/solver.(*sharedOp).Exec.func2
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/jobs.go:1248
+
+github.com/moby/buildkit/util/flightcontrol.(*call[...]).run
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/util/flightcontrol/flightcontrol.go:122
+
+sync.(*Once).doSlow
+
+	/usr/local/go/src/sync/once.go:78
+
+sync.(*Once).Do
+
+	/usr/local/go/src/sync/once.go:69
+
+runtime.goexit
+
+	/usr/local/go/src/runtime/asm_amd64.s:1771
+
+
+
+2100214 v0.36.1 /usr/libexec/docker/cli-plugins/docker-buildx bake --file - --progress rawjson --metadata-file /tmp/compose-build-metadataFile-649afc0c-e1af-42a8-8c02-627f898a5703.json --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store
+
+google.golang.org/grpc.(*ClientConn).Invoke
+
+	google.golang.org/grpc@v1.82.1/call.go:35
+
+github.com/moby/buildkit/api/services/control.(*controlClient).Solve
+
+	github.com/moby/buildkit@v0.32.2/api/services/control/control_grpc.pb.go:88
+
+github.com/moby/buildkit/client.(*Client).solve.func2
+
+	github.com/moby/buildkit@v0.32.2/client/solve.go:337
+
+golang.org/x/sync/errgroup.(*Group).Go.func1
+
+	golang.org/x/sync@v0.22.0/errgroup/errgroup.go:93
+
+runtime.goexit
+
+	runtime/asm_amd64.s:1771
+
+
+
+2100214 v0.36.1 /usr/libexec/docker/cli-plugins/docker-buildx bake --file - --progress rawjson --metadata-file /tmp/compose-build-metadataFile-649afc0c-e1af-42a8-8c02-627f898a5703.json --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store
+
+github.com/docker/buildx/build.BuildWithResultHandler.func2.5.2
+
+	github.com/docker/buildx/build/build.go:750
+
+github.com/docker/buildx/build.BuildWithResultHandler.func2.5
+
+	github.com/docker/buildx/build/build.go:756
+
+golang.org/x/sync/errgroup.(*Group).Go.func1
+
+	golang.org/x/sync@v0.22.0/errgroup/errgroup.go:93
+
+
+
+2792  /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+github.com/moby/buildkit/solver.(*edge).execOp
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/edge.go:979
+
+github.com/moby/buildkit/solver/internal/pipe.NewWithFunction[...].func2
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/internal/pipe/pipe.go:78
+
+runtime.goexit
+
+	/usr/local/go/src/runtime/asm_amd64.s:1771
+
+
+
+2100214 v0.36.1 /usr/libexec/docker/cli-plugins/docker-buildx bake --file - --progress rawjson --metadata-file /tmp/compose-build-metadataFile-649afc0c-e1af-42a8-8c02-627f898a5703.json --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store --allow fs.read=/home/farhankabirsifat/Desktop/Arise_Store
+
+github.com/moby/buildkit/client.(*Client).solve.func2
+
+	github.com/moby/buildkit@v0.32.2/client/solve.go:339
+
+golang.org/x/sync/errgroup.(*Group).Go.func1
+
+	golang.org/x/sync@v0.22.0/errgroup/errgroup.go:93
+
+
+
+2792  /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+github.com/moby/buildkit/solver/llbsolver/ops.(*ExecOp).Exec
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/llbsolver/ops/exec.go:555
+
+github.com/moby/buildkit/solver.(*sharedOp).Exec.func2
+
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/jobs.go:1248
+
+
+

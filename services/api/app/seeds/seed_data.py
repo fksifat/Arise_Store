@@ -11,6 +11,7 @@ from app.models.catalog import Category, Product, ProductCategory, ProductImage,
 from app.models.order import Order, OrderItem
 from app.models.customer import Customer
 from app.config import settings
+from app.core.websites import CATALOG as WEBSITE_CATALOG
 
 def seed_all(demo=False):
     if demo and settings.APP_ENV == "production":
@@ -22,7 +23,7 @@ def seed_all(demo=False):
         catalog = json.loads((Path(__file__).resolve().parents[1] / "theme_catalog.json").read_text())
         for preset in catalog:
             values = {
-                "name": preset["name"], "version": preset["version"],
+                "name": preset["name"], "version": preset["version"], "website_type": "online_store",
                 "description": preset["description"], "preview_image_url": preset["preview_image_url"],
                 "configuration_schema": json.dumps({
                     "theme_key": preset["key"],
@@ -33,6 +34,18 @@ def seed_all(demo=False):
             theme = db.query(Theme).filter(Theme.theme_key == preset["key"]).first()
             if not theme:
                 db.add(Theme(theme_key=preset["key"], **values))
+            else:
+                for field, value in values.items():
+                    setattr(theme, field, value)
+        db.commit()
+
+        for preset in WEBSITE_CATALOG['themes']:
+            values = {'name': preset['name'], 'website_type': preset['website_type'], 'version': preset['version'],
+                      'description': preset['description'], 'preview_image_url': preset['preview_image_url'],
+                      'configuration_schema': json.dumps({'theme_key': preset['key'], 'brand': {'primary_color': preset['accent']}})}
+            theme = db.query(Theme).filter(Theme.theme_key == preset['key']).first()
+            if not theme:
+                db.add(Theme(theme_key=preset['key'], **values))
             else:
                 for field, value in values.items():
                     setattr(theme, field, value)
@@ -49,9 +62,10 @@ def seed_all(demo=False):
                 "product_limit": 100,
                 "custom_domain_allowed": False,
                 "features_json": json.dumps([
-                    "Up to 100 products",
-                    "Platform subdomain (shop.arisestore.com)",
-                    f"All {len(catalog)} storefront themes",
+                    "Online stores: up to 100 products",
+                    "Business websites, portfolios, blogs, landing pages and online stores",
+                    "Customizable sections, pages and blog publishing",
+                    f"{len(catalog)} store themes and {len(WEBSITE_CATALOG['themes'])} website themes",
                     "Cash on Delivery checkout",
                     "Order management & tracking",
                     "Mobile-responsive storefront"
@@ -66,7 +80,7 @@ def seed_all(demo=False):
                 "product_limit": 1000,
                 "custom_domain_allowed": True,
                 "features_json": json.dumps([
-                    "Up to 1,000 products",
+                    "Online stores: up to 1,000 products",
                     "DNS ownership verification; hosting configured separately",
                     "Product variants (Size, Color, etc.)",
                     "Guest customer records linked to orders",
@@ -83,10 +97,10 @@ def seed_all(demo=False):
                 "product_limit": 10000,
                 "custom_domain_allowed": True,
                 "features_json": json.dumps([
-                    "Up to 10,000 products",
+                    "Online stores: up to 10,000 products",
                     "Owner and staff authorization boundaries",
                     "Zero transaction commissions",
-                    f"All {len(catalog)} configurable storefront themes",
+                    f"All {len(catalog) + len(WEBSITE_CATALOG['themes'])} configurable website themes",
                     "Order fulfillment status management",
                     "Manual subscription payment confirmation"
                 ])

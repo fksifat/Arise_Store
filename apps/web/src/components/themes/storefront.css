@@ -1798,3 +1798,6 @@ transition:none!important}
 }
 .sf-hero-copy { min-width: 0; overflow-wrap: anywhere; }
 .sf-primary-link { max-width: 100%; }
+
+.sf-nav a { max-width:130px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sf-footer-main a { overflow-wrap:anywhere; }

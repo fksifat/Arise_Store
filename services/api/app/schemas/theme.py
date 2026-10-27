@@ -2,6 +2,7 @@ from typing import Optional, Any, Dict
 from datetime import datetime
 from pydantic import ConfigDict, BaseModel, Field, field_validator
 from urllib.parse import urlsplit
+from app.schemas.page import WebsiteType
 
 
 class BannerContent(BaseModel):
@@ -36,6 +37,7 @@ class StorefrontContentUpdate(BaseModel):
 class ThemeResponse(BaseModel):
     id: str
     theme_key: str
+    website_type: WebsiteType
     name: str
     version: str
     description: Optional[str]

@@ -1,0 +1,480 @@
+{
+  "types": [
+    {
+      "key": "business",
+      "label": "Business website",
+      "description": "Present your services and help people get in touch.",
+      "default_theme": "business-studio"
+    },
+    {
+      "key": "portfolio",
+      "label": "Portfolio",
+      "description": "Show your work, experience and creative projects.",
+      "default_theme": "portfolio-canvas"
+    },
+    {
+      "key": "blog",
+      "label": "Blog",
+      "description": "Publish articles and build a home for your writing.",
+      "default_theme": "blog-journal"
+    },
+    {
+      "key": "landing_page",
+      "label": "Landing page",
+      "description": "Explain an offer and guide visitors to a clear next step.",
+      "default_theme": "landing-launch"
+    },
+    {
+      "key": "online_store",
+      "label": "Online store",
+      "description": "Sell products with inventory, checkout and order management.",
+      "default_theme": "fashion-modern"
+    },
+    {
+      "key": "agency",
+      "label": "Agency website",
+      "description": "Present your team, services and selected work.",
+      "default_theme": "agency-collective"
+    },
+    {
+      "key": "other",
+      "label": "Other website",
+      "description": "Start with flexible pages and make the structure your own.",
+      "default_theme": "other-canvas"
+    }
+  ],
+  "themes": [
+    {
+      "key": "business-studio",
+      "website_type": "business",
+      "name": "Business Studio",
+      "presentation": "studio",
+      "accent": "#2358a8",
+      "description": "A studio design for business website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/business-studio.jpg"
+    },
+    {
+      "key": "business-classic",
+      "website_type": "business",
+      "name": "Business Classic",
+      "presentation": "editorial",
+      "accent": "#245d50",
+      "description": "A editorial design for business website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/business-classic.jpg"
+    },
+    {
+      "key": "business-bold",
+      "website_type": "business",
+      "name": "Business Bold",
+      "presentation": "bold",
+      "accent": "#b7dbf5",
+      "description": "A bold design for business website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/business-bold.jpg"
+    },
+    {
+      "key": "portfolio-canvas",
+      "website_type": "portfolio",
+      "name": "Portfolio Canvas",
+      "presentation": "canvas",
+      "accent": "#b04b2c",
+      "description": "A canvas design for portfolio pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/portfolio-canvas.jpg"
+    },
+    {
+      "key": "portfolio-minimal",
+      "website_type": "portfolio",
+      "name": "Portfolio Minimal",
+      "presentation": "split",
+      "accent": "#39434e",
+      "description": "A split design for portfolio pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/portfolio-minimal.jpg"
+    },
+    {
+      "key": "portfolio-noir",
+      "website_type": "portfolio",
+      "name": "Portfolio Noir",
+      "presentation": "bold",
+      "accent": "#edc993",
+      "description": "A bold design for portfolio pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/portfolio-noir.jpg"
+    },
+    {
+      "key": "blog-journal",
+      "website_type": "blog",
+      "name": "The Journal",
+      "presentation": "journal",
+      "accent": "#843d50",
+      "description": "A journal design for blog pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/blog-journal.jpg"
+    },
+    {
+      "key": "blog-notebook",
+      "website_type": "blog",
+      "name": "Notebook",
+      "presentation": "editorial",
+      "accent": "#4a6652",
+      "description": "A editorial design for blog pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/blog-notebook.jpg"
+    },
+    {
+      "key": "blog-dispatch",
+      "website_type": "blog",
+      "name": "Dispatch",
+      "presentation": "studio",
+      "accent": "#2756a3",
+      "description": "A studio design for blog pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/blog-dispatch.jpg"
+    },
+    {
+      "key": "landing-launch",
+      "website_type": "landing_page",
+      "name": "Launch",
+      "presentation": "bold",
+      "accent": "#ccb6ff",
+      "description": "A bold design for landing page pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/landing-launch.jpg"
+    },
+    {
+      "key": "landing-focus",
+      "website_type": "landing_page",
+      "name": "Focus",
+      "presentation": "split",
+      "accent": "#285b89",
+      "description": "A split design for landing page pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/landing-focus.jpg"
+    },
+    {
+      "key": "landing-spotlight",
+      "website_type": "landing_page",
+      "name": "Spotlight",
+      "presentation": "studio",
+      "accent": "#ad4635",
+      "description": "A studio design for landing page pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/landing-spotlight.jpg"
+    },
+    {
+      "key": "agency-collective",
+      "website_type": "agency",
+      "name": "The Collective",
+      "presentation": "bold",
+      "accent": "#c8b7fa",
+      "description": "A bold design for agency website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/agency-collective.jpg"
+    },
+    {
+      "key": "agency-atelier",
+      "website_type": "agency",
+      "name": "Agency Atelier",
+      "presentation": "editorial",
+      "accent": "#76513a",
+      "description": "A editorial design for agency website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/agency-atelier.jpg"
+    },
+    {
+      "key": "agency-works",
+      "website_type": "agency",
+      "name": "Selected Works",
+      "presentation": "canvas",
+      "accent": "#236250",
+      "description": "A canvas design for agency website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/agency-works.jpg"
+    },
+    {
+      "key": "other-canvas",
+      "website_type": "other",
+      "name": "Blank Canvas",
+      "presentation": "studio",
+      "accent": "#3a5668",
+      "description": "A studio design for other website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/other-canvas.jpg"
+    },
+    {
+      "key": "other-simple",
+      "website_type": "other",
+      "name": "Simple Pages",
+      "presentation": "editorial",
+      "accent": "#435c79",
+      "description": "A editorial design for other website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/other-simple.jpg"
+    },
+    {
+      "key": "other-statement",
+      "website_type": "other",
+      "name": "Statement",
+      "presentation": "bold",
+      "accent": "#a7dccf",
+      "description": "A bold design for other website pages, with editable sections and responsive layouts.",
+      "version": "1.0.0",
+      "preview_image_url": "/themes/previews/other-statement.jpg"
+    }
+  ],
+  "starters": {
+    "business": [
+      {
+        "id": "intro",
+        "type": "hero",
+        "heading": "Your next chapter starts here.",
+        "eyebrow": "Business website",
+        "body": "Introduce your business, explain what you do, and make it easy for people to reach you.",
+        "button_text": "Explore",
+        "button_url": "#details"
+      },
+      {
+        "id": "details",
+        "type": "features",
+        "heading": "What you will find here",
+        "items": [
+          {
+            "heading": "A clear introduction",
+            "body": "Explain what you do and who your website is for."
+          },
+          {
+            "heading": "Details that matter",
+            "body": "Share the services, information or ideas visitors need."
+          },
+          {
+            "heading": "An easy next step",
+            "body": "Help visitors explore your pages or get in touch."
+          }
+        ]
+      },
+      {
+        "id": "about",
+        "type": "text",
+        "heading": "A little about us",
+        "body": "Use this space to share your story, your approach and what matters to you."
+      },
+      {
+        "id": "contact",
+        "type": "contact",
+        "heading": "Let’s start a conversation.",
+        "body": "Get in touch to ask a question or talk about your next project."
+      }
+    ],
+    "portfolio": [
+      {
+        "id": "intro",
+        "type": "hero",
+        "heading": "Work with a point of view.",
+        "eyebrow": "Portfolio",
+        "body": "A personal collection of projects, ideas and the details behind the work.",
+        "button_text": "Explore",
+        "button_url": "#details"
+      },
+      {
+        "id": "details",
+        "type": "gallery",
+        "heading": "Selected work",
+        "items": [
+          {
+            "heading": "Project one",
+            "body": "Add a project description and show the details that matter.",
+            "image_url": "/themes/assets/home.jpg",
+            "image_alt": "An interior with natural materials"
+          },
+          {
+            "heading": "Project two",
+            "body": "Tell the story behind another piece of your work.",
+            "image_url": "/themes/assets/tech.jpg",
+            "image_alt": "Studio headphones"
+          },
+          {
+            "heading": "Project three",
+            "body": "Share an idea, a case study or a creative experiment.",
+            "image_url": "/themes/assets/chair.jpg",
+            "image_alt": "A sculptural chair"
+          }
+        ]
+      },
+      {
+        "id": "about",
+        "type": "text",
+        "heading": "A little about me",
+        "body": "Use this space to share your story, your approach and what matters to you."
+      },
+      {
+        "id": "contact",
+        "type": "contact",
+        "heading": "Let’s start a conversation.",
+        "body": "Get in touch to ask a question or talk about your next project."
+      }
+    ],
+    "blog": [
+      {
+        "id": "intro",
+        "type": "hero",
+        "heading": "Notes worth sharing.",
+        "eyebrow": "Blog",
+        "body": "Stories, observations and ideas, gathered in one place.",
+        "button_text": "Explore",
+        "button_url": "#details"
+      },
+      {
+        "id": "details",
+        "type": "posts",
+        "heading": "Latest writing"
+      },
+      {
+        "id": "about",
+        "type": "text",
+        "heading": "A little about me",
+        "body": "Use this space to share your story, your approach and what matters to you."
+      },
+      {
+        "id": "contact",
+        "type": "contact",
+        "heading": "Let’s start a conversation.",
+        "body": "Get in touch to ask a question or talk about your next project."
+      }
+    ],
+    "landing_page": [
+      {
+        "id": "intro",
+        "type": "hero",
+        "heading": "One idea. A clear next step.",
+        "eyebrow": "Landing page",
+        "body": "Present your offer, explain the benefits and invite people to learn more.",
+        "button_text": "Explore",
+        "button_url": "#details"
+      },
+      {
+        "id": "details",
+        "type": "features",
+        "heading": "What you will find here",
+        "items": [
+          {
+            "heading": "A clear introduction",
+            "body": "Explain what you do and who your website is for."
+          },
+          {
+            "heading": "Details that matter",
+            "body": "Share the services, information or ideas visitors need."
+          },
+          {
+            "heading": "An easy next step",
+            "body": "Help visitors explore your pages or get in touch."
+          }
+        ]
+      },
+      {
+        "id": "about",
+        "type": "text",
+        "heading": "A little about us",
+        "body": "Use this space to share your story, your approach and what matters to you."
+      },
+      {
+        "id": "contact",
+        "type": "contact",
+        "heading": "Let’s start a conversation.",
+        "body": "Get in touch to ask a question or talk about your next project."
+      }
+    ],
+    "agency": [
+      {
+        "id": "intro",
+        "type": "hero",
+        "heading": "Good ideas. Thoughtfully made.",
+        "eyebrow": "Agency website",
+        "body": "Bring your services and selected work together in a website that feels like your team.",
+        "button_text": "Explore",
+        "button_url": "#details"
+      },
+      {
+        "id": "details",
+        "type": "gallery",
+        "heading": "Selected work",
+        "items": [
+          {
+            "heading": "Project one",
+            "body": "Add a project description and show the details that matter.",
+            "image_url": "/themes/assets/home.jpg",
+            "image_alt": "An interior with natural materials"
+          },
+          {
+            "heading": "Project two",
+            "body": "Tell the story behind another piece of your work.",
+            "image_url": "/themes/assets/tech.jpg",
+            "image_alt": "Studio headphones"
+          },
+          {
+            "heading": "Project three",
+            "body": "Share an idea, a case study or a creative experiment.",
+            "image_url": "/themes/assets/chair.jpg",
+            "image_alt": "A sculptural chair"
+          }
+        ]
+      },
+      {
+        "id": "about",
+        "type": "text",
+        "heading": "A little about us",
+        "body": "Use this space to share your story, your approach and what matters to you."
+      },
+      {
+        "id": "contact",
+        "type": "contact",
+        "heading": "Let’s start a conversation.",
+        "body": "Get in touch to ask a question or talk about your next project."
+      }
+    ],
+    "other": [
+      {
+        "id": "intro",
+        "type": "hero",
+        "heading": "Make this space your own.",
+        "eyebrow": "Other website",
+        "body": "A flexible starting point for your ideas, information and next chapter.",
+        "button_text": "Explore",
+        "button_url": "#details"
+      },
+      {
+        "id": "details",
+        "type": "features",
+        "heading": "What you will find here",
+        "items": [
+          {
+            "heading": "A clear introduction",
+            "body": "Explain what you do and who your website is for."
+          },
+          {
+            "heading": "Details that matter",
+            "body": "Share the services, information or ideas visitors need."
+          },
+          {
+            "heading": "An easy next step",
+            "body": "Help visitors explore your pages or get in touch."
+          }
+        ]
+      },
+      {
+        "id": "about",
+        "type": "text",
+        "heading": "A little about us",
+        "body": "Use this space to share your story, your approach and what matters to you."
+      },
+      {
+        "id": "contact",
+        "type": "contact",
+        "heading": "Let’s start a conversation.",
+        "body": "Get in touch to ask a question or talk about your next project."
+      }
+    ]
+  }
+}

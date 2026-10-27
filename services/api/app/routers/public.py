@@ -13,7 +13,8 @@ from app.models.theme import ShopThemeSetting
 from app.models.catalog import Product, Category, ProductCategory, ProductVariant
 from app.models.customer import Customer
 from app.models.order import Order, OrderItem
-from app.core.tenant import resolve_public_tenant
+from app.core.tenant import resolve_public_store
+from app.routers.websites import public_site
 from app.core.order_snapshots import option_snapshot
 from app.core.promotions import shop_promotion, promotion_discount
 from app.schemas.catalog import ProductResponse, CategoryResponse
@@ -37,7 +38,7 @@ def _generate_order_number() -> str:
 
 @router.get("/store", response_model=PublicStoreResponse)
 def get_public_store(
-    shop: Shop = Depends(resolve_public_tenant),
+    shop: Shop = Depends(resolve_public_store),
     db: Session = Depends(get_db)
 ):
     # Load theme settings
@@ -104,7 +105,8 @@ def get_public_store(
         outside_dhaka_delivery_fee_minor=shop.outside_dhaka_delivery_fee_minor,
         theme=theme_resp,
         categories=[CategoryResponse.model_validate(c) for c in categories],
-        featured_products=[_format_product_response(p) for p in featured]
+        featured_products=[_format_product_response(p) for p in featured],
+        site_pages=public_site(db, shop)['navigation'] + ([{'title':'Blog','slug':'blog'}] if public_site(db, shop)['recent_posts'] else [])
     )
 
 @router.get("/products", response_model=List[ProductResponse])
@@ -112,7 +114,7 @@ def get_public_products(
     category_slug: Optional[str] = None,
     search: Optional[str] = None,
     sort_by: Optional[str] = "newest",  # newest, price_asc, price_desc
-    shop: Shop = Depends(resolve_public_tenant),
+    shop: Shop = Depends(resolve_public_store),
     db: Session = Depends(get_db)
 ):
     query = db.query(Product).filter(Product.shop_id == shop.id, Product.status == "active")
@@ -139,7 +141,7 @@ def get_public_products(
 @router.get("/products/{slug}", response_model=ProductResponse)
 def get_public_product_detail(
     slug: str,
-    shop: Shop = Depends(resolve_public_tenant),
+    shop: Shop = Depends(resolve_public_store),
     db: Session = Depends(get_db)
 ):
     product = db.query(Product).filter(
@@ -200,7 +202,7 @@ def cart_totals(req, shop, lines, db):
 
 
 @router.post("/cart/validate", response_model=CartValidationResponse)
-def validate_cart(req: CartValidationRequest, shop: Shop = Depends(resolve_public_tenant), db: Session = Depends(get_db)):
+def validate_cart(req: CartValidationRequest, shop: Shop = Depends(resolve_public_store), db: Session = Depends(get_db)):
     lines = cart_lines(req, shop, db)
     subtotal, fee, discount, total = cart_totals(req, shop, lines, db)
     return CartValidationResponse(items=[line for _, _, line in lines], subtotal_minor=subtotal, delivery_fee_minor=fee, discount_minor=discount, total_minor=total, currency=shop.default_currency, all_in_stock=all(line.in_stock for _, _, line in lines))
@@ -210,7 +212,7 @@ def validate_cart(req: CartValidationRequest, shop: Shop = Depends(resolve_publi
 def place_order(
     req: PublicCheckoutRequest,
     idempotency_key: str = Header(..., alias="Idempotency-Key", min_length=16, max_length=100, pattern=r"^[A-Za-z0-9_-]+$"),
-    shop: Shop = Depends(resolve_public_tenant), db: Session = Depends(get_db)
+    shop: Shop = Depends(resolve_public_store), db: Session = Depends(get_db)
 ):
     # Serialize checkout retries and customer creation per shop; stock updates remain conditional.
     db.query(Shop).filter(Shop.id == shop.id).populate_existing().with_for_update().one()
@@ -261,10 +263,10 @@ def find_order(order_number, phone, shop, db):
 
 
 @router.post("/orders/track", response_model=PublicOrderResponse)
-def track_order(req: TrackOrderRequest, shop: Shop = Depends(resolve_public_tenant), db: Session = Depends(get_db)):
+def track_order(req: TrackOrderRequest, shop: Shop = Depends(resolve_public_store), db: Session = Depends(get_db)):
     return find_order(req.order_number, req.phone, shop, db)
 
 
 @router.get("/orders/track/{order_number}", response_model=PublicOrderResponse, deprecated=True)
-def track_order_legacy(order_number: str, phone: str = Query(..., min_length=11, max_length=20), shop: Shop = Depends(resolve_public_tenant), db: Session = Depends(get_db)):
+def track_order_legacy(order_number: str, phone: str = Query(..., min_length=11, max_length=20), shop: Shop = Depends(resolve_public_store), db: Session = Depends(get_db)):
     return find_order(order_number, phone, shop, db)

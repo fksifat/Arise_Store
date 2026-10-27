@@ -14,6 +14,7 @@ test('mobile navigation, registration labels and password visibility work', asyn
   await annual.click();
   await expect(annual).toHaveAttribute('aria-checked', initial === 'true' ? 'false' : 'true');
   await page.goto('/register');
+  await page.getByRole('radio',{name:'Online store',exact:true}).check();
   for (const label of ['Your Full Name', 'Email Address', 'Mobile Phone (Bangladesh)', 'Password', 'Shop Name', 'Store URL name']) {
     await expect(page.getByLabel(label, { exact: false })).toBeVisible();
   }
@@ -141,9 +142,9 @@ test('admin load failures and action failures are explicit and recoverable', asy
   await expect(page.locator('main').getByRole('alert')).toContainText('Platform data unavailable');
   await expect(page.getByText('No pending payment requests.', { exact: true })).not.toBeVisible();
   await page.getByRole('button', { name: 'Try again', exact: true }).click();
-  await page.getByLabel('Search merchant stores', { exact: true }).fill('missing');
-  await expect(page.getByRole('cell', { name: 'No stores match these filters.', exact: true })).toBeVisible();
-  await page.getByLabel('Search merchant stores', { exact: true }).fill('');
+  await page.getByLabel('Search websites', { exact: true }).fill('missing');
+  await expect(page.getByRole('cell', { name: 'No websites match these filters.', exact: true })).toBeVisible();
+  await page.getByLabel('Search websites', { exact: true }).fill('');
   await page.getByRole('button', { name: 'Confirm received payment', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Confirm received payment', exact: true });
   await dialog.getByLabel('Receipt or transaction reference', { exact: true }).fill('RECEIPT-123');
@@ -156,9 +157,9 @@ test('admin load failures and action failures are explicit and recoverable', asy
   expect(submitted).toEqual({ provider_reference: 'RECEIPT-123', reason: 'Receipt checked in provider account' });
   await expect(page.getByRole('status')).toContainText('Payment receipt confirmed.');
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByRole('button', { name: 'Suspend store', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Suspend store', exact: true }).click();
-  await expect(page.getByRole('dialog', { name: 'Suspend store', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Suspend website', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Suspend website', exact: true }).click();
+  await expect(page.getByRole('dialog', { name: 'Suspend website', exact: true })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).not.toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);

@@ -1,0 +1,8 @@
+Language: unknown
+Command:  bash scripts/test-browser.sh
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+ERROR: verification timed out after 300 seconds
+------------------------------------------------------------
+VERDICT: FAIL -- see output above

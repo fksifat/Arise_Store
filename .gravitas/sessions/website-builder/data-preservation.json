@@ -1,0 +1,21 @@
+{
+  "matches": true,
+  "tables": 15,
+  "counts": {
+    "users": 3,
+    "shops": 3,
+    "shop_memberships": 3,
+    "shop_domains": 3,
+    "shop_theme_settings": 3,
+    "subscriptions": 3,
+    "payments": 0,
+    "categories": 5,
+    "products": 5,
+    "product_categories": 5,
+    "product_images": 5,
+    "product_variants": 3,
+    "customers": 1,
+    "orders": 1,
+    "order_items": 1
+  }
+}

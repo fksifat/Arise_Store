@@ -1,0 +1,24 @@
+{
+  "mode": "debug",
+  "objective": "Walk through a fresh local account and fix reproduced UI/customization failures",
+  "allowed_write_scope": [
+    "apps/web/src/app/dashboard/",
+    "apps/web/src/components/website/website.css",
+    "apps/web/e2e/ui-walkthrough.spec.ts",
+    "services/api/app/routers/pages.py",
+    "services/api/app/schemas/catalog.py",
+    "services/api/tests/test_ui_walkthrough.py",
+    "scripts/test-browser.sh",
+    ".gravitas/sessions/ui-walkthrough/",
+    "docs/UI_WALKTHROUGH.md"
+  ],
+  "acceptance_criteria": [
+    "Fresh account and business/store customization work in the browser",
+    "Unsaved edits are protected during feedback navigation and workspace switching",
+    "Preview skip links stay hidden when unfocused and remain keyboard-accessible",
+    "Preview navigation refreshes after publication",
+    "Duplicate content URLs give actionable errors without changing saved content",
+    "Product image editor accepts same-site paths and API rejects unsafe image URLs",
+    "Targeted regressions, affected tests, typecheck and rebuilt local app pass"
+  ]
+}

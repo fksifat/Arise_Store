@@ -4,6 +4,7 @@ from pydantic import ConfigDict, BaseModel, Field, field_validator
 from slugify import slugify
 from app.core.constants import RESERVED_SLUGS
 from app.schemas.base import PatchModel
+from app.schemas.page import WebsiteType, safe_url
 import re
 
 def delivery_fee(value):
@@ -12,6 +13,7 @@ def delivery_fee(value):
     return value
 
 class ShopCreate(BaseModel):
+    website_type: WebsiteType = 'online_store'
     name: str = Field(..., min_length=2, max_length=100)
     slug: str = Field(..., min_length=3, max_length=50)
     description: Optional[str] = None
@@ -22,7 +24,7 @@ class ShopCreate(BaseModel):
     address: Optional[str] = None
     inside_dhaka_delivery_fee_minor: str = "6000"
     outside_dhaka_delivery_fee_minor: str = "12000"
-    theme_key: Optional[str] = "fashion-modern"
+    theme_key: Optional[str] = None
     _fees = field_validator("inside_dhaka_delivery_fee_minor", "outside_dhaka_delivery_fee_minor")(delivery_fee)
 
     @field_validator("slug")
@@ -46,12 +48,15 @@ class ShopUpdate(PatchModel):
     inside_dhaka_delivery_fee_minor: Optional[str] = None
     outside_dhaka_delivery_fee_minor: Optional[str] = None
     _fees = field_validator("inside_dhaka_delivery_fee_minor", "outside_dhaka_delivery_fee_minor")(delivery_fee)
+    _logo = field_validator('logo_url')(lambda value: safe_url(value, image=True) if value else None)
+
 
 class ShopResponse(BaseModel):
     id: str
     owner_user_id: str
     name: str
     slug: str
+    website_type: WebsiteType
     description: Optional[str]
     status: str
     default_currency: str

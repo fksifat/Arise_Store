@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { fetchApi } from '@/lib/api';
+import { isOnlineStore } from '@/lib/sites';
 import { useMerchant } from '@/lib/merchant';
 import { PageState } from '../_components/PageState';
 import { CreditCard, Check, Sparkles, AlertCircle } from 'lucide-react';
@@ -60,7 +61,7 @@ export default function SubscriptionPage() {
       {actionError && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">{actionError}</p>}
       <div>
         <h1 className="text-2xl font-black text-slate-900">Subscription & Billing</h1>
-        <p className="text-xs text-slate-500">Manage store plan tier, product limits, and renewal dates</p>
+        <p className="text-xs text-slate-500">Manage your website plan, included features and renewal dates</p>
       </div>
 
       <p className="text-sm text-slate-600">Subscription payments are confirmed manually by the platform administrator. Request a plan, arrange payment with support, and quote your billing request ID.</p>
@@ -115,7 +116,7 @@ export default function SubscriptionPage() {
                 <ul className="space-y-2.5 text-xs text-slate-600 border-t pt-4">
                   <li className="flex items-center space-x-2">
                     <Check className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                    <span>Up to {p.product_limit.toLocaleString()} products</span>
+                    <span>{isOnlineStore(shop)?`Up to ${p.product_limit.toLocaleString()} products`:'Pages, blogging and section editing'}</span>
                   </li>
                   <li className="flex items-center space-x-2">
                     <Check className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />

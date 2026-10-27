@@ -1,0 +1,141 @@
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test ui-walkthrough.spec.ts website-builder.spec.ts
+
+
+Running 5 tests using 1 worker
+
+(node:163612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 e2e/ui-walkthrough.spec.ts:13:5 › editor navigation preserves unsaved work and refreshes the published navigation (2ms)
+(node:163630) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 e2e/ui-walkthrough.spec.ts:59:5 › product editor saves and edits same-site image paths (2ms)
+(node:163642) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 e2e/website-builder.spec.ts:12:5 › business onboarding, section editing and private-to-public publishing work (2ms)
+(node:163654) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 e2e/website-builder.spec.ts:63:5 › pages, blog posts, color choices and draft URLs keep their publication boundaries (2ms)
+(node:163667) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  5 e2e/website-builder.spec.ts:86:5 › every non-store website type renders all three themes and keeps commerce separate (2ms)
+
+
+  1) e2e/ui-walkthrough.spec.ts:13:5 › editor navigation preserves unsaved work and refreshes the published navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /home/farhankabirsifat/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/ui-walkthrough-editor-navi-bb3df-es-the-published-navigation/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-walkthrough-editor-navi-bb3df-es-the-published-navigation/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-walkthrough-editor-navi-bb3df-es-the-published-navigation/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/ui-walkthrough.spec.ts:59:5 › product editor saves and edits same-site image paths ────────
+
+    Error: browserType.launch: Executable doesn't exist at /home/farhankabirsifat/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/ui-walkthrough-product-edi-bc39a-edits-same-site-image-paths/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ui-walkthrough-product-edi-bc39a-edits-same-site-image-paths/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ui-walkthrough-product-edi-bc39a-edits-same-site-image-paths/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) e2e/website-builder.spec.ts:12:5 › business onboarding, section editing and private-to-public publishing work 
+
+    Error: browserType.launch: Executable doesn't exist at /home/farhankabirsifat/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/website-builder-business-o-a8c5a-e-to-public-publishing-work/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/website-builder-business-o-a8c5a-e-to-public-publishing-work/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/website-builder-business-o-a8c5a-e-to-public-publishing-work/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) e2e/website-builder.spec.ts:63:5 › pages, blog posts, color choices and draft URLs keep their publication boundaries 
+
+    Error: browserType.launch: Executable doesn't exist at /home/farhankabirsifat/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/website-builder-pages-blog-a79be-heir-publication-boundaries/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/website-builder-pages-blog-a79be-heir-publication-boundaries/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/website-builder-pages-blog-a79be-heir-publication-boundaries/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) e2e/website-builder.spec.ts:86:5 › every non-store website type renders all three themes and keeps commerce separate 
+
+    Error: browserType.launch: Executable doesn't exist at /home/farhankabirsifat/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/website-builder-every-non--ba5fb-and-keeps-commerce-separate/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/website-builder-every-non--ba5fb-and-keeps-commerce-separate/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/website-builder-every-non--ba5fb-and-keeps-commerce-separate/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    e2e/ui-walkthrough.spec.ts:13:5 › editor navigation preserves unsaved work and refreshes the published navigation 
+    e2e/ui-walkthrough.spec.ts:59:5 › product editor saves and edits same-site image paths ─────────
+    e2e/website-builder.spec.ts:12:5 › business onboarding, section editing and private-to-public publishing work 
+    e2e/website-builder.spec.ts:63:5 › pages, blog posts, color choices and draft URLs keep their publication boundaries 
+    e2e/website-builder.spec.ts:86:5 › every non-store website type renders all three themes and keeps commerce separate 
+Browser test cleanup: removed 0 temporary accounts and their audit events.

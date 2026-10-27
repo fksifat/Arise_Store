@@ -6,9 +6,11 @@ import { ArrowRight, ArrowUpRight, Check, CheckCircle2, ExternalLink, Loader2, P
 import { fetchApi } from '@/lib/api';
 import { useMerchant } from '@/lib/merchant';
 import { getStorefrontTheme, themeCategories } from '@/lib/storefront-themes';
+import { isOnlineStore } from '@/lib/sites';
+import { WebsiteThemes } from '../_components/WebsiteThemes';
 import { ProductImage } from '@/components/ProductImage';
 
-export default function ThemesPage() {
+function StoreThemesPage() {
   const { shop } = useMerchant();
   const [themes, setThemes] = useState<any[]>([]);
   const [currentSetting, setCurrentSetting] = useState<any | null>(null);
@@ -71,3 +73,5 @@ export default function ThemesPage() {
     })}</div></section>)}</div>}
   </div>;
 }
+
+export default function ThemesPage(){const {shop}=useMerchant();return isOnlineStore(shop)?<StoreThemesPage/>:<WebsiteThemes/>;}

@@ -1,0 +1,1 @@
+Fix the browser-reproduced editor, workspace, URL conflict and product image issues in their existing shared components. Preserve all pre-existing changes. Reuse safe_url for the product-image trust boundary; no dependencies or schema migrations. Verify browser regressions against the rebuilt Docker app.

@@ -1,0 +1,68 @@
+{
+  "status": "verified locally",
+  "website_theme_counts": {
+    "business": 3,
+    "portfolio": 3,
+    "blog": 3,
+    "landing_page": 3,
+    "online_store": 18,
+    "agency": 3,
+    "other": 3
+  },
+  "postgres_tests": 110,
+  "sqlite_tests": {
+    "passed": 109,
+    "skipped": 1
+  },
+  "browser_tests": 26,
+  "new_theme_visual_cases": 36,
+  "original_data_tables_preserved": 15,
+  "production_build": "passed",
+  "schema_check": "No new upgrade operations detected.",
+  "evidence_logs": [
+    "backend-postgres.log",
+    "backend-sqlite.log",
+    "browser-final.log",
+    "build-final.log",
+    "visual-final.log",
+    "preservation-final.log",
+    "migration-sqlite.log"
+  ],
+  "acceptance_evidence": {
+    "website_types_and_themes": [
+      "backend-postgres.log",
+      "browser-final.log",
+      "visual-final.log"
+    ],
+    "dashboard_pages_posts_and_publication": [
+      "browser-final.log"
+    ],
+    "section_editing_order_visibility_and_responsive_rendering": [
+      "browser-final.log",
+      "backend-postgres.log",
+      "visual-final.log"
+    ],
+    "privacy_tenant_roles_safe_urls_and_revisions": [
+      "backend-postgres.log",
+      "browser-final.log"
+    ],
+    "public_routes_metadata_and_commerce_compatibility": [
+      "browser-final.log"
+    ],
+    "migration_data_preservation_regressions_and_build": [
+      "backend-postgres.log",
+      "backend-sqlite.log",
+      "browser-final.log",
+      "build-final.log",
+      "visual-final.log",
+      "preservation-final.log",
+      "migration-sqlite.log"
+    ]
+  },
+  "limits": [
+    "Local deployment only",
+    "Structured sections with plain text and image URLs",
+    "No uploads, form processing or free-form canvas",
+    "Hosted operations and load testing remain launch work"
+  ]
+}

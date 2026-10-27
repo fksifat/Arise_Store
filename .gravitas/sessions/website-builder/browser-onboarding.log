@@ -1,0 +1,21 @@
+Language: unknown
+Command:  bash scripts/test-browser.sh website-builder.spec.ts -g 'business onboarding'
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test website-builder.spec.ts -g business onboarding
+
+
+Running 1 test using 1 worker
+
+  ✓  1 e2e/website-builder.spec.ts:12:5 › business onboarding, section editing and private-to-public publishing work (7.4s)
+
+  1 passed (8.2s)
+Browser test cleanup: removed 1 temporary accounts and their audit events.
+(node:2144767) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+------------------------------------------------------------
+VERDICT: PASS

@@ -1,0 +1,9 @@
+Language: unknown
+Command:  venv/bin/python .gravitas/sessions/website-builder/preserve.py after
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: after snapshot verified for 15 existing application tables; no row contents or credentials printed.
+
+------------------------------------------------------------
+VERDICT: PASS

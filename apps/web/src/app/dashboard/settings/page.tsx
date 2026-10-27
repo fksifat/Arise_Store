@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { fetchApi } from '@/lib/api';
+import { isOnlineStore } from '@/lib/sites';
 import { useMerchant } from '@/lib/merchant';
 import { StorefrontSettings } from '../_components/StorefrontSettings';
 import { Settings, Save, AlertCircle, CheckCircle } from 'lucide-react';
 
 export default function SettingsPage() {
   const { shop, updateShop } = useMerchant();
+  const store = isOnlineStore(shop);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [contactEmail, setContactEmail] = useState('');
@@ -51,8 +53,7 @@ export default function SettingsPage() {
         contact_phone: contactPhone.trim() || null,
         address: address.trim() || null,
         logo_url: logoUrl.trim() || null,
-        inside_dhaka_delivery_fee_minor: deliveryMinor(insideFeeBdt),
-        outside_dhaka_delivery_fee_minor: deliveryMinor(outsideFeeBdt),
+        ...(store ? {inside_dhaka_delivery_fee_minor: deliveryMinor(insideFeeBdt), outside_dhaka_delivery_fee_minor: deliveryMinor(outsideFeeBdt)} : {}),
       };
 
       const updated = await fetchApi<any>(`/shops/${shop.id}`, {
@@ -73,8 +74,8 @@ export default function SettingsPage() {
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-black text-slate-900">Store Settings</h1>
-        <p className="text-xs text-slate-500">Configure your store information, contact details, and delivery charges</p>
+        <h1 className="text-2xl font-black text-slate-900">{store?'Store Settings':'Website Settings'}</h1>
+        <p className="text-xs text-slate-500">{store?'Configure your store information, contact details, and delivery charges':'Configure your website name, description and public contact details'}</p>
       </div>
 
       <form onSubmit={handleSave} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
@@ -94,7 +95,7 @@ export default function SettingsPage() {
 
         <div>
           <label htmlFor="store-name" className="block text-xs font-semibold text-slate-700 mb-1">
-            Store Name
+            {store?'Store Name':'Website Name'}
           </label>
           <input id="store-name" minLength={2} maxLength={100}
             type="text"
@@ -107,7 +108,7 @@ export default function SettingsPage() {
 
         <div>
           <label htmlFor="store-description" className="block text-xs font-semibold text-slate-700 mb-1">
-            Store Description
+            {store?'Store Description':'Website Description'}
           </label>
           <textarea id="store-description"
             rows={2}
@@ -144,7 +145,7 @@ export default function SettingsPage() {
 
         <div>
           <label htmlFor="store-address" className="block text-xs font-semibold text-slate-700 mb-1">
-            Store Physical Address
+            {store?'Store Physical Address':'Address'}
           </label>
           <input id="store-address"
             type="text"
@@ -154,9 +155,9 @@ export default function SettingsPage() {
           />
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2"><label className="text-xs font-semibold text-slate-700">Store logo URL<input type="url" value={logoUrl} onChange={event => setLogoUrl(event.target.value)} placeholder="https://…" className="mt-2 w-full rounded-lg border p-3 text-sm font-normal" /></label></div>
+        <div className="grid gap-4 sm:grid-cols-2"><label className="text-xs font-semibold text-slate-700">{store?'Store logo URL':'Website logo URL'}<input type="url" value={logoUrl} onChange={event => setLogoUrl(event.target.value)} placeholder="https://…" className="mt-2 w-full rounded-lg border p-3 text-sm font-normal" /></label></div>
         {/* Delivery Rates */}
-        <div className="border-t pt-4 space-y-3">
+        {store && <div className="border-t pt-4 space-y-3">
           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
             Cash on Delivery Shipping Rates (BDT)
           </h4>
@@ -190,6 +191,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
+        }
         <div className="pt-2">
           <button
             type="submit"
@@ -201,7 +203,7 @@ export default function SettingsPage() {
           </button>
         </div>
       </form>
-      <StorefrontSettings />
+      {store && <StorefrontSettings />}
     </div>
   );
 }

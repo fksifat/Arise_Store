@@ -1,0 +1,28 @@
+{
+  "mode": "implement",
+  "objective": "Create a separate local account for every theme; improve professional presentation and flexible editing; verify all 36 designs on desktop and mobile",
+  "allowed_write_scope": [
+    "services/api/app/website_catalog.json",
+    "services/api/app/schemas/",
+    "services/api/tests/test_theme_quality.py",
+    "apps/web/src/components/website/",
+    "apps/web/src/components/themes/",
+    "apps/web/src/app/dashboard/",
+    "apps/web/src/app/themes/",
+    "apps/web/src/lib/sites.ts",
+    "apps/web/e2e/theme-quality.spec.ts",
+    "apps/web/public/themes/previews/",
+    ".gravitas/sessions/theme-quality/",
+    ".data/theme-review/",
+    "docs/THEME_QUALITY.md"
+  ],
+  "acceptance_criteria": [
+    "36 separate accounts and matching published sample websites exist with a private local manifest",
+    "Website starters have purposeful content, imagery and stronger theme-specific presentation",
+    "Section alignment, spacing, background, links and item ordering are editable and validated",
+    "All themes expose working brand-color and typography controls",
+    "Changes preserve existing merchants content and publication boundaries",
+    "All 36 accounts pass desktop/mobile editing and rendering checks with screenshots",
+    "Affected API, browser regression, typecheck and production build checks pass"
+  ]
+}

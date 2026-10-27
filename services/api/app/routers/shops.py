@@ -11,11 +11,19 @@ from app.core.tenant import get_current_user, require_shop_access
 from app.schemas.shop import ShopCreate, ShopUpdate, ShopResponse
 from app.config import settings
 from app.core.subscriptions import active_subscription
+from app.core.websites import default_theme, starter_sections
+from app.models.page import SitePage
+from app.schemas.page import PageSection
+import json
 
 router = APIRouter(prefix="/shops", tags=["Shops"])
 
 @router.post("", response_model=ShopResponse, status_code=status.HTTP_201_CREATED)
 def create_shop(req: ShopCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    theme_key = req.theme_key or default_theme(req.website_type)
+    theme = db.query(Theme).filter(Theme.theme_key == theme_key, Theme.is_active == True, Theme.website_type == req.website_type).first()
+    if not theme:
+        raise HTTPException(400, 'Choose an available theme for this website type')
     # 1. Enforce unique slug across platform
     existing = db.query(Shop).filter(Shop.slug == req.slug).first()
     if existing:
@@ -29,10 +37,11 @@ def create_shop(req: ShopCreate, current_user: User = Depends(get_current_user),
         owner_user_id=current_user.id,
         name=req.name.strip(),
         slug=req.slug,
+        website_type=req.website_type,
         description=req.description,
         default_currency=req.default_currency,
         default_locale=req.default_locale,
-        contact_email=req.contact_email or current_user.email,
+        contact_email=req.contact_email or (current_user.email if req.website_type == 'online_store' else None),
         contact_phone=req.contact_phone or current_user.phone,
         address=req.address,
         inside_dhaka_delivery_fee_minor=req.inside_dhaka_delivery_fee_minor,
@@ -63,12 +72,6 @@ def create_shop(req: ShopCreate, current_user: User = Depends(get_current_user),
     db.add(subdomain)
 
     # 5. Attach selected or default theme
-    theme_key = req.theme_key or "fashion-modern"
-    theme = db.query(Theme).filter(Theme.theme_key == theme_key).first()
-    if not theme:
-        # Fallback to any active theme
-        theme = db.query(Theme).filter(Theme.is_active == True).first()
-    
     if theme:
         theme_setting = ShopThemeSetting(
             shop_id=shop.id,
@@ -77,6 +80,10 @@ def create_shop(req: ShopCreate, current_user: User = Depends(get_current_user),
             settings_json=theme.configuration_schema
         )
         db.add(theme_setting)
+
+    if req.website_type != 'online_store':
+        sections = [PageSection.model_validate(item).model_dump() for item in starter_sections(req.website_type)]
+        db.add(SitePage(shop_id=shop.id, kind='page', title='Home', slug='home', description=req.description or '', sections_json=json.dumps(sections)))
 
     # 6. Assign free trial subscription
     starter_plan = db.query(Plan).filter(Plan.slug == "starter").first()
@@ -136,6 +143,8 @@ def publish_shop(
     if shop.status not in ("draft", "published"):
         raise HTTPException(403, "Only platform administrators can restore a restricted shop")
     active_subscription(db, shop.id)
+    if shop.website_type != 'online_store' and not db.query(SitePage.id).filter(SitePage.shop_id == shop.id, SitePage.kind == 'page', SitePage.published_slug == 'home', SitePage.published_json.isnot(None)).first():
+        raise HTTPException(409, 'Publish your homepage in Pages before publishing the website')
     shop.status = "published"
     shop.published_at = datetime.now(timezone.utc)
     db.commit()

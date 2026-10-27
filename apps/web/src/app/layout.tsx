@@ -3,8 +3,8 @@ import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 
 export const metadata: Metadata = {
-  title: 'Arise Store | Multi-Tenant E-Commerce SaaS Platform',
-  description: 'Launch your high-converting online store with beautiful themes, custom domains, and Cash on Delivery in Bangladesh.',
+  title: 'Arise | Websites for your next chapter',
+  description: 'Build a business website, portfolio, blog, landing page, agency website or online store with customizable themes and sections.',
 };
 
 export default function RootLayout({

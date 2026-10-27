@@ -1,0 +1,254 @@
+{
+  "users": {
+    "columns": [
+      "id",
+      "name",
+      "email",
+      "phone",
+      "password_hash",
+      "role",
+      "email_verified_at",
+      "is_active",
+      "created_at",
+      "updated_at"
+    ],
+    "count": 3,
+    "sha256": "59e894332cc17f925bee24fb215495866049c4acbbcb527b3b55fe29e42e8f50"
+  },
+  "shops": {
+    "columns": [
+      "id",
+      "owner_user_id",
+      "name",
+      "slug",
+      "description",
+      "status",
+      "default_currency",
+      "default_locale",
+      "logo_url",
+      "banner_url",
+      "contact_email",
+      "contact_phone",
+      "address",
+      "inside_dhaka_delivery_fee_minor",
+      "outside_dhaka_delivery_fee_minor",
+      "published_at",
+      "created_at",
+      "updated_at"
+    ],
+    "count": 3,
+    "sha256": "faf1457326fb7d6e9e634eb2316168ebcf1104cb8457a46cd0d81cbd2a891c1b"
+  },
+  "shop_memberships": {
+    "columns": [
+      "id",
+      "shop_id",
+      "user_id",
+      "role",
+      "status",
+      "created_at"
+    ],
+    "count": 3,
+    "sha256": "9ba02d88b217770a7720541d66db082bf3786d70b27616c3a347bfd1be23349d"
+  },
+  "shop_domains": {
+    "columns": [
+      "id",
+      "shop_id",
+      "hostname",
+      "domain_type",
+      "verification_status",
+      "routing_status",
+      "verified_at",
+      "created_at",
+      "updated_at",
+      "verification_token"
+    ],
+    "count": 3,
+    "sha256": "bbf1ec896a7a130f00c9bcf7150ea9216004c98b06f7955f0204fbdb54597d7d"
+  },
+  "shop_theme_settings": {
+    "columns": [
+      "shop_id",
+      "theme_id",
+      "theme_version",
+      "settings_json",
+      "updated_at"
+    ],
+    "count": 3,
+    "sha256": "e1d5462e51920b4b153d6834027c15f5cbd1b7bce6eac5613f9a6eda68bcfedf"
+  },
+  "subscriptions": {
+    "columns": [
+      "id",
+      "shop_id",
+      "plan_id",
+      "status",
+      "billing_interval",
+      "starts_at",
+      "current_period_start",
+      "current_period_end",
+      "trial_ends_at",
+      "cancelled_at",
+      "created_at",
+      "updated_at"
+    ],
+    "count": 3,
+    "sha256": "27ba52a66c6ff3362c307812de6babb5f0ec5bed43dd34960a4139f33595a3a0"
+  },
+  "payments": {
+    "columns": [
+      "id",
+      "shop_id",
+      "subscription_id",
+      "provider",
+      "provider_reference",
+      "amount_minor",
+      "currency",
+      "status",
+      "verified_at",
+      "notes",
+      "created_at",
+      "plan_id",
+      "billing_interval"
+    ],
+    "count": 0,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "categories": {
+    "columns": [
+      "id",
+      "shop_id",
+      "parent_id",
+      "name",
+      "slug",
+      "description",
+      "image_url",
+      "sort_order",
+      "status",
+      "created_at",
+      "updated_at"
+    ],
+    "count": 5,
+    "sha256": "7b0ff454f0d4cd62edd241a142aa6af165025e84b88f780e3fb27aa9569a9de6"
+  },
+  "products": {
+    "columns": [
+      "id",
+      "shop_id",
+      "name",
+      "slug",
+      "description",
+      "status",
+      "price_minor",
+      "compare_at_price_minor",
+      "currency",
+      "sku",
+      "stock_quantity",
+      "track_inventory",
+      "is_featured",
+      "published_at",
+      "created_at",
+      "updated_at"
+    ],
+    "count": 5,
+    "sha256": "c7a8603567f71f860abdbf2bd1d3f320882c01bb4b1126f8b74ba484048aa00c"
+  },
+  "product_categories": {
+    "columns": [
+      "product_id",
+      "category_id"
+    ],
+    "count": 5,
+    "sha256": "d874ad3dfc4c54b3fc3c30f348a4ae5f6392093d9311293581c8a5c9aee0b885"
+  },
+  "product_images": {
+    "columns": [
+      "id",
+      "product_id",
+      "image_url",
+      "alt_text",
+      "sort_order",
+      "is_primary",
+      "created_at"
+    ],
+    "count": 5,
+    "sha256": "b7f7c662917734e5421e061d0667051dce4c54c9a7d1a3349704cd72699bdb1a"
+  },
+  "product_variants": {
+    "columns": [
+      "id",
+      "product_id",
+      "sku",
+      "title",
+      "attributes_json",
+      "price_minor",
+      "stock_quantity",
+      "is_active",
+      "created_at"
+    ],
+    "count": 3,
+    "sha256": "2ded981d5b6b64c69c63658b393c0ccc34796376f916ca76a7c8d5b813138dc3"
+  },
+  "customers": {
+    "columns": [
+      "id",
+      "shop_id",
+      "name",
+      "phone",
+      "email",
+      "default_address",
+      "created_at",
+      "updated_at"
+    ],
+    "count": 1,
+    "sha256": "96a66f39810372289eca08287e8aec09311c9ebf4aeda3b37d0ebf7cad6570a5"
+  },
+  "orders": {
+    "columns": [
+      "id",
+      "shop_id",
+      "customer_id",
+      "order_number",
+      "status",
+      "payment_method",
+      "payment_status",
+      "subtotal_minor",
+      "delivery_fee_minor",
+      "discount_minor",
+      "total_minor",
+      "currency",
+      "customer_name",
+      "customer_phone",
+      "customer_email",
+      "shipping_city",
+      "shipping_address",
+      "customer_note",
+      "admin_note",
+      "created_at",
+      "updated_at",
+      "idempotency_key",
+      "request_hash"
+    ],
+    "count": 1,
+    "sha256": "09f348043b26d89c5bd250e5b20a4bf12b01cdc2ca6357ef53c6441ab7210ae6"
+  },
+  "order_items": {
+    "columns": [
+      "id",
+      "order_id",
+      "product_id",
+      "variant_id",
+      "product_name_snapshot",
+      "sku_snapshot",
+      "variant_snapshot_json",
+      "product_image_url_snapshot",
+      "unit_price_minor",
+      "quantity",
+      "line_total_minor",
+      "inventory_deducted"
+    ],
+    "count": 1,
+    "sha256": "3887eb40052b3bb5265a2ad7486d72f949cc366ebe3141b664044898369c36d0"
+  }
+}

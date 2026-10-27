@@ -73,6 +73,9 @@ def require_shop_access(
     if not shop:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Shop not found")
     
+    commerce_routes = ('/products', '/categories', '/orders', '/customers', '/reports')
+    if shop.website_type != 'online_store' and any(part in request.url.path for part in commerce_routes):
+        raise HTTPException(404, 'Commerce tools are available on online-store websites')
     if current_user.role == "platform_admin":
         return shop
 
@@ -152,3 +155,9 @@ def resolve_public_tenant(
         active_subscription(db, shop.id)
     return shop
 
+
+
+def resolve_public_store(shop: Shop = Depends(resolve_public_tenant)) -> Shop:
+    if shop.website_type != 'online_store':
+        raise HTTPException(404, 'This website does not have an online store')
+    return shop

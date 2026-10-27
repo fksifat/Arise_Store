@@ -22,7 +22,7 @@ from app.routers import (
     subscriptions,
     domains,
     admin,
-    operations
+    operations, pages, websites
 )
 from app.seeds.seed_data import seed_all
 
@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.APP_NAME,
-    description="Multi-Tenant E-Commerce SaaS API for Arise Store Platform",
+    description="Multi-purpose website builder with pages, blogging and optional e-commerce",
     version="1.0.0",
     lifespan=lifespan,
     docs_url="/docs" if settings.APP_ENV != "production" else None,
@@ -78,6 +78,8 @@ app.include_router(subscriptions.router, prefix="/api/v1")
 app.include_router(domains.router, prefix="/api/v1")
 app.include_router(admin.router, prefix="/api/v1")
 app.include_router(operations.router, prefix="/api/v1")
+app.include_router(pages.router, prefix="/api/v1")
+app.include_router(websites.router, prefix="/api/v1")
 
 @app.get("/health")
 def health_check():

@@ -1,0 +1,221 @@
+{
+  "results": [
+    {
+      "key": "business-studio",
+      "website_type": "business",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "business-studio",
+      "website_type": "business",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "business-classic",
+      "website_type": "business",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "business-classic",
+      "website_type": "business",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "business-bold",
+      "website_type": "business",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "business-bold",
+      "website_type": "business",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "portfolio-canvas",
+      "website_type": "portfolio",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "portfolio-canvas",
+      "website_type": "portfolio",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "portfolio-minimal",
+      "website_type": "portfolio",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "portfolio-minimal",
+      "website_type": "portfolio",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "portfolio-noir",
+      "website_type": "portfolio",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "portfolio-noir",
+      "website_type": "portfolio",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "blog-journal",
+      "website_type": "blog",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "blog-journal",
+      "website_type": "blog",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "blog-notebook",
+      "website_type": "blog",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "blog-notebook",
+      "website_type": "blog",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "blog-dispatch",
+      "website_type": "blog",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "blog-dispatch",
+      "website_type": "blog",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "landing-launch",
+      "website_type": "landing_page",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "landing-launch",
+      "website_type": "landing_page",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "landing-focus",
+      "website_type": "landing_page",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "landing-focus",
+      "website_type": "landing_page",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "landing-spotlight",
+      "website_type": "landing_page",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "landing-spotlight",
+      "website_type": "landing_page",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "agency-collective",
+      "website_type": "agency",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "agency-collective",
+      "website_type": "agency",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "agency-atelier",
+      "website_type": "agency",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "agency-atelier",
+      "website_type": "agency",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "agency-works",
+      "website_type": "agency",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "agency-works",
+      "website_type": "agency",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "other-canvas",
+      "website_type": "other",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "other-canvas",
+      "website_type": "other",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "other-simple",
+      "website_type": "other",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "other-simple",
+      "website_type": "other",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "key": "other-statement",
+      "website_type": "other",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "key": "other-statement",
+      "website_type": "other",
+      "width": 390,
+      "overflow": false
+    }
+  ],
+  "errors": []
+}

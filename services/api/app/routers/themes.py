@@ -6,13 +6,14 @@ from app.database import get_db
 from app.models.shop import Shop
 from app.models.theme import Theme, ShopThemeSetting
 from app.core.tenant import require_shop_access
+from app.schemas.page import WebsiteType
 from app.schemas.theme import ThemeResponse, ShopThemeSettingUpdate, ShopThemeSettingResponse, StorefrontContentUpdate
 
 router = APIRouter(tags=["Themes"])
 
 @router.get("/themes", response_model=List[ThemeResponse])
-def list_themes(db: Session = Depends(get_db)):
-    themes = db.query(Theme).filter(Theme.is_active == True).all()
+def list_themes(website_type: WebsiteType = 'online_store', db: Session = Depends(get_db)):
+    themes = db.query(Theme).filter(Theme.is_active == True, Theme.website_type == website_type).all()
     return [ThemeResponse.model_validate(t) for t in themes]
 
 @router.get("/themes/{theme_key}", response_model=ThemeResponse)
@@ -57,6 +58,8 @@ def update_shop_theme_settings(
     # If switching theme
     if req.theme_key:
         theme = db.query(Theme).filter(Theme.theme_key == req.theme_key, Theme.is_active == True).first()
+        if theme and theme.website_type != shop.website_type:
+            raise HTTPException(400, 'Choose a theme for this website type')
         if not theme:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Theme '{req.theme_key}' not found")
         if not setting:

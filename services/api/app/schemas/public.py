@@ -84,6 +84,12 @@ class PublicCheckoutRequest(BaseModel):
     def validate_phone(cls, v: str) -> str:
         return normalize_phone(v)
 
+class PublicPageLink(BaseModel):
+    title: str
+    slug: str
+    kind: Literal['page','post'] = 'page'
+
+
 class PublicStoreResponse(BaseModel):
     id: str
     name: str
@@ -103,4 +109,5 @@ class PublicStoreResponse(BaseModel):
     theme: ShopThemeSettingResponse
     categories: List[CategoryResponse]
     featured_products: List[ProductResponse]
+    site_pages: List[PublicPageLink] = Field(default_factory=list)
 

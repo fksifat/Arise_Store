@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "checks": {
+    "targeted_api": "33 passed",
+    "sqlite_api": "119 passed, 1 skipped",
+    "postgres_api": "120 passed",
+    "browser_regressions": "2 passed",
+    "full_browser": "26 passed, 2 skipped (opt-in demo login)",
+    "typescript": "pass",
+    "docker_production_build": "pass",
+    "diff_whitespace": "pass"
+  },
+  "manual_verification": [
+    "fresh account registration and login",
+    "business and store customization and publication",
+    "duplicate URL recovery feedback",
+    "same-site product image edit",
+    "unsaved-edit cancellation preserved text",
+    "test order cancelled and inventory restored"
+  ],
+  "remaining_limits": [
+    "no live payment",
+    "no DNS/HTTPS activation",
+    "no hosted deployment or load/security audit"
+  ]
+}

@@ -6,6 +6,7 @@ from app.models.customer import Customer
 from app.models.order import Order, OrderItem
 from app.models.subscription import Plan, Subscription, Payment
 from app.models.audit import AuditLog
+from app.models.page import SitePage
 
 __all__ = [
     "User",
@@ -25,6 +26,7 @@ __all__ = [
     "Plan",
     "Subscription",
     "Payment",
-    "AuditLog"
+    "AuditLog",
+    "SitePage"
 ]
 

@@ -356,8 +356,8 @@ export default function ProductsPage() {
                   Product Image URL
                 </label>
                 <input
-                  type="url"
-                  placeholder="https://images.unsplash.com/..."
+                  type="text" inputMode="url" maxLength={2048}
+                  placeholder="https://… or /uploads/…"
                   id="product-imageUrl" value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-slate-900 outline-none"

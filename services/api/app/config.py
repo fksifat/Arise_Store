@@ -4,7 +4,7 @@ from pydantic import model_validator, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    APP_NAME: str = "Arise Store Multi-Tenant SaaS"
+    APP_NAME: str = "Arise Website Builder"
     APP_ENV: str = "development"
     APP_DEBUG: bool = True
     SECRET_KEY: str = "arise_store_super_secret_dev_key_change_in_production_32bytes"

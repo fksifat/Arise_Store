@@ -11,6 +11,7 @@ class Shop(Base):
     owner_user_id = Column(String(36), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     name = Column(String(255), nullable=False)
     slug = Column(String(100), unique=True, index=True, nullable=False)
+    website_type = Column(String(30), nullable=False, default='online_store', server_default='online_store')
     description = Column(Text, nullable=True)
     status = Column(String(50), default="draft", nullable=False)  # draft, published, suspended, archived
     default_currency = Column(String(10), default="BDT", nullable=False)
@@ -34,6 +35,7 @@ class Shop(Base):
     products = relationship("Product", back_populates="shop", cascade="all, delete-orphan")
     orders = relationship("Order", back_populates="shop", cascade="all, delete-orphan")
     subscriptions = relationship("Subscription", back_populates="shop", cascade="all, delete-orphan")
+    pages = relationship('SitePage', back_populates='shop', cascade='all, delete-orphan')
 
 class ShopMembership(Base):
     __tablename__ = "shop_memberships"

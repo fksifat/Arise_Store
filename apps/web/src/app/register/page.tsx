@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
-import { getStorefrontTheme } from '@/lib/storefront-themes';
+import { anyTheme, themeWebsiteType, websiteTypes, websiteType } from '@/lib/sites';
 import { fetchApi } from '@/lib/api';
 import { AlertCircle, Lock, Mail, User as UserIcon, Phone, Store, ArrowRight } from 'lucide-react';
 
@@ -19,8 +19,9 @@ export default function RegisterPage() {
   const [shopName, setShopName] = useState('');
   const [shopSlug, setShopSlug] = useState('');
   const [slugEdited, setSlugEdited] = useState(false);
-  const [themeKey, setThemeKey] = useState('fashion-modern');
-  useEffect(() => { setThemeKey(getStorefrontTheme(new URLSearchParams(window.location.search).get('theme') || undefined).key); }, []);
+  const [themeKey, setThemeKey] = useState('business-studio');
+  const [websiteKind, setWebsiteKind] = useState('business');
+  useEffect(() => { const preset=anyTheme(new URLSearchParams(window.location.search).get('theme') || ''); if(preset){setThemeKey(preset.key);setWebsiteKind(themeWebsiteType(preset.key));} else {const type=new URLSearchParams(window.location.search).get('type');const choice=websiteTypes.find(item=>item.key===type);if(choice){setWebsiteKind(choice.key);setThemeKey(choice.default_theme);}} }, []);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,6 +63,7 @@ export default function RegisterPage() {
           name: shopName.trim(),
           slug: shopSlug.trim().toLowerCase(),
           theme_key: themeKey,
+          website_type: websiteKind,
         }),
       });
 
@@ -83,7 +85,7 @@ export default function RegisterPage() {
               A
             </div>
           </Link>
-          <h1 className="text-2xl font-black text-slate-900">Launch Your Online Shop</h1>
+          <h1 className="text-2xl font-black text-slate-900">Create your website</h1>
           <p className="text-xs text-slate-500">14-day free trial • No credit card required</p>
         </div>
 
@@ -94,9 +96,10 @@ export default function RegisterPage() {
           </div>
         )}
 
-        <p className="text-center text-xs text-slate-500">Starting with {getStorefrontTheme(themeKey).name}. You can change it anytime.</p>
+        <p className="text-center text-xs text-slate-500">Starting with {anyTheme(themeKey)?.name}. You can change it anytime.</p>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {user ? <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-600">Signed in as {user.email}. Create a new store for this account.</p> : <>
+          <fieldset><legend className="mb-3 text-xs font-semibold text-slate-700">What are you building?</legend><div className="grid grid-cols-2 gap-2">{websiteTypes.map(type=><label key={type.key} className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 text-xs ${websiteKind===type.key?'border-slate-900 bg-slate-50':'border-slate-200'}`}><input type="radio" name="website-type" value={type.key} checked={websiteKind===type.key} onChange={()=>{setWebsiteKind(type.key);setThemeKey(type.default_theme);}}/>{type.label}</label>)}</div><p className="mt-3 text-xs leading-5 text-slate-500">{websiteType(websiteKind).description}</p></fieldset>
+          {user ? <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-600">Signed in as {user.email}. Create a new website for this account.</p> : <>
           <div>
             <label htmlFor="register-name" className="block text-xs font-semibold text-slate-700 mb-1">
               Your Full Name <span className="text-rose-500">*</span>
@@ -168,7 +171,7 @@ export default function RegisterPage() {
           <div className="border-t pt-3 space-y-3">
             <div>
               <label htmlFor="register-shop" className="block text-xs font-semibold text-slate-700 mb-1">
-                Shop Name <span className="text-rose-500">*</span>
+                {websiteKind==='online_store'?'Shop Name':'Website name'} <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
                 <Store className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
@@ -185,13 +188,13 @@ export default function RegisterPage() {
 
             <div>
               <label htmlFor="register-slug" className="block text-xs font-semibold text-slate-700 mb-1">
-                Store URL name
+                {websiteKind==='online_store'?'Store URL name':'Website URL name'}
               </label>
               <div className="flex items-center">
-                <span className="rounded-l-lg border border-r-0 bg-slate-100 px-3 py-2 text-xs font-mono text-slate-500">/store/</span>
+                <span className="rounded-l-lg border border-r-0 bg-slate-100 px-3 py-2 text-xs font-mono text-slate-500">{websiteKind==='online_store'?'/store/':'/site/'}</span>
                 <input id="register-slug" minLength={3} maxLength={50} pattern="[a-z0-9]+(-[a-z0-9]+)*" type="text" required placeholder="dhaka-silk" value={shopSlug} onChange={event=>{setSlugEdited(true);setShopSlug(event.target.value.toLowerCase());}} className="min-w-0 w-full rounded-r-lg border px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-slate-900 outline-none" />
               </div>
-              <p className="mt-2 text-[11px] leading-5 text-slate-500">Choose a short URL using English letters, numbers and dashes. Your store name can be in Bangla.</p>
+              <p className="mt-2 text-[11px] leading-5 text-slate-500">Choose a short URL using English letters, numbers and dashes. Your website name can be in Bangla.</p>
             </div>
           </div>
 
@@ -200,14 +203,14 @@ export default function RegisterPage() {
             disabled={loading}
             className="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-semibold flex items-center justify-center space-x-2 transition disabled:opacity-50 shadow-md"
           >
-            {loading ? <span>Creating Store...</span> : <span>Create Online Store</span>}
+            {loading ? <span>Creating website...</span> : <span>Create website</span>}
           </button>
         </form>
 
         <p className="text-center text-xs text-slate-500">
           Already registered?{' '}
           <Link href="/login" className="text-slate-900 font-semibold hover:underline">
-            Sign in to existing store
+            Sign in to your workspace
           </Link>
         </p>
       </div>

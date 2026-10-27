@@ -1,0 +1,337 @@
+ Image arise-store-api:local Building 
+ Image arise-store-web Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.50kB done
+#1 DONE 0.0s
+
+#2 [api internal] load build definition from Dockerfile.api
+#2 transferring dockerfile:
+#2 transferring dockerfile: 614B done
+#2 DONE 0.0s
+
+#3 [web internal] load build definition from Dockerfile.web
+#3 transferring dockerfile: 800B done
+#3 DONE 0.0s
+
+#4 [api internal] load metadata for docker.io/library/python:3.12-slim
+#4 ...
+
+#5 [web internal] load metadata for docker.io/library/node:24-alpine
+#5 DONE 2.4s
+
+#6 [web internal] load .dockerignore
+#6 transferring context: 197B done
+#6 DONE 0.0s
+
+#7 [web builder 1/8] FROM docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
+#7 resolve docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 0.0s done
+#7 DONE 0.0s
+
+#8 [web internal] load build context
+#8 transferring context: 6.59MB 0.1s done
+#8 DONE 0.1s
+
+#9 [web builder 3/8] COPY apps/web/package*.json ./
+#9 CACHED
+
+#10 [web builder 2/8] WORKDIR /app
+#10 CACHED
+
+#11 [web builder 4/8] RUN npm ci
+#11 CACHED
+
+#12 [web builder 5/8] COPY apps/web ./
+#12 DONE 0.3s
+
+#4 [api internal] load metadata for docker.io/library/python:3.12-slim
+#4 ...
+
+#13 [web builder 6/8] COPY services/api/app/theme_catalog.json /services/api/app/theme_catalog.json
+#13 DONE 0.1s
+
+#14 [web builder 7/8] COPY services/api/app/website_catalog.json /services/api/app/website_catalog.json
+#14 DONE 0.1s
+
+#4 [api internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 3.7s
+
+#6 [api internal] load .dockerignore
+#6 transferring context: 197B done
+#6 DONE 0.0s
+
+#15 [web builder 8/8] RUN npm run build
+#15 0.508 
+#15 0.508 > arise-store-web@1.0.0 build
+#15 0.508 > next build --webpack
+#15 0.508 
+#15 ...
+
+#16 [api internal] load build context
+#16 transferring context: 286.51kB 0.2s done
+#16 DONE 0.3s
+
+#17 [api base 1/6] FROM docker.io/library/python:3.12-slim@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f
+#17 resolve docker.io/library/python:3.12-slim@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f 0.1s done
+#17 sha256:86586d55cc56d61ea925eceb95264d80c84fae62b3f013b4022710968a0bcf73 0B / 254B 0.3s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 0B / 12.12MB 0.2s
+#17 sha256:f5b253875fcbce1c3ed3bf3431019fc52d83f106ccf45e58e083985648ad4ec7 0B / 1.55MB 0.2s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 1.05MB / 12.12MB 1.2s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 2.10MB / 12.12MB 1.4s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 3.15MB / 12.12MB 1.5s
+#17 sha256:f5b253875fcbce1c3ed3bf3431019fc52d83f106ccf45e58e083985648ad4ec7 1.05MB / 1.55MB 1.7s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 4.19MB / 12.12MB 1.8s
+#17 sha256:f5b253875fcbce1c3ed3bf3431019fc52d83f106ccf45e58e083985648ad4ec7 1.55MB / 1.55MB 2.0s done
+#17 extracting sha256:f5b253875fcbce1c3ed3bf3431019fc52d83f106ccf45e58e083985648ad4ec7
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 5.24MB / 12.12MB 2.1s
+#17 extracting sha256:f5b253875fcbce1c3ed3bf3431019fc52d83f106ccf45e58e083985648ad4ec7 0.2s done
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 6.29MB / 12.12MB 2.3s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 7.34MB / 12.12MB 2.4s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 8.39MB / 12.12MB 2.6s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 9.44MB / 12.12MB 2.7s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 10.49MB / 12.12MB 3.0s
+#17 sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 12.12MB / 12.12MB 3.2s done
+#17 extracting sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c
+#17 sha256:86586d55cc56d61ea925eceb95264d80c84fae62b3f013b4022710968a0bcf73 254B / 254B 3.6s done
+#17 extracting sha256:ca30a39e3f58fe12fab1873dcbc2295c56c29222f8aca17c0765e9777c59615c 0.4s done
+#17 extracting sha256:86586d55cc56d61ea925eceb95264d80c84fae62b3f013b4022710968a0bcf73 0.0s done
+#17 DONE 3.9s
+
+#15 [web builder 8/8] RUN npm run build
+#15 1.432 ▲ Next.js 16.4.1 (webpack)
+#15 1.473 ✓ Running next.config.mjs took 40ms
+#15 1.545 
+#15 1.582   Creating an optimized production build ...
+#15 ...
+
+#18 [api base 2/6] WORKDIR /app
+#18 DONE 0.4s
+
+#19 [api base 3/6] COPY services/api/requirements.txt .
+#19 DONE 0.1s
+
+#15 [web builder 8/8] RUN npm run build
+#15 ...
+
+#20 [api base 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#20 2.387 Collecting fastapi==0.162.0 (from -r requirements.txt (line 1))
+#20 2.475   Downloading fastapi-0.162.0-py3-none-any.whl.metadata (26 kB)
+#20 2.537 Collecting uvicorn==0.54.0 (from -r requirements.txt (line 2))
+#20 2.547   Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+#20 3.104 Collecting sqlalchemy==2.1.6 (from -r requirements.txt (line 3))
+#20 3.118   Downloading sqlalchemy-2.1.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.7 kB)
+#20 3.315 Collecting pydantic==2.14.1 (from -r requirements.txt (line 4))
+#20 3.332   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+#20 3.381 Collecting pydantic-settings==2.16.1 (from -r requirements.txt (line 5))
+#20 3.394   Downloading pydantic_settings-2.16.1-py3-none-any.whl.metadata (4.0 kB)
+#20 3.421 Collecting pyjwt==2.15.1 (from -r requirements.txt (line 6))
+#20 3.434   Downloading pyjwt-2.15.1-py3-none-any.whl.metadata (3.5 kB)
+#20 3.469 Collecting argon2-cffi==25.1.0 (from -r requirements.txt (line 7))
+#20 3.484   Downloading argon2_cffi-25.1.0-py3-none-any.whl.metadata (4.1 kB)
+#20 3.507 Collecting python-multipart==0.0.32 (from -r requirements.txt (line 8))
+#20 3.523   Downloading python_multipart-0.0.32-py3-none-any.whl.metadata (2.1 kB)
+#20 3.549 Collecting python-slugify==9.1.3 (from -r requirements.txt (line 9))
+#20 3.564   Downloading python_slugify-9.1.3-py3-none-any.whl.metadata (12 kB)
+#20 3.590 Collecting email-validator==2.3.0 (from -r requirements.txt (line 10))
+#20 3.604   Downloading email_validator-2.3.0-py3-none-any.whl.metadata (26 kB)
+#20 3.651 Collecting alembic==1.20.1 (from -r requirements.txt (line 11))
+#20 3.666   Downloading alembic-1.20.1-py3-none-any.whl.metadata (7.3 kB)
+#20 3.699 Collecting redis==8.1.0 (from -r requirements.txt (line 12))
+#20 3.717   Downloading redis-8.1.0-py3-none-any.whl.metadata (16 kB)
+#20 3.751 Collecting dnspython==2.9.0 (from -r requirements.txt (line 13))
+#20 3.765   Downloading dnspython-2.9.0-py3-none-any.whl.metadata (5.7 kB)
+#20 3.804 Collecting psycopg==3.3.6 (from psycopg[binary]==3.3.6->-r requirements.txt (line 14))
+#20 3.818   Downloading psycopg-3.3.6-py3-none-any.whl.metadata (4.4 kB)
+#20 3.880 Collecting starlette>=0.46.0 (from fastapi==0.162.0->-r requirements.txt (line 1))
+#20 3.895   Downloading starlette-1.10.0-py3-none-any.whl.metadata (6.6 kB)
+#20 3.947 Collecting typing-extensions>=4.8.0 (from fastapi==0.162.0->-r requirements.txt (line 1))
+#20 3.961   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#20 3.978 Collecting typing-inspection>=0.4.2 (from fastapi==0.162.0->-r requirements.txt (line 1))
+#20 3.989   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+#20 4.007 Collecting annotated-doc>=0.0.2 (from fastapi==0.162.0->-r requirements.txt (line 1))
+#20 4.020   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+#20 4.049 Collecting opentelemetry-api>=1.44.0 (from fastapi==0.162.0->-r requirements.txt (line 1))
+#20 4.060   Downloading opentelemetry_api-1.45.1-py3-none-any.whl.metadata (1.4 kB)
+#20 4.090 Collecting click>=7.0 (from uvicorn==0.54.0->-r requirements.txt (line 2))
+#20 4.104   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#20 4.122 Collecting h11>=0.8 (from uvicorn==0.54.0->-r requirements.txt (line 2))
+#20 4.133   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#20 4.155 Collecting annotated-types>=0.6.0 (from pydantic==2.14.1->-r requirements.txt (line 4))
+#20 4.168   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#20 5.124 Collecting pydantic-core==2.50.1 (from pydantic==2.14.1->-r requirements.txt (line 4))
+#20 5.140   Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+#20 5.191 Collecting python-dotenv>=1.2.2 (from pydantic-settings==2.16.1->-r requirements.txt (line 5))
+#20 5.205   Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+#20 5.241 Collecting argon2-cffi-bindings (from argon2-cffi==25.1.0->-r requirements.txt (line 7))
+#20 5.253   Downloading argon2_cffi_bindings-26.1.0-cp310-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (7.5 kB)
+#20 5.270 Collecting text-unidecode>=1.3 (from python-slugify==9.1.3->-r requirements.txt (line 9))
+#20 5.282   Downloading text_unidecode-1.3-py2.py3-none-any.whl.metadata (2.4 kB)
+#20 5.304 Collecting idna>=2.0.0 (from email-validator==2.3.0->-r requirements.txt (line 10))
+#20 5.316   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#20 5.363 Collecting Mako (from alembic==1.20.1->-r requirements.txt (line 11))
+#20 5.377   Downloading mako-1.4.3-py3-none-any.whl.metadata (2.9 kB)
+#20 5.641 Collecting psycopg-binary==3.3.6 (from psycopg[binary]==3.3.6->-r requirements.txt (line 14))
+#20 5.657   Downloading psycopg_binary-3.3.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+#20 5.701 Collecting anyio<5,>=4.0.0 (from starlette>=0.46.0->fastapi==0.162.0->-r requirements.txt (line 1))
+#20 5.714   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+#20 5.868 Collecting cffi>=1.0.1 (from argon2-cffi-bindings->argon2-cffi==25.1.0->-r requirements.txt (line 7))
+#20 5.885   Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+#20 5.948 Collecting MarkupSafe>=2.0 (from Mako->alembic==1.20.1->-r requirements.txt (line 11))
+#20 5.961   Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#20 6.039 Collecting pycparser (from cffi>=1.0.1->argon2-cffi-bindings->argon2-cffi==25.1.0->-r requirements.txt (line 7))
+#20 6.054   Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
+#20 6.077 Downloading fastapi-0.162.0-py3-none-any.whl (148 kB)
+#20 6.095 Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+#20 6.112 Downloading sqlalchemy-2.1.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.7 MB)
+#20 6.880    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 6.0 MB/s eta 0:00:00
+#20 6.903 Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+#20 7.004 Downloading pydantic_settings-2.16.1-py3-none-any.whl (80 kB)
+#20 7.026 Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)
+#20 7.040 Downloading argon2_cffi-25.1.0-py3-none-any.whl (14 kB)
+#20 7.052 Downloading python_multipart-0.0.32-py3-none-any.whl (30 kB)
+#20 7.067 Downloading python_slugify-9.1.3-py3-none-any.whl (16 kB)
+#20 7.080 Downloading email_validator-2.3.0-py3-none-any.whl (35 kB)
+#20 7.095 Downloading alembic-1.20.1-py3-none-any.whl (270 kB)
+#20 7.147 Downloading redis-8.1.0-py3-none-any.whl (560 kB)
+#20 7.242    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 560.6/560.6 kB 6.1 MB/s eta 0:00:00
+#20 7.255 Downloading dnspython-2.9.0-py3-none-any.whl (354 kB)
+#20 7.317 Downloading psycopg-3.3.6-py3-none-any.whl (215 kB)
+#20 7.354 Downloading psycopg_binary-3.3.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.2 MB)
+#20 8.178    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 6.3 MB/s eta 0:00:00
+#20 8.194 Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+#20 8.545    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 6.3 MB/s eta 0:00:00
+#20 8.557 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+#20 8.570 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#20 8.582 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#20 8.613 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#20 8.629 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#20 8.651 Downloading opentelemetry_api-1.45.1-py3-none-any.whl (60 kB)
+#20 8.669 Downloading python_dotenv-1.2.4-py3-none-any.whl (23 kB)
+#20 8.682 Downloading starlette-1.10.0-py3-none-any.whl (80 kB)
+#20 8.706 Downloading text_unidecode-1.3-py2.py3-none-any.whl (78 kB)
+#20 8.729 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#20 8.747 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+#20 8.761 Downloading argon2_cffi_bindings-26.1.0-cp310-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (26 kB)
+#20 8.775 Downloading mako-1.4.3-py3-none-any.whl (80 kB)
+#20 8.799 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+#20 8.832 Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+#20 8.876 Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#20 8.890 Downloading pycparser-3.12-py3-none-any.whl (62 kB)
+#20 9.014 Installing collected packages: text-unidecode, typing-extensions, redis, python-slugify, python-multipart, python-dotenv, pyjwt, pycparser, psycopg-binary, MarkupSafe, idna, h11, dnspython, click, annotated-types, annotated-doc, uvicorn, typing-inspection, sqlalchemy, pydantic-core, psycopg, opentelemetry-api, Mako, email-validator, cffi, anyio, starlette, pydantic, argon2-cffi-bindings, alembic, pydantic-settings, fastapi, argon2-cffi
+#20 ...
+
+#15 [web builder 8/8] RUN npm run build
+#15 15.56 ✓ Compiled successfully in 10.5s
+#15 15.56   Running TypeScript ...
+#15 ...
+
+#20 [api base 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#20 14.11 Successfully installed Mako-1.4.3 MarkupSafe-3.0.4 alembic-1.20.1 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 argon2-cffi-25.1.0 argon2-cffi-bindings-26.1.0 cffi-2.1.1 click-8.5.0 dnspython-2.9.0 email-validator-2.3.0 fastapi-0.162.0 h11-0.16.0 idna-3.20 opentelemetry-api-1.45.1 psycopg-3.3.6 psycopg-binary-3.3.6 pycparser-3.12 pydantic-2.14.1 pydantic-core-2.50.1 pydantic-settings-2.16.1 pyjwt-2.15.1 python-dotenv-1.2.4 python-multipart-0.0.32 python-slugify-9.1.3 redis-8.1.0 sqlalchemy-2.1.6 starlette-1.10.0 text-unidecode-1.3 typing-extensions-4.16.0 typing-inspection-0.4.4 uvicorn-0.54.0
+#20 14.11 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#20 14.22 
+#20 14.22 [notice] A new release of pip is available: 25.0.1 -> 26.2.2
+#20 14.22 [notice] To update, run: pip install --upgrade pip
+#20 DONE 14.9s
+
+#21 [api base 5/6] COPY services/api /app
+#21 DONE 0.1s
+
+#15 [web builder 8/8] RUN npm run build
+#15 ...
+
+#22 [api base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#22 DONE 0.9s
+
+#15 [web builder 8/8] RUN npm run build
+#15 20.70   Finished TypeScript in 5.1s ...
+#15 20.70   Collecting page data using 7 workers ...
+#15 22.44   Generating static pages using 7 workers (0/54) ...
+#15 23.17   Generating static pages using 7 workers (13/54) 
+#15 23.17   Generating static pages using 7 workers (26/54) 
+#15 23.17   Generating static pages using 7 workers (40/54) 
+#15 23.22 ✓ Generating static pages using 7 workers (54/54) in 782ms
+#15 23.35   Finalizing page optimization ...
+#15 23.35   Collecting build traces ...
+#15 ...
+
+#23 [api] exporting to image
+#23 exporting layers 4.1s done
+#23 exporting manifest sha256:63a09e0e16e994cbefd9b3adf18f68fe35d07f731e86d2b21d2474c238559279 0.0s done
+#23 exporting config sha256:dda6f8626734b19de626d3706acfca9a8fbc87a5ba3b33ae6efb48a62100ee43 0.0s done
+#23 exporting attestation manifest sha256:962d14c1e35bcbdb1a8a4ea449728dd62cd59f01efd30dcaeac0cc1d7b751318 0.0s done
+#23 exporting manifest list sha256:46aa6945c94f22152398fe36593ddaf1847e9d4dc485748c9353ec5a3ba14cea 0.0s done
+#23 naming to docker.io/library/arise-store-api:local done
+#23 unpacking to docker.io/library/arise-store-api:local 0.7s done
+#23 DONE 5.0s
+
+#24 [api] resolving provenance for metadata file
+#24 DONE 0.0s
+
+#15 [web builder 8/8] RUN npm run build
+#15 36.30 
+#15 36.31 Route (app)
+#15 36.31 ┌ ○ /
+#15 36.31 ├ ○ /_not-found
+#15 36.31 ├ ○ /admin
+#15 36.31 ├ ○ /dashboard
+#15 36.31 ├ ○ /dashboard/blog
+#15 36.31 ├ ○ /dashboard/categories
+#15 36.31 ├ ○ /dashboard/customers
+#15 36.31 ├ ○ /dashboard/domains
+#15 36.31 ├ ○ /dashboard/orders
+#15 36.31 ├ ƒ /dashboard/orders/[orderId]/invoice
+#15 36.31 ├ ○ /dashboard/pages
+#15 36.31 ├ ƒ /dashboard/pages/[pageId]
+#15 36.31 ├ ○ /dashboard/products
+#15 36.31 ├ ○ /dashboard/reports
+#15 36.31 ├ ○ /dashboard/settings
+#15 36.31 ├ ○ /dashboard/subscription
+#15 36.31 ├ ○ /dashboard/themes
+#15 36.31 ├ ƒ /health
+#15 36.31 ├ ƒ /login
+#15 36.31 ├ ƒ /preview/[slug]/[pageId]
+#15 36.31 ├ ○ /register
+#15 36.31 ├ ƒ /site/[slug]/[[...path]]
+#15 36.31 ├ ƒ /store/[slug]
+#15 36.31 ├ ƒ /store/[slug]/track
+#15 36.31 └   /themes/[themeKey]
+#15 36.31   ├ ● /themes/fashion-modern
+#15 36.31   ├ ● /themes/fashion-noir
+#15 36.31   ├ ● /themes/fashion-runway
+#15 36.31   └ ● [+33 more paths]
+#15 36.31 
+#15 36.31 
+#15 36.31 ○  (Static)   prerendered as static content
+#15 36.31 ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+#15 36.31 ƒ  (Dynamic)  server-rendered on demand
+#15 36.31 
+#15 DONE 36.8s
+
+#10 [web builder 2/8] WORKDIR /app
+#10 CACHED
+
+#25 [web runner 3/5] COPY --from=builder --chown=node:node /app/.next/standalone ./
+#25 DONE 0.7s
+
+#26 [web runner 4/5] COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+#26 DONE 0.2s
+
+#27 [web runner 5/5] COPY --from=builder --chown=node:node /app/public ./public
+#27 DONE 0.2s
+
+#28 [web] exporting to image
+#28 exporting layers
+#28 exporting layers 2.1s done
+#28 exporting manifest sha256:4ea2351cef70caf7cb786c0a634e9d2c844b67d575617789844955cb488220e3 0.0s done
+#28 exporting config sha256:58afff08fa393ad9022cb7a9b9c2af884d69d99ac9f9dffb16fd5f84955dbbae 0.0s done
+#28 exporting attestation manifest sha256:7fac783dac2a176a98e9ca9f06080ade09c7f97bc204b58b381c1340b63909d3
+#28 exporting attestation manifest sha256:7fac783dac2a176a98e9ca9f06080ade09c7f97bc204b58b381c1340b63909d3 0.0s done
+#28 exporting manifest list sha256:367e6cb59bb9084c2864c342a2872855c8b37ff77c4d8899f6d2a8865d2ad45a 0.0s done
+#28 naming to docker.io/library/arise-store-web:latest done
+#28 unpacking to docker.io/library/arise-store-web:latest
+#28 unpacking to docker.io/library/arise-store-web:latest 0.5s done
+#28 DONE 2.9s
+
+#29 [web] resolving provenance for metadata file
+#29 DONE 0.0s
+ Image arise-store-api:local Built 
+ Image arise-store-web Built 

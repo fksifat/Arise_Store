@@ -1,0 +1,12 @@
+{
+  "action": "Reuse Shop as the tenant, add website_type and a versioned page/post model, add structured content and type-aware themes/navigation",
+  "evidence": [
+    "Accounts/domains/subscriptions/publication already share Shop tenant",
+    "Current overview, navigation and registration assume commerce",
+    "Existing eighteen storefront designs and COD flows must remain available",
+    "Plain structured content can reuse React rendering without a new editor dependency"
+  ],
+  "risk": "Publication privacy, slug collision, URL injection, access isolation and migration preservation require executable regression coverage",
+  "packaging_followup": "The production build detected that the web Dockerfile copies only the old shared catalog. Include the new website catalog in the same build context.",
+  "verification_followup": "Run the final browser regression against the production Docker server. Development Strict Mode repeats effects and its environment omits demo controls, making the production-oriented suite unsuitable there. Give the new first-website selector an explicit accessible name."
+}

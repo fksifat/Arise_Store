@@ -9,6 +9,7 @@ class Theme(Base):
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     theme_key = Column(String(100), unique=True, index=True, nullable=False)
+    website_type = Column(String(30), nullable=False, default='online_store', server_default='online_store')
     name = Column(String(255), nullable=False)
     version = Column(String(50), default="1.0.0", nullable=False)
     description = Column(Text, nullable=True)

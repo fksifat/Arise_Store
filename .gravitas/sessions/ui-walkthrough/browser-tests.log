@@ -1,0 +1,14 @@
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test ui-walkthrough.spec.ts
+
+
+Running 2 tests using 1 worker
+
+(node:185944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 e2e/ui-walkthrough.spec.ts:13:5 › editor navigation preserves unsaved work and refreshes the published navigation (2.0s)
+  ✓  2 e2e/ui-walkthrough.spec.ts:63:5 › product editor saves and edits same-site image paths (998ms)
+
+  2 passed (3.7s)
+Browser test cleanup: removed 2 temporary accounts and their audit events.

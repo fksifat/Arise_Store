@@ -1,0 +1,9 @@
+Language: unknown
+Command:  node .gravitas/sessions/website-builder/visual.cjs
+Source:   explicit --cmd
+Running...
+------------------------------------------------------------
+PASS: 18 website themes in 36 desktop/mobile cases; three related themes per type, safe preview links, decoded images, no page overflow or JavaScript/hydration errors.
+
+------------------------------------------------------------
+VERDICT: PASS

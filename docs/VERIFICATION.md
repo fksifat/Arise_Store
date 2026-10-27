@@ -107,6 +107,18 @@ Final results: 90 PostgreSQL tests, 23 full browser tests (including both local 
 
 No dependencies, schema fields or new payment behavior were added. The existing hosting and integration limits below still apply.
 
+## Multi-purpose website builder
+
+The local product now supports business, portfolio, blog, landing-page, online-store, agency and other websites. Six non-store types have three themes each; the existing 18 commerce designs remain available. Type-aware onboarding and navigation lead into a shared section editor, page/post libraries, authenticated draft previews and explicit publication. The [builder guide](WEBSITE_BUILDER.md) describes the workflow, roles, URLs and limits.
+
+Migration `0004` was applied to the local PostgreSQL database after creating a backup. Hashes of the original columns and rows in 15 application tables matched before and after the upgrade and again after browser-test cleanup. Existing sites were classified as online stores. An isolated SQLite 0003-to-0004 migration also preserved legacy account, site, theme, product and order values; Alembic detected no pending schema changes.
+
+Final observed results: **110 PostgreSQL tests**, **109 SQLite tests with one PostgreSQL-only concurrency test skipped**, **26 browser tests**, TypeScript and the Docker production build passed. The full browser suite includes both demo logins and existing store checkout, stock conflict recovery, promotions, fulfillment, billing, reporting and administration. New flows create websites, customize and reorder sections, preview drafts privately, publish pages/sites, change themes and brand colors, publish blog articles with search metadata, and verify that saved draft content and URL changes stay private until republishing. Hidden sections are excluded from public payloads; backend tests cover unsafe links, tenant/role boundaries, stale revisions and publication guards.
+
+A production-server visual probe checked all 18 new themes at desktop and mobile widths in 36 cases: decoded images, no horizontal page overflow, no page JavaScript/hydration errors, three related themes per type and inactive preview links. Layouts were also inspected locally. The final browser run removed its 11 generated accounts and their audit events. Web, API, PostgreSQL and Redis were left healthy locally.
+
+Evidence is under `.gravitas/sessions/website-builder/`. The earlier development-server regression attempt timed out: development Strict Mode repeats effects and the dev process did not enable demo controls. An explicit accessible label fixed the new first-website selector; the complete production-server run subsequently passed. No dependency was added. This is a structured-section editor with plain-text articles and image URLs; uploads, rich text, form processing, free-form canvas editing and hosted deployment were not implemented. The existing launch/integration limits below still apply.
+
 ## Repeat the checks
 
 With the local Compose stack running and host dependencies installed:

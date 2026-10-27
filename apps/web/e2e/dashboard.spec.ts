@@ -87,9 +87,10 @@ test('merchant completes store setup, fulfillment, billing request and store swi
   };
   await post('/auth/register',{name:'Dashboard Merchant',email:`e2e-${runId}-dashboard@example.com`,password:'Browser-test-password-123'});
   await page.goto('/dashboard');
-  await page.getByLabel('Store name',{exact:true}).fill('Dashboard Store');
-  await page.getByLabel('Store URL name',{exact:true}).fill(`dashboard-${runId}`);
-  await page.getByRole('button',{name:'Create store',exact:true}).click();
+  await page.getByLabel('Website type',{exact:true}).selectOption('online_store');
+  await page.getByLabel('Website name',{exact:true}).fill('Dashboard Store');
+  await page.getByLabel('Website URL name',{exact:true}).fill(`dashboard-${runId}`);
+  await page.getByRole('button',{name:'Create website',exact:true}).click();
   await expect(page.getByRole('heading',{name:'Store overview',exact:true})).toBeVisible();
   const shopList=await (await page.request.get('/api/v1/shops')).json();const current=shopList[0];
   await page.goto('/dashboard/categories');
@@ -153,8 +154,8 @@ test('merchant completes store setup, fulfillment, billing request and store swi
   await expect(page.getByRole('button',{name:'Request Growth',exact:true})).toBeDisabled();
   const subscription=await (await page.request.get(`/api/v1/shops/${current.id}/subscription`)).json();expect(subscription.plan_name).toBe('Starter');
   const second=await post('/shops',{name:'Second Dashboard Store',slug:`second-${runId}`});
-  await page.reload();await page.getByRole('combobox',{name:'Active store',exact:true}).selectOption(second.id);
-  await expect(page.getByRole('combobox',{name:'Active store',exact:true})).toHaveValue(second.id);
+  await page.reload();await page.getByRole('combobox',{name:'Active website',exact:true}).selectOption(second.id);
+  await expect(page.getByRole('combobox',{name:'Active website',exact:true})).toHaveValue(second.id);
   await page.goto('/dashboard');await expect(page.getByRole('link',{name:'Total orders: 0',exact:true})).toBeVisible();
   expect(await page.evaluate(()=>localStorage.getItem('arise_active_shop'))).toBe(second.slug);
 });

@@ -1,0 +1,12 @@
+{
+  "planning": "deep",
+  "context_depth": "dependency",
+  "verification_depth": "impact",
+  "delegation": "none",
+  "reason_codes": [
+    "36-theme-review",
+    "shared-rendering-and-editing",
+    "additive-json-settings",
+    "preserve-user-content"
+  ]
+}

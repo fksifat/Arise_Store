@@ -62,8 +62,8 @@ export default function LoginForm({ showDemoCredentials }: { showDemoCredentials
               A
             </div>
           </Link>
-          <h1 className="text-2xl font-black text-slate-900">Sign in to your store</h1>
-          <p className="text-xs text-slate-500">Access your merchant dashboard and manage orders</p>
+          <h1 className="text-2xl font-black text-slate-900">Sign in to your workspace</h1>
+          <p className="text-xs text-slate-500">Manage your websites, content and publishing</p>
         </div>
 
         {sessionExpired && <p role="status" className="rounded-lg bg-amber-50 p-3 text-xs text-amber-800">Your session expired. Please sign in again.</p>}
@@ -143,9 +143,9 @@ export default function LoginForm({ showDemoCredentials }: { showDemoCredentials
         </form>
 
         <p className="text-center text-xs text-slate-500">
-          Don't have an online store yet?{' '}
+          New to Arise?{' '}
           <Link href="/register" className="text-rose-600 font-semibold hover:underline">
-            Register your shop free
+            Create your website
           </Link>
         </p>
       </div>

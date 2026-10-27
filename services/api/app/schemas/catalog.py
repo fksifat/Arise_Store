@@ -3,6 +3,7 @@ from app.schemas.base import PatchModel
 from datetime import datetime
 from pydantic import ConfigDict, BaseModel, Field, field_validator, model_validator
 from slugify import slugify
+from app.schemas.page import safe_url
 
 # Categories
 class CategoryCreate(BaseModel):
@@ -45,10 +46,11 @@ class CategoryResponse(BaseModel):
 
 # Images & Variants
 class ProductImageCreate(BaseModel):
-    image_url: str
+    image_url: str = Field(..., min_length=1, max_length=2048)
     alt_text: Optional[str] = None
     sort_order: int = 0
     is_primary: bool = False
+    _image = field_validator('image_url')(lambda value: safe_url(value, image=True))
 
 class ProductImageResponse(BaseModel):
     id: str

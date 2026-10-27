@@ -1,6 +1,6 @@
-# Arise Store
+# Arise Website Builder
 
-A multi-tenant commerce application for Bangladeshi merchants. The local stack runs Next.js 16, React 19, FastAPI, PostgreSQL 17 and Redis. Customer checkout currently supports cash on delivery. Subscription payments require administrator confirmation.
+A multi-purpose website-building SaaS for business websites, portfolios, blogs, landing pages, online stores, agency websites and other sites. Users choose a website type and theme, customize sections, edit pages and posts, preview drafts and publish. Online stores retain inventory, COD checkout and order management. The local stack uses Next.js 16, React 19, FastAPI, PostgreSQL 17 and Redis.
 
 ## Run locally with Docker (recommended)
 
@@ -10,7 +10,7 @@ Requirements: Docker with Compose, Python 3, and ports 3000/8000 available. Post
 bash scripts/setup-local.sh --docker
 ```
 
-Open **http://localhost:3000** and register a merchant. The script creates a private `.env` with random secrets. Compose runs migrations and seeds the 18 themes and subscription plans before starting the API. It does not create demo accounts or products by default. Services bind to localhost; Redis remains private to the Compose network.
+Open **http://localhost:3000** and create a website owner account. The script creates a private `.env` with random secrets. Compose runs migrations and seeds 36 themes and subscription plans before starting the API. It does not create demo accounts or products by default. Services bind to localhost; Redis remains private to the Compose network.
 
 For a database client such as DBeaver, pgAdmin or an IDE, connect to **127.0.0.1:5434**, database **arise**, user **arise**, with `POSTGRES_PASSWORD` from `.env`. The Docker API connects internally to `postgres:5432`. Host Python commands use `DATABASE_URL` from `.env`; this workspace now points to the same PostgreSQL database. See [local PostgreSQL instructions](docs/OPERATIONS.md#local-postgresql-connection).
 
@@ -20,7 +20,7 @@ Create a platform administrator explicitly:
 docker compose exec api python -m app.manage create-admin
 ```
 
-The command prompts for an email and a password of at least 12 characters. Log in through `/login`; administrators use `/admin`. Merchant registration creates a draft shop with a 14-day trial. Add products and publish it from the dashboard. Storefronts are available at `/store/your-slug`.
+The command prompts for an email and a password of at least 12 characters. Log in through `/login`; administrators use `/admin`. Registration creates a draft website with a 14-day trial. Non-store sites start with an editable homepage. Save and publish the homepage in Pages, then publish the website from Overview. Websites use `/site/your-slug`; online stores retain `/store/your-slug`. [Builder guide and publishing rules](docs/WEBSITE_BUILDER.md).
 
 ```bash
 docker compose ps
@@ -65,7 +65,19 @@ PYTHONPATH=services/api venv/bin/python -m app.manage create-admin
 
 The existing `arise_store.db` and `test_shared.db` are not used or automatically migrated by the new local setup. To adopt existing data, follow [operations instructions](docs/OPERATIONS.md) on a backup first.
 
-## What is implemented
+## Website builder
+
+- Seven website types with type-aware onboarding and navigation.
+- Thirty-six themes: three for each non-store type and 18 store designs grouped into six commerce categories.
+- Structured page/post editor with hero, text, services/features, galleries, FAQs, testimonials, contact, calls to action and recent-post sections.
+- Add/reorder/hide sections, edit items, use image/link URLs, and preview desktop/mobile layouts.
+- Private saved drafts, authenticated previews, explicit publication, stable published URLs until republishing and concurrent-edit protection.
+- Blog index/article routes, pagination, server-rendered published content and page search metadata.
+- Shared website accounts, roles, subscriptions, domain verification and moderation; commerce tools appear for online-store sites.
+
+Migration `0004` preserves existing store data and classifies it as `online_store`. The tenant table/API remain named `shops` for compatibility. Website type is chosen when creating a site; existing stores are not converted automatically. See [builder behavior and limits](docs/WEBSITE_BUILDER.md).
+
+## Commerce module and shared infrastructure
 
 - Merchant registration, cookie-based browser sessions, JWT authentication for API clients, owner/staff authorization and tenant isolation.
 - Product creation/editing with safe stock adjustments, option management and purchases, category management, 18 storefront themes with product quick views, search/category/price controls, clear image placeholders, per-store carts and configurable delivery fees.
@@ -76,11 +88,11 @@ The existing `arise_store.db` and `test_shared.db` are not used or automatically
 - Production configuration guards, explicit CORS/hosts, request-size limits, shared Redis abuse limits, security headers and database readiness checks.
 - Versioned Alembic migrations, non-root containers and automated verification.
 
-Online customer payment gateways, automatic subscription charging, email/SMS delivery, courier integrations and custom-domain hosting are not enabled. The larger [product specification](ecommerce_saas_platform_documentation.md) is a roadmap, not an implementation checklist marked complete.
+Online customer payment gateways, automatic subscription charging, email/SMS delivery, courier integrations and custom-domain hosting are not enabled. The original [commerce specification](ecommerce_saas_platform_documentation.md) is retained as module/history documentation. The current product direction and implemented publishing model are in the [website-builder guide](docs/WEBSITE_BUILDER.md).
 
-## Merchant dashboard
+## Website workspace and store dashboard
 
-The dashboard at `/dashboard` has a shared active-store selector and mobile navigation. Its overview separates delivered order value from unfulfilled orders, counts active products, flags low-stock products/options and links to the filtered work queues. Storefront links use the actual `/store/<slug>` address and appear when published.
+The dashboard at `/dashboard` has a shared active-website selector and mobile navigation. All sites have Pages, Blog, Themes, Domains, Subscription and Settings. Non-store sites have a content overview; online stores also expose their commerce dashboard. Its overview separates delivered order value from unfulfilled orders, counts active products, flags low-stock products/options and links to the filtered work queues. Storefront links use the actual `/store/<slug>` address and appear when published.
 
 Orders include customer/delivery/item details and permitted fulfillment transitions. Products support draft/active visibility, safe stock edits and low-stock filtering. Categories can be created, renamed and archived. Settings support store branding, clearing optional fields and decimal delivery fees. Themes, domain verification and manual billing retain their existing server rules; billing history and domain feedback make pending steps visible. Failed page requests have retry controls.
 
@@ -98,9 +110,9 @@ Exports protect spreadsheet formula-like text and preserve Bangla/quoted fields.
 
 ## Storefront themes
 
-The theme gallery at `/dashboard/themes` has 18 designs: three each for Fashion, Electronics, Grocery & essentials, Home & furniture, Beauty & skincare, and Sport & outdoor. Enter a category to compare its designs, preview them and apply one. The homepage also browses by category, and each preview links to its related designs. Each theme has a responsive layout, working category navigation, search, sorting, option pricing and product quick views. Preview a design at `/themes/<theme-key>` using clearly labeled sample products; preview checkout cannot place orders.
+The theme gallery at `/dashboard/themes` shows compatible designs for the current website type. Non-store sites have three choices per type and a brand-color control. Online stores have 18 designs: three each for Fashion, Electronics, Grocery & essentials, Home & furniture, Beauty & skincare, and Sport & outdoor. Enter a category to compare its designs, preview them and apply one. The homepage also browses by category, and each preview links to its related designs. Each theme has a responsive layout, working category navigation, search, sorting, option pricing and product quick views. Preview a design at `/themes/<theme-key>` using clearly labeled sample products; preview checkout cannot place orders.
 
-Apply a theme from the dashboard or choose one when registering. Changing themes preserves custom brand colors and hero copy while refreshing unmodified defaults. Existing products, inventory, orders and draft/published status are preserved. [Design references and asset credits](docs/THEME_DESIGN.md).
+Apply a theme from the dashboard or choose one when registering. Website theme changes keep page/post content in place; general theme and contact settings update live pages immediately. Changing themes preserves custom brand colors and hero copy while refreshing unmodified defaults. Existing products, inventory, orders and draft/published status are preserved. [Design references and asset credits](docs/THEME_DESIGN.md).
 
 ## Verification
 

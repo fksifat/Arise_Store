@@ -1,0 +1,13 @@
+{
+  "planning": "deep",
+  "context_depth": "dependency",
+  "verification_depth": "impact",
+  "delegation": "none",
+  "reason_codes": [
+    "product-pivot",
+    "additive-migration",
+    "shared-tenant-and-publication",
+    "new-cms-and-website-types",
+    "preserve-existing-commerce"
+  ]
+}

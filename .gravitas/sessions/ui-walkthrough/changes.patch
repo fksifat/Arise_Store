@@ -1,0 +1,130 @@
+--- apps/web/src/app/dashboard/layout.tsx
++++ apps/web/src/app/dashboard/layout.tsx
+@@ -76,8 +76,9 @@
+   const selectShop = (id: string) => {
+     const selected = shops.find(store => store.id === id);
+     if (!selected || selected.id === shop?.id) return;
++    if (document.querySelector('#merchant-content [data-unsaved="true"]') && !window.confirm('Discard unsaved changes and switch websites?')) return;
+     localStorage.setItem('arise_active_shop', selected.slug);
+-    if(pathname.startsWith('/dashboard/pages/'))window.location.assign('/dashboard/pages');
++    if(pathname.startsWith('/dashboard/pages/')) { setShop(selected); router.push('/dashboard/pages'); }
+     else window.location.reload();
+   };
+   const signOut = async () => {
+--- apps/web/src/app/dashboard/pages/[pageId]/page.tsx
++++ apps/web/src/app/dashboard/pages/[pageId]/page.tsx
+@@ -16,13 +16,14 @@
+ const itemOf=():SectionItem=>({heading:'',body:'',image_url:'',image_alt:'',button_text:'',button_url:''});
+ 
+ export default function PageEditor({params}:{params:Promise<{pageId:string}>}){
+- const {pageId}=use(params);const {shop}=useMerchant();const router=useRouter();const [page,setPage]=useState<any>(null);const [draft,setDraft]=useState<any>(null);const [theme,setTheme]=useState<any>(null);const [previewSite,setPreviewSite]=useState<any>(null);const [loadError,setLoadError]=useState('');const [error,setError]=useState('');const [notice,setNotice]=useState('');const [busy,setBusy]=useState(false);const [retry,setRetry]=useState(0);const [selected,setSelected]=useState('');const [addType,setAddType]=useState('text');const [phone,setPhone]=useState(false);const [confirm,setConfirm]=useState<'delete'|'reload'|null>(null);
++ const {pageId}=use(params);const {shop}=useMerchant();const router=useRouter();const [page,setPage]=useState<any>(null);const [draft,setDraft]=useState<any>(null);const [theme,setTheme]=useState<any>(null);const [previewSite,setPreviewSite]=useState<any>(null);const [loadError,setLoadError]=useState('');const [error,setError]=useState('');const [notice,setNotice]=useState('');const [busy,setBusy]=useState(false);const [retry,setRetry]=useState(0);const [selected,setSelected]=useState('');const [addType,setAddType]=useState('text');const [phone,setPhone]=useState(false);const [confirm,setConfirm]=useState<'delete'|'reload'|null>(null);const [previewRevision,setPreviewRevision]=useState(0);
+  const dirty=!!page&&!!draft&&JSON.stringify(draft)!==JSON.stringify(draftOf(page));
+  useEffect(()=>{let cancelled=false;setPage(null);setLoadError('');Promise.all([fetchApi<any>(`/shops/${shop.id}/pages/${pageId}`),fetchApi<any>(`/shops/${shop.id}/theme-settings`),fetchApi<any>(`/shops/${shop.id}/pages/preview-site`)]).then(([loaded,setting,siteData])=>{if(cancelled)return;setPage(loaded);setDraft(draftOf(loaded));setTheme(setting);setPreviewSite(siteData);setSelected(loaded.sections[0]?.id||'');}).catch(error=>{if(!cancelled)setLoadError(error.message);});return()=>{cancelled=true;};},[shop.id,pageId,retry]);
+  useEffect(()=>{const warn=(event:BeforeUnloadEvent)=>{if(dirty){event.preventDefault();event.returnValue='';}};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn);},[dirty]);
+  const accept=(updated:any)=>{setPage(updated);setDraft(draftOf(updated));};
++ useEffect(()=>{if(!previewRevision)return;let cancelled=false;fetchApi(`/shops/${shop.id}/pages/preview-site`).then(site=>{if(!cancelled)setPreviewSite(site);}).catch(error=>{if(!cancelled)setError('Preview could not be refreshed: '+error.message);});return()=>{cancelled=true;};},[shop.id,previewRevision]);
+  const save=async(event:FormEvent)=>{event.preventDefault();if(busy)return;setBusy(true);setError('');setNotice('');try{const updated=await fetchApi<any>(`/shops/${shop.id}/pages/${pageId}`,{method:'PUT',body:JSON.stringify({...draft,expected_revision:page.revision})});accept(updated);setNotice('Draft saved. Your live content has not changed.');}catch(error:any){setError(error.message);}finally{setBusy(false);}};
+- const publish=async(action:'publish'|'unpublish')=>{if(busy||dirty)return;setBusy(true);setError('');setNotice('');try{const updated=await fetchApi<any>(`/shops/${shop.id}/pages/${pageId}/${action}`,{method:'POST',body:JSON.stringify({expected_revision:page.revision})});accept(updated);setNotice(action==='publish'?(shop.status==='published'?'Published content updated.':'Content published. Publish your website from Overview to make it public.'):'Content unpublished. Your draft is still saved.');}catch(error:any){setError(error.message);}finally{setBusy(false);}};
++ const publish=async(action:'publish'|'unpublish')=>{if(busy||dirty)return;setBusy(true);setError('');setNotice('');try{const updated=await fetchApi<any>(`/shops/${shop.id}/pages/${pageId}/${action}`,{method:'POST',body:JSON.stringify({expected_revision:page.revision})});accept(updated);setPreviewRevision(value=>value+1);setNotice(action==='publish'?(shop.status==='published'?'Published content updated.':'Content published. Publish your website from Overview to make it public.'):'Content unpublished. Your draft is still saved.');}catch(error:any){setError(error.message);}finally{setBusy(false);}};
+  const remove=async()=>{setBusy(true);setError('');try{await fetchApi(`/shops/${shop.id}/pages/${pageId}?expected_revision=${page.revision}`,{method:'DELETE'});router.push(page.kind==='post'?'/dashboard/blog':'/dashboard/pages');}catch(error:any){setError(error.message);setConfirm(null);setBusy(false);}};
+  if(loadError||!page||!draft||!theme)return <PageState loading={!loadError} error={loadError} onRetry={()=>setRetry(value=>value+1)}/>;
+  const section:Section|undefined=draft.sections.find((section:Section)=>section.id===selected);
+@@ -31,7 +32,7 @@
+  const add=()=>{const id='section-'+crypto.randomUUID();const added={id,type:addType,enabled:true,heading:sectionTypes.find(([key])=>key===addType)?.[1]||'',body:'',items:['features','gallery','faq','testimonials'].includes(addType)?[itemOf()]:[]};setDraft({...draft,sections:[...draft.sections,added]});setSelected(id);};
+  const textField=(label:string,field:keyof Section,multi=false,max=160)=><div><label htmlFor={`section-editor-${field}`} className="block text-xs font-semibold text-slate-600">{label}</label>{multi?<textarea id={`section-editor-${field}`} rows={field==='body'?6:3} maxLength={max} value={String(section?.[field]||'')} onChange={event=>updateSection({[field]:event.target.value})} className={inputStyle}/>:<input id={`section-editor-${field}`} maxLength={max} value={String(section?.[field]||'')} onChange={event=>updateSection({[field]:event.target.value})} className={inputStyle}/>}</div>;
+  return <div data-unsaved={dirty} className="space-y-5 p-4 sm:p-7"><header className="flex flex-wrap items-start justify-between gap-4"><div><a href={page.kind==='post'?'/dashboard/blog':'/dashboard/pages'} className="text-xs text-slate-500 underline">← Back to {page.kind==='post'?'posts':'pages'}</a><h1 className="mt-3 break-words text-2xl font-semibold">{page.kind==='post'?'Post editor':'Page editor'}</h1><p className="mt-2 text-xs text-slate-500">{shop.status!=='published'?'Website is not public · ':''}{dirty?'Unsaved changes — save before leaving.':page.published_slug?(page.has_unpublished_changes?'Saved draft has unpublished changes.':'Saved and published.'): 'Saved draft · Only you and authorized team members can see it.'}</p></div><div className="flex flex-wrap gap-2"><button type="submit" form="page-editor-form" disabled={busy||!dirty} className="flex items-center gap-2 rounded-lg border bg-white px-4 py-2.5 text-xs disabled:opacity-40"><Save size={14}/>{busy?'Working…':'Save draft'}</button><button disabled={busy||dirty} onClick={()=>publish('publish')} className="rounded-lg bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white disabled:opacity-40">Publish {page.kind==='post'?'post':'page'}</button><Link href={`/preview/${shop.slug}/${pageId}`} target="_blank" className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2.5 text-xs"><Eye size={14}/>Preview saved draft</Link>{shop.status==='published'&&page.published_slug&&<a href={contentPath(shop,{kind:page.kind,slug:page.published_slug})} target="_blank" className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2.5 text-xs">View published <ExternalLink size={13}/></a>}</div></header>
+- {dirty&&<p className="rounded-lg bg-amber-50 p-3 text-xs text-amber-900">Save your draft before publishing. The live page keeps its last published version.</p>}{notice&&<p role="status" className="rounded-lg bg-emerald-50 p-4 text-xs text-emerald-800">{notice} <Link href="/dashboard" className="underline">Open Overview</Link></p>}{error&&<div role="alert" className="rounded-lg bg-rose-50 p-4 text-xs text-rose-700">{error}<button onClick={()=>setConfirm('reload')} className="ml-3 underline">Reload saved content</button></div>}
++ {dirty&&<p className="rounded-lg bg-amber-50 p-3 text-xs text-amber-900">Save your draft before publishing. The live page keeps its last published version.</p>}{notice&&<p role="status" className="rounded-lg bg-emerald-50 p-4 text-xs text-emerald-800">{notice} <Link href="/dashboard" onNavigate={event=>{if(dirty&&!window.confirm('Discard unsaved changes and open Overview?'))event.preventDefault();}} className="underline">Open Overview</Link></p>}{error&&<div role="alert" className="rounded-lg bg-rose-50 p-4 text-xs text-rose-700">{error}<button onClick={()=>setConfirm('reload')} className="ml-3 underline">Reload saved content</button></div>}
+  <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(330px,440px)_minmax(0,1fr)]"><form id="page-editor-form" onSubmit={save} className="min-w-0 space-y-5"><section className="space-y-4 rounded-xl border bg-white p-5"><h2 className="text-sm font-semibold">Page details</h2><label className="block text-xs font-semibold">Title<input required maxLength={160} value={draft.title} onChange={event=>setDraft({...draft,title:event.target.value})} className={inputStyle}/></label><label className="block text-xs font-semibold">URL name<input required disabled={page.slug==='home'} pattern="[a-z0-9]+(-[a-z0-9]+)*" maxLength={80} value={draft.slug} onChange={event=>setDraft({...draft,slug:event.target.value.toLowerCase()})} className={inputStyle}/></label><div><label htmlFor="page-search-description" className="block text-xs font-semibold">Search description</label><textarea id="page-search-description" maxLength={300} rows={2} value={draft.description} onChange={event=>setDraft({...draft,description:event.target.value})} className={inputStyle}/></div><p className="text-[11px] leading-5 text-slate-400">The title and search description are used in the published page’s metadata. URL changes take effect when you publish.</p></section>
+  <section className="space-y-4 rounded-xl border bg-white p-5"><h2 className="text-sm font-semibold">Sections · {draft.sections.length}/30</h2><p className="text-xs leading-5 text-slate-500">Select a section to edit it. Use the arrows to reorder your page.</p><div className="space-y-2">{draft.sections.map((item:Section,index:number)=><div key={item.id} className={`flex items-center gap-1 rounded-lg border p-2 ${item.id===selected?'border-slate-800 bg-slate-50':'border-slate-200'}`}><button type="button" onClick={()=>setSelected(item.id)} className="min-w-0 flex-1 px-1 text-left text-xs"><span className="block truncate font-semibold">{item.heading||sectionTypes.find(([key])=>key===item.type)?.[1]}</span><span className="mt-1 block text-[10px] text-slate-400">{item.type} · {item.enabled===false?'Hidden':'Visible'}</span></button><button type="button" disabled={index===0} aria-label={`Move section ${index+1} up`} onClick={()=>move(index,-1)} className="p-1.5 disabled:opacity-25"><ArrowUp size={15}/></button><button type="button" disabled={index===draft.sections.length-1} aria-label={`Move section ${index+1} down`} onClick={()=>move(index,1)} className="p-1.5 disabled:opacity-25"><ArrowDown size={15}/></button><button type="button" aria-label={`Remove section ${index+1}`} onClick={()=>{setDraft({...draft,sections:draft.sections.filter((section:Section)=>section.id!==item.id)});if(selected===item.id)setSelected('');}} className="p-1.5 text-rose-600"><Trash2 size={14}/></button></div>)}</div><div className="flex gap-2"><select aria-label="New section type" value={addType} onChange={event=>setAddType(event.target.value)} className="min-w-0 flex-1 rounded-lg border p-2 text-xs">{sectionTypes.map(([key,label])=><option key={key} value={key}>{label}</option>)}</select><button type="button" disabled={draft.sections.length>=30} onClick={add} className="flex items-center gap-1 rounded-lg bg-slate-900 px-3 text-xs text-white disabled:opacity-40"><Plus size={14}/>Add section</button></div></section>
+  {section&&<section className="space-y-4 rounded-xl border bg-white p-5"><h2 className="text-sm font-semibold">Edit section</h2><label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={section.enabled!==false} onChange={event=>updateSection({enabled:event.target.checked})}/>Show section</label>{textField('Small heading','eyebrow',false,80)}{textField('Section heading','heading')}{textField('Section text','body',true,12000)}{textField('Section image URL','image_url',false,2048)}{textField('Image description','image_alt',false,200)}{textField('Button text','button_text',false,60)}{textField('Button URL','button_url',false,2048)}<p className="text-[11px] leading-5 text-slate-400">Use https:// links, /site paths, #section anchors, mailto: or tel: links. Contact sections use details from Settings.</p>
+--- apps/web/src/app/dashboard/products/page.tsx
++++ apps/web/src/app/dashboard/products/page.tsx
+@@ -356,8 +356,8 @@
+                   Product Image URL
+                 </label>
+                 <input
+-                  type="url"
+-                  placeholder="https://images.unsplash.com/..."
++                  type="text" inputMode="url" maxLength={2048}
++                  placeholder="https://… or /uploads/…"
+                   id="product-imageUrl" value={imageUrl}
+                   onChange={(e) => setImageUrl(e.target.value)}
+                   className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-slate-900 outline-none"
+--- apps/web/src/components/website/website.css
++++ apps/web/src/components/website/website.css
+@@ -1,5 +1,5 @@
+ .wb{--wb-paper:#fff;--wb-ink:#142237;--wb-muted:#627185;--wb-line:#dfe6ee;background:var(--wb-paper);color:var(--wb-ink);font:15px/1.75 Arial,Helvetica,sans-serif;container-type:inline-size;container-name:website;overflow-wrap:anywhere}
+-.wb *{box-sizing:border-box}.wb h1,.wb h2,.wb h3,.wb p{margin:0}.wb a{color:inherit;text-decoration:none}.wb a:focus-visible,.wb summary:focus-visible{outline:2px solid var(--wb-accent);outline-offset:5px}.wb-container{width:100%;max-width:1200px;margin:auto;padding:0 40px}.wb-skip{position:absolute;left:10px;transform:translateY(-200%);background:var(--wb-paper);padding:12px 20px;z-index:60}.wb-skip:focus{transform:none}
++.wb *{box-sizing:border-box}.wb h1,.wb h2,.wb h3,.wb p{margin:0}.wb a{color:inherit;text-decoration:none}.wb a:focus-visible,.wb summary:focus-visible{outline:2px solid var(--wb-accent);outline-offset:5px}.wb-container{width:100%;max-width:1200px;margin:auto;padding:0 40px}.wb-skip{position:absolute;left:10px;top:0;transform:translateY(-200%);background:var(--wb-paper);padding:12px 20px;z-index:60}.wb-skip:focus{transform:none}
+ .wb-header{border-bottom:1px solid var(--wb-line);background:var(--wb-paper)}.wb-header-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;min-height:88px}.wb-brand{display:flex;align-items:center;gap:12px;min-width:0;max-width:40%;line-height:1.25}.wb-brand strong{font-size:19px;letter-spacing:-.6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wb-brand>span,.wb-brand>img{display:flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:9px;background:var(--wb-accent);color:var(--wb-on-accent);object-fit:contain;font-weight:700}.wb-desktop-nav{display:flex;align-items:center;gap:24px;font-size:12px}.wb-desktop-nav>a{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wb-mobile-menu{display:none}.wb-more{position:relative}.wb-more>div{position:absolute;right:0;top:35px;z-index:50;min-width:200px;max-height:320px;overflow:auto;padding:10px;background:var(--wb-paper);border:1px solid var(--wb-line);box-shadow:0 12px 30px #0002}.wb-more a{display:block;padding:8px}.wb summary{cursor:pointer}
+ .wb-section{padding:78px 0;border-bottom:1px solid var(--wb-line);scroll-margin-top:24px}.wb-section--hero{padding:90px 0;background:#f3f6fa}.wb-section-copy{max-width:780px}.wb h1{font-size:clamp(40px,6cqw,78px);line-height:1.05;letter-spacing:-.055em;font-weight:650;white-space:pre-line}.wb h2{font-size:clamp(29px,4cqw,43px);line-height:1.2;letter-spacing:-1.5px;font-weight:550}.wb h3{font-size:21px;line-height:1.35;letter-spacing:-.4px;font-weight:550}.wb-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2.2px;font-weight:600;color:var(--wb-muted);margin-bottom:22px!important}.wb-body{font-size:16px;color:var(--wb-muted);line-height:1.95;white-space:pre-line;margin-top:24px!important;max-width:680px}.wb-button{display:inline-flex;align-items:center;justify-content:center;gap:22px;padding:15px 23px;margin-top:30px;background:var(--wb-accent);color:var(--wb-on-accent)!important;border-radius:5px;font-size:12px;font-weight:600;max-width:100%}.wb-section--with-image>.wb-container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:50px;align-items:center}.wb-section-image{width:100%;min-width:0;max-height:520px;object-fit:cover;border-radius:10px}.wb-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-top:38px}.wb-card,.wb-post{min-width:0;border-top:1px solid var(--wb-line);padding:24px 0}.wb-card>img{width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:20px;border-radius:5px}.wb-card-number{display:block;color:var(--wb-accent);font-size:10px;letter-spacing:2px;margin-bottom:16px}.wb-card>p,.wb-post>p{margin-top:14px;color:var(--wb-muted);white-space:pre-line;font-size:14px}.wb-text-link{display:inline-flex;gap:10px;align-items:center;font-size:12px;border-bottom:1px solid currentColor;padding-bottom:4px;margin-top:20px}.wb-section--text .wb-section-copy{max-width:760px}.wb-section--cta{text-align:center;background:#f3f6fa}.wb-section--cta .wb-section-copy{margin:auto}.wb-section--cta .wb-body{margin-left:auto!important;margin-right:auto!important}.wb-contact{display:flex;flex-wrap:wrap;gap:20px 35px;margin-top:35px}.wb-contact a,.wb-contact p{display:flex;align-items:center;gap:12px;min-width:0;max-width:100%}.wb-contact svg{flex-shrink:0}.wb-faq{max-width:850px;margin-top:35px}.wb-faq details{border-top:1px solid var(--wb-line);padding:20px 0}.wb-faq summary{font-size:17px;font-weight:550}.wb-faq p{color:var(--wb-muted);padding-top:15px;white-space:pre-line}.wb-empty{color:var(--wb-muted);padding:30px 0}.wb-page-title{padding-top:65px;padding-bottom:45px;border-bottom:1px solid var(--wb-line)}.wb-page-title>p:not(.wb-eyebrow){margin-top:25px;color:var(--wb-muted);max-width:700px}.wb-page-title time{display:block;margin-top:20px;font-size:12px;color:var(--wb-muted)}.wb-feed{padding-top:40px;padding-bottom:60px}.wb-post .wb-eyebrow{margin-top:0}.wb-pagination{display:flex;align-items:center;justify-content:center;gap:30px;margin-top:40px;font-size:13px}.wb-pagination a{border:1px solid var(--wb-line);padding:10px 15px;border-radius:5px}.wb-footer{padding:50px 0;background:#f3f6fa}.wb-footer-name{font-size:24px;letter-spacing:-.7px;font-weight:600}.wb-footer p{max-width:550px;margin:15px 0 25px;color:var(--wb-muted);font-size:13px}.wb-footer span{font-size:10px;letter-spacing:1px;color:var(--wb-muted)}
+ .wb--editorial{--wb-paper:#fbf8f0;--wb-ink:#3f392f;--wb-muted:#817769;--wb-line:#e5ddce}.wb--editorial h1,.wb--editorial h2,.wb--editorial .wb-brand strong{font-family:Georgia,serif;font-weight:400}.wb--editorial .wb-section--hero{background:#f1ebde;text-align:center}.wb--editorial .wb-section--hero .wb-section-copy{margin:auto}.wb--editorial .wb-section--hero .wb-body{margin-left:auto!important;margin-right:auto!important}.wb--editorial .wb-button{border-radius:0}.wb--editorial .wb-footer,.wb--editorial .wb-section--cta{background:#ede5d6}
+--- scripts/test-browser.sh
++++ scripts/test-browser.sh
+@@ -12,7 +12,7 @@
+ from app.models.audit import AuditLog
+ 
+ run = os.environ['E2E_RUN_ID']
+-emails = [f'e2e-{run}-{kind}@example.com' for kind in ('registration','checkout','usability','themes','dashboard','promotions','operations','polish','builder','builder-content','builder-types')]
++emails = [f'e2e-{run}-{kind}@example.com' for kind in ('registration','checkout','usability','themes','dashboard','promotions','operations','polish','builder','builder-content','builder-types','walkthrough-editor','walkthrough-images')]
+ with SessionLocal() as db:
+     users = db.scalars(select(User.id).where(User.email.in_(emails))).all()
+     shops = db.scalars(select(Shop.id).where(Shop.owner_user_id.in_(users))).all()
+--- services/api/app/routers/pages.py
++++ services/api/app/routers/pages.py
+@@ -34,6 +34,14 @@
+     return page
+ 
+ 
++def ensure_available_slug(db, shop, kind, slug, page_id=None):
++    query = db.query(SitePage.id).filter(SitePage.shop_id == shop.id, SitePage.kind == kind, SitePage.slug == slug)
++    if page_id:
++        query = query.filter(SitePage.id != page_id)
++    if query.first():
++        raise HTTPException(409, f'That URL is already used by another {kind}. Choose a different URL.')
++
++
+ def audit(db, shop, page, action, actor):
+     db.add(AuditLog(actor_user_id=actor.id, shop_id=shop.id, action=f'website.{action}', resource_type=page.kind, resource_id=page.id,
+                     details_json=json.dumps({'slug': page.slug, 'revision': page.revision})))
+@@ -62,6 +70,7 @@
+         raise HTTPException(403, 'This website has reached its 500-page and post limit')
+     if req.slug == 'home' and (req.kind == 'post' or shop.website_type == 'online_store'):
+         raise HTTPException(400, 'The home URL is reserved for the website homepage')
++    ensure_available_slug(db, shop, req.kind, req.slug)
+     values = req.model_dump(exclude={'sections'})
+     page = SitePage(shop_id=shop.id, **values, sections_json=json.dumps([section.model_dump() for section in req.sections]))
+     db.add(page); db.flush(); audit(db, shop, page, 'content_created', actor); db.commit(); db.refresh(page)
+@@ -87,6 +96,7 @@
+     page = find_page(db, shop, page_id, req.expected_revision)
+     if (page.slug == 'home' or req.slug == 'home') and page.slug != req.slug:
+         raise HTTPException(400, 'The homepage URL cannot be changed')
++    ensure_available_slug(db, shop, page.kind, req.slug, page.id)
+     page.title, page.slug, page.description = req.title, req.slug, req.description
+     page.sections_json = json.dumps([section.model_dump() for section in req.sections])
+     page.revision += 1
+--- services/api/app/schemas/catalog.py
++++ services/api/app/schemas/catalog.py
+@@ -3,6 +3,7 @@
+ from datetime import datetime
+ from pydantic import ConfigDict, BaseModel, Field, field_validator, model_validator
+ from slugify import slugify
++from app.schemas.page import safe_url
+ 
+ # Categories
+ class CategoryCreate(BaseModel):
+@@ -45,10 +46,11 @@
+ 
+ # Images & Variants
+ class ProductImageCreate(BaseModel):
+-    image_url: str
++    image_url: str = Field(..., min_length=1, max_length=2048)
+     alt_text: Optional[str] = None
+     sort_order: int = 0
+     is_primary: bool = False
++    _image = field_validator('image_url')(lambda value: safe_url(value, image=True))
+ 
+ class ProductImageResponse(BaseModel):
+     id: str
