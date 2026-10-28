@@ -14,7 +14,11 @@
     "apps/web/public/themes/previews/",
     ".gravitas/sessions/theme-quality/",
     ".data/theme-review/",
-    "docs/THEME_QUALITY.md"
+    "docs/THEME_QUALITY.md",
+    "apps/web/src/components/ProductImage.tsx",
+    "apps/web/e2e/website-builder.spec.ts",
+    "apps/web/e2e/usability.spec.ts",
+    "apps/web/e2e/dashboard.spec.ts"
   ],
   "acceptance_criteria": [
     "36 separate accounts and matching published sample websites exist with a private local manifest",

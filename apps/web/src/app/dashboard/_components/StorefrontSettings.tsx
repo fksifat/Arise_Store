@@ -16,7 +16,7 @@ export function StorefrontSettings() {
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
-  const [content, setContent] = useState({ banner_url:'', eyebrow:'', title:'', subtitle:'', button_text:'', image_alt:'', enabled:false, message:'', discount_percent:'0' });
+  const [content, setContent] = useState({ banner_url:'', eyebrow:'', title:'', subtitle:'', button_text:'', image_alt:'', button_url:'#catalog', story_title:'', footer_text:'', enabled:false, message:'', discount_percent:'0' });
 
   const load = async () => {
     setLoading(true); setLoadError('');
@@ -27,7 +27,7 @@ export function StorefrontSettings() {
       const legacyHero = setting.settings?.homepage_sections?.find((section: any) => section.type === 'hero' && section.enabled !== false);
       const promotion = setting.settings?.promotion || {};
       setPreviewImage(hero.image_url || preset.image);
-      setContent({ banner_url:shop.banner_url || '', eyebrow:hero.eyebrow || preset.eyebrow, title:hero.title || legacyHero?.title || preset.title, subtitle:hero.subtitle || legacyHero?.subtitle || preset.subtitle, button_text:hero.button_text || 'Shop the collection', image_alt:hero.image_alt || '', enabled:promotion.enabled === true, message:promotion.message || '', discount_percent:String(promotion.discount_percent || 0) });
+      setContent({ banner_url:shop.banner_url || '', eyebrow:hero.eyebrow || preset.eyebrow, title:hero.title || legacyHero?.title || preset.title, subtitle:hero.subtitle ?? legacyHero?.subtitle ?? preset.subtitle, button_text:hero.button_text || 'Shop the collection', image_alt:hero.image_alt || '', button_url:hero.button_url||'#catalog', story_title:hero.story_title||'', footer_text:hero.footer_text||'', enabled:promotion.enabled === true, message:promotion.message || '', discount_percent:String(promotion.discount_percent || 0) });
     } catch (error: any) { setLoadError(error.message || 'Banner settings could not be loaded.'); }
     finally { setLoading(false); }
   };
@@ -40,7 +40,7 @@ export function StorefrontSettings() {
       if (content.enabled && (!/^\d{1,3}$/.test(content.discount_percent) || Number(content.discount_percent) > 100)) throw new Error('Enter a whole discount percentage from 0 to 100.');
       const response = await fetchApi<any>(`/shops/${shop.id}/storefront-content`, {
         method:'PUT', body:JSON.stringify({ banner_url:content.banner_url.trim() || null,
-          hero:{eyebrow:content.eyebrow.trim(),title:content.title.trim(),subtitle:content.subtitle.trim(),button_text:content.button_text.trim(),image_alt:content.image_alt.trim()},
+          hero:{eyebrow:content.eyebrow.trim(),title:content.title.trim(),subtitle:content.subtitle.trim(),button_text:content.button_text.trim(),image_alt:content.image_alt.trim(),button_url:content.button_url.trim(),story_title:content.story_title.trim(),footer_text:content.footer_text.trim()},
           promotion:{enabled:content.enabled,message:content.message.trim(),discount_percent:content.enabled ? Number(content.discount_percent) : 0},
         }),
       });
@@ -55,13 +55,13 @@ export function StorefrontSettings() {
     {loading || loadError ? <PageState loading={loading} error={loadError} onRetry={load} /> : <form onSubmit={save} onChange={() => setSaved(false)} className="mt-5 space-y-5">
       {error && <p role="alert" className="rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">{error}</p>}
       {saved && <p role="status" className="rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">Banner and offers saved.</p>}
-      <label className="block text-xs font-semibold text-slate-700">Banner image URL<input type="url" maxLength={2048} placeholder="https://…" value={content.banner_url} onChange={event => setContent(current=>({...current,banner_url:event.target.value}))} className="mt-2 w-full rounded-lg border p-3 text-sm font-normal" /></label>
+      <label className="block text-xs font-semibold text-slate-700">Banner image URL<input type="text" inputMode="url" maxLength={2048} placeholder="https://… or /uploads/…" value={content.banner_url} onChange={event => setContent(current=>({...current,banner_url:event.target.value}))} className="mt-2 w-full rounded-lg border p-3 text-sm font-normal" /></label>
       <p className="text-[11px] text-slate-500">Use a hosted image, ideally 1600 × 900 pixels. Leave blank to use the theme image.</p>
       <ProductImage src={content.banner_url || previewImage} alt={content.image_alt || 'Storefront banner preview'} className="aspect-[16/7] w-full rounded-xl bg-stone-100 object-cover" />
       <div className="grid gap-4 sm:grid-cols-2">{[
         {key:'eyebrow',label:'Banner small heading',max:80}, {key:'title',label:'Banner headline',max:160},
-        {key:'button_text',label:'Banner button text',max:60}, {key:'image_alt',label:'Banner image description',max:160},
-      ].map(({key,label,max})=><label key={key} className="block text-xs font-semibold text-slate-700">{label}<input maxLength={max} value={content[key]} onChange={event=>setContent(current=>({...current,[key]:event.target.value}))} className="mt-2 w-full rounded-lg border p-3 text-sm font-normal" /></label>)}</div>
+        {key:'button_text',label:'Banner button text',max:60}, {key:'button_url',label:'Banner button URL',max:2048}, {key:'story_title',label:'Store story heading',max:120}, {key:'footer_text',label:'Footer tagline',max:160}, {key:'image_alt',label:'Banner image description',max:160},
+      ].map(({key,label,max})=><div key={key}><label htmlFor={`banner-field-${key}`} className="block text-xs font-semibold text-slate-700">{label}</label>{key==='title'?<textarea id={`banner-field-${key}`} rows={3} maxLength={max} value={content[key]} onChange={event=>setContent(current=>({...current,[key]:event.target.value}))} className="mt-2 w-full rounded-lg border p-3 text-sm font-normal"/>:<input id={`banner-field-${key}`} placeholder={key==='story_title'?'Good finds. A personal touch.':key==='footer_text'?'Your everyday, thoughtfully selected.':undefined} maxLength={max} value={content[key]} onChange={event=>setContent(current=>({...current,[key]:event.target.value}))} className="mt-2 w-full rounded-lg border p-3 text-sm font-normal" />}</div>)}</div>
       <div><label htmlFor="banner-description" className="block text-xs font-semibold text-slate-700">Banner description</label><textarea id="banner-description" rows={3} maxLength={500} value={content.subtitle} onChange={event=>setContent(current=>({...current,subtitle:event.target.value}))} className="mt-2 w-full rounded-lg border p-3 text-sm font-normal" /></div>
       <fieldset className="space-y-4 rounded-xl border border-slate-200 p-4"><legend className="px-1 text-sm font-semibold text-slate-800">Offer & discount</legend>
         <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={content.enabled} onChange={event=>setContent(current=>({...current,enabled:event.target.checked}))} />Enable offer</label>

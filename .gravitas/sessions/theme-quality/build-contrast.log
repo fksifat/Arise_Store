@@ -1,0 +1,129 @@
+ Image arise-store-web Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.49kB done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.web
+#2 transferring dockerfile: 800B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:24-alpine
+#3 DONE 2.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 197B done
+#4 DONE 0.0s
+
+#5 [builder 1/8] FROM docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
+#5 resolve docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 51.55MB 0.3s done
+#6 DONE 0.3s
+
+#7 [builder 3/8] COPY apps/web/package*.json ./
+#7 CACHED
+
+#8 [builder 2/8] WORKDIR /app
+#8 CACHED
+
+#9 [builder 4/8] RUN npm ci
+#9 CACHED
+
+#10 [builder 5/8] COPY apps/web ./
+#10 DONE 0.5s
+
+#11 [builder 6/8] COPY services/api/app/theme_catalog.json /services/api/app/theme_catalog.json
+#11 DONE 0.1s
+
+#12 [builder 7/8] COPY services/api/app/website_catalog.json /services/api/app/website_catalog.json
+#12 DONE 0.1s
+
+#13 [builder 8/8] RUN npm run build
+#13 0.349 
+#13 0.349 > arise-store-web@1.0.0 build
+#13 0.349 > next build --webpack
+#13 0.349 
+#13 0.761 ▲ Next.js 16.4.1 (webpack)
+#13 0.783 ✓ Running next.config.mjs took 22ms
+#13 0.809 
+#13 0.835   Creating an optimized production build ...
+#13 11.26 ✓ Compiled successfully in 8.0s
+#13 11.26   Running TypeScript ...
+#13 15.99   Finished TypeScript in 4.7s ...
+#13 16.00   Collecting page data using 7 workers ...
+#13 17.46   Generating static pages using 7 workers (0/54) ...
+#13 18.07   Generating static pages using 7 workers (13/54) 
+#13 18.18   Generating static pages using 7 workers (26/54) 
+#13 18.18   Generating static pages using 7 workers (40/54) 
+#13 18.26 ✓ Generating static pages using 7 workers (54/54) in 798ms
+#13 18.35   Finalizing page optimization ...
+#13 18.35   Collecting build traces ...
+#13 30.67 
+#13 30.67 Route (app)
+#13 30.67 ┌ ○ /
+#13 30.67 ├ ○ /_not-found
+#13 30.67 ├ ○ /admin
+#13 30.67 ├ ○ /dashboard
+#13 30.67 ├ ○ /dashboard/blog
+#13 30.67 ├ ○ /dashboard/categories
+#13 30.67 ├ ○ /dashboard/customers
+#13 30.67 ├ ○ /dashboard/domains
+#13 30.67 ├ ○ /dashboard/orders
+#13 30.67 ├ ƒ /dashboard/orders/[orderId]/invoice
+#13 30.67 ├ ○ /dashboard/pages
+#13 30.67 ├ ƒ /dashboard/pages/[pageId]
+#13 30.67 ├ ○ /dashboard/products
+#13 30.67 ├ ○ /dashboard/reports
+#13 30.67 ├ ○ /dashboard/settings
+#13 30.67 ├ ○ /dashboard/subscription
+#13 30.67 ├ ○ /dashboard/themes
+#13 30.67 ├ ƒ /health
+#13 30.67 ├ ƒ /login
+#13 30.67 ├ ƒ /preview/[slug]/[pageId]
+#13 30.67 ├ ○ /register
+#13 30.67 ├ ƒ /site/[slug]/[[...path]]
+#13 30.67 ├ ƒ /store/[slug]
+#13 30.67 ├ ƒ /store/[slug]/track
+#13 30.67 └   /themes/[themeKey]
+#13 30.67   ├ ● /themes/fashion-modern
+#13 30.67   ├ ● /themes/fashion-noir
+#13 30.67   ├ ● /themes/fashion-runway
+#13 30.67   └ ● [+33 more paths]
+#13 30.67 
+#13 30.67 
+#13 30.67 ○  (Static)   prerendered as static content
+#13 30.67 ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+#13 30.67 ƒ  (Dynamic)  server-rendered on demand
+#13 30.67 
+#13 DONE 30.9s
+
+#8 [builder 2/8] WORKDIR /app
+#8 CACHED
+
+#14 [runner 3/5] COPY --from=builder --chown=node:node /app/.next/standalone ./
+#14 DONE 0.6s
+
+#15 [runner 4/5] COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+#15 DONE 0.2s
+
+#16 [runner 5/5] COPY --from=builder --chown=node:node /app/public ./public
+#16 DONE 0.2s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 2.0s done
+#17 exporting manifest sha256:ad3b703271573054825f7ec2798c7cd00202ad11f2adc51470ee4dc652d8921e 0.0s done
+#17 exporting config sha256:a0596040eb73270986e0531dd6294f05ebec4862965aa9beda3b206b4cfd6042 0.0s done
+#17 exporting attestation manifest sha256:78a8c50bf66584ca3a468804c078a8c3f359ec5b580d1ef7c205c345dd8771e2 0.0s done
+#17 exporting manifest list sha256:e3d560ad4f0f423f2a5c1bc43ebf9c18e7e4d08e567bdd0c42461038b2ebbc4c
+#17 exporting manifest list sha256:e3d560ad4f0f423f2a5c1bc43ebf9c18e7e4d08e567bdd0c42461038b2ebbc4c 0.0s done
+#17 naming to docker.io/library/arise-store-web:latest done
+#17 unpacking to docker.io/library/arise-store-web:latest
+#17 unpacking to docker.io/library/arise-store-web:latest 0.5s done
+#17 DONE 2.7s
+
+#18 resolving provenance for metadata file
+#18 DONE 0.0s
+ Image arise-store-web Built 

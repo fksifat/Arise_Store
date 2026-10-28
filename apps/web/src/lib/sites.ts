@@ -5,7 +5,7 @@ export const websiteTypes = catalog.types;
 export const websiteThemes = catalog.themes;
 export const websiteStarters = catalog.starters as Record<string, Section[]>;
 export type SectionItem = { heading: string; body: string; image_url: string; image_alt: string; button_text: string; button_url: string };
-export type Section = Partial<SectionItem> & { id: string; type: string; enabled?: boolean; eyebrow?: string; items?: Partial<SectionItem>[] };
+export type Section = Partial<SectionItem> & { id: string; type: string; enabled?: boolean; eyebrow?: string; anchor?: string; layout?: 'default'|'center'|'image_left'; spacing?: 'default'|'compact'|'relaxed'; tone?: 'default'|'soft'|'accent'; items?: Partial<SectionItem>[] };
 export const isOnlineStore = (site: any) => !site.website_type || site.website_type === 'online_store';
 export const publicSitePath = (site: any) => `${isOnlineStore(site) ? '/store' : '/site'}/${site.slug}`;
 export const websiteType = (key: string) => websiteTypes.find(type => type.key === key) || websiteTypes.find(type => type.key === 'online_store')!;

@@ -1,0 +1,4 @@
+36 retained theme accounts verified with desktop and mobile screenshots.
+36 theme walkthroughs, 19 final affected-theme walkthroughs, 26 browser regression tests, and 132 PostgreSQL tests passed.
+TypeScript and production build passed. Three opt-in browser cases skipped; one PostgreSQL-only test skipped only in the default API run.
+VERDICT: PASS

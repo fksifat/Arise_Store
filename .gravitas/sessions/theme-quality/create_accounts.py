@@ -41,11 +41,24 @@ samples = {
  'Sport & outdoor': [('Everyday training set','training',350000),('Refill bottle','bottle',125000),('Training backpack','bag',285000),('Session essentials','sport',420000)],
 }
 
+purpose = {
+ 'business':'Independent thinking. Thoughtful design. A studio for what comes next.',
+ 'portfolio':'Objects, ideas and places, considered from a personal point of view.',
+ 'blog':'Notes on design, places and things worth noticing.',
+ 'landing_page':'Thoughtful sound and everyday essentials, designed around your day.',
+ 'agency':'Strategy, identity and digital experiences, made with care.',
+ 'other':'A little space for shared interests, good ideas and the next chapter.',
+}
+
 refresh = len(sys.argv) > 1 and sys.argv[1] == 'refresh'
 for index, theme in enumerate(themes):
     existing = next((item for item in manifest['accounts'] if item['theme_key'] == theme['key']), None)
     if existing and not refresh:
         continue
+    if existing and refresh:
+        auth = request('POST', '/auth/login', json={'email':existing['email'], 'password':existing['password']})
+        existing['access_token'] = auth['access_token']
+        write_manifest()
     if not existing:
         password = secrets.token_urlsafe(24)
         email = f"theme-review-{theme['key']}-{manifest['run']}@example.com"
@@ -59,7 +72,7 @@ for index, theme in enumerate(themes):
         existing.update(site_id=site['id'], slug=site['slug'], url=('http://localhost:3000/store/' if theme['website_type'] == 'online_store' else 'http://localhost:3000/site/') + site['slug'])
         write_manifest()
     path = '/shops/' + existing['site_id']
-    request('PATCH', path, json={'description': theme.get('subtitle', theme['description']), 'contact_email': 'hello@example.com', 'address': 'Bangladesh'})
+    request('PATCH', path, json={'description': theme.get('subtitle', purpose.get(theme['website_type'], theme['description'])), 'contact_email': 'hello@example.com', 'address': 'Bangladesh'})
     if theme['website_type'] == 'online_store':
         if not existing.get('catalog_created'):
             categories = [request('POST', path + '/categories', json={'name': label}) for label in ['The essentials', 'Selected favorites']]
@@ -71,7 +84,7 @@ for index, theme in enumerate(themes):
         home = request('GET', path + '/pages?kind=page')['items'][0]
         existing['home_id'] = home['id']
         if refresh:
-            home = request('PUT', path + '/pages/' + home['id'], json={'title': 'Home', 'slug': 'home', 'description': theme['description'], 'sections': web_catalog['starters'][theme['website_type']], 'expected_revision': home['revision']})
+            home = request('PUT', path + '/pages/' + home['id'], json={'title': 'Home', 'slug': 'home', 'description': web_catalog['starters'][theme['website_type']][0]['body'], 'sections': web_catalog['starters'][theme['website_type']], 'expected_revision': home['revision']})
         request('POST', path + '/pages/' + home['id'] + '/publish', json={'expected_revision': home['revision']})
         if theme['website_type'] == 'blog' and not existing.get('posts_created'):
             for number, title in enumerate(['Finding beauty in the everyday', 'A slower way to see the world', 'Room for a new perspective']):

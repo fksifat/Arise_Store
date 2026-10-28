@@ -1,0 +1,38 @@
+{
+  "decisions": [
+    {
+      "action": "Retain one local account per theme",
+      "reason": "User requested independent accounts for all themes",
+      "risk": "Local trial records remain until manually removed"
+    },
+    {
+      "action": "Reuse JSON settings and existing image components",
+      "reason": "Add the requested editing flexibility without dependencies or database migration",
+      "risk": "Existing content remains preserved"
+    },
+    {
+      "action": "Fix shared multiline editing, contrast and responsive controls",
+      "reason": "Manual screenshots and browser tests exposed lost line breaks, muted text, stale status notices and a narrow mobile hero",
+      "risk": "Theme CSS affects published sites; all themes reviewed at desktop and mobile widths"
+    },
+    {
+      "action": "Update dashboard recovery test theme-settings fixture",
+      "reason": "The old catch-all mock returned an array; the new brand controls require the API object shape with settings. Trace showed undefined brand in the invalid fixture.",
+      "risk": "Test fixture only; real API account tests already pass."
+    }
+  ],
+  "baseline_modified_files": [
+    "apps/web/src/app/dashboard/_components/WebsiteThemes.tsx",
+    "apps/web/src/app/dashboard/pages/[pageId]/page.tsx",
+    "apps/web/src/app/dashboard/themes/page.tsx",
+    "apps/web/src/app/themes/[themeKey]/WebsiteThemePreview.tsx",
+    "apps/web/src/components/themes/Storefront.tsx",
+    "apps/web/src/components/themes/storefront.css",
+    "apps/web/src/components/website/Website.tsx",
+    "apps/web/src/components/website/website.css",
+    "apps/web/src/lib/sites.ts",
+    "services/api/app/schemas/page.py",
+    "services/api/app/schemas/theme.py",
+    "services/api/app/website_catalog.json"
+  ]
+}

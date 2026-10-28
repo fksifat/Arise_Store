@@ -47,6 +47,8 @@ export function Storefront({ store, products, preview = false }: { store: any; p
   };
   const closeQuickView = () => { quickView.current?.close(); setSelectedProduct(null); };
 
+  useEffect(() => {if(!menuOpen)return;const close=(event:KeyboardEvent)=>{if(event.key==='Escape')setMenuOpen(false);};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close);},[menuOpen]);
+
   useEffect(() => {
     if (!selectedProduct || !quickView.current) return;
     if (!quickView.current.open) quickView.current.showModal();
@@ -55,7 +57,7 @@ export function Storefront({ store, products, preview = false }: { store: any; p
     return () => { document.body.style.overflow = previous; };
   }, [selectedProduct]);
 
-  return <div className={`sf sf--${preset.family} sf--${preset.key}${preset.family !== preset.key ? ' sf-variant' : ''}`} style={{ '--sf-accent': accent, '--sf-on-accent': onAccent } as CSSProperties}>
+  return <div className={`sf sf--${preset.family} sf--${preset.key}${preset.family !== preset.key ? ' sf-variant' : ''}`} data-font={settings.brand?.font_family||'theme'} style={{ '--sf-accent': accent, '--sf-on-accent': onAccent } as CSSProperties}>
     <a href="#catalog" className="sf-skip">Skip to products</a>
     <div className="sf-utility">
       <span><Truck size={13} aria-hidden="true" /> Cash on Delivery available</span>
@@ -85,6 +87,7 @@ export function Storefront({ store, products, preview = false }: { store: any; p
         {(store.site_pages||[]).map(page=><Link key={page.slug} href={`/site/${store.slug}/${page.slug}`}>{page.title}</Link>)}
         <a href="#catalog" onClick={() => setMenuOpen(false)}>Shop all <ArrowUpRight size={16} /></a>
         {categories.map(category => <button type="button" key={category.id} onClick={() => chooseCategory(category.id)}>{category.name}<ChevronRight size={16} /></button>)}
+        <a href="#store-info" onClick={()=>setMenuOpen(false)}>Our store <ArrowUpRight size={16}/></a>
         {!preview && <Link href={trackUrl}>Track an order <Package size={16} /></Link>}
       </nav>}
     </header>
@@ -99,8 +102,8 @@ export function Storefront({ store, products, preview = false }: { store: any; p
       <div className="sf-hero-copy">
         <span className="sf-eyebrow"><span />{hero.eyebrow || preset.eyebrow}</span>
         <h1>{hero.title || legacyHero?.title || preset.title}</h1>
-        <p>{hero.subtitle || legacyHero?.subtitle || preset.subtitle}</p>
-        <div className="sf-hero-actions"><a href="#catalog" className="sf-primary-link">{hero.button_text || 'Shop the collection'} <ArrowRight size={18} /></a><a href={categories.length ? '#collections' : '#store-info'} className="sf-text-link">{categories.length ? 'Explore collections' : 'Meet the store'} <ArrowDown size={15} /></a></div>
+        <p>{hero.subtitle ?? legacyHero?.subtitle ?? preset.subtitle}</p>
+        <div className="sf-hero-actions"><a href={hero.button_url||'#catalog'} className="sf-primary-link">{hero.button_text || 'Shop the collection'} <ArrowRight size={18} /></a><a href={categories.length ? '#collections' : '#store-info'} className="sf-text-link">{categories.length ? 'Explore collections' : 'Meet the store'} <ArrowDown size={15} /></a></div>
         <div className="sf-hero-caption"><span className="sf-caption-line" /> A fresh perspective on everyday essentials.</div>
       </div>
       <div className="sf-hero-media">
@@ -142,17 +145,17 @@ export function Storefront({ store, products, preview = false }: { store: any; p
         const sale = product.compare_at_price_minor > startingPrice(product);
         return <article key={product.id} className="sf-product-card">
           <button type="button" className="sf-product-photo-button" aria-label={`View ${product.name}`} onClick={() => setSelectedProduct(product)}><ProductImage src={image} alt={product.name} className="sf-product-photo" />{sale && <span className="sf-sale-badge">{product.variants?.some((variant: any) => variant.is_active) ? 'Sale options' : 'Special price'}</span>}<span className="sf-quick-view">View details <ArrowUpRight size={16} /></span></button>
-          <div className="sf-product-copy"><span className="sf-product-category">{categories.find(category => product.category_ids.includes(category.id))?.name || preset.category}</span><h4><button type="button" onClick={() => setSelectedProduct(product)}>{product.name}</button></h4><p>{product.description || 'Discover the details. Find your everyday favorite.'}</p><ProductPurchase product={product} imageUrl={image} className="sf-add-button" label="Add to Bag" /></div>
+          <div className="sf-product-copy"><span className="sf-product-category">{categories.find(category => product.category_ids.includes(category.id))?.name || preset.category}</span><h3><button type="button" onClick={() => setSelectedProduct(product)}>{product.name}</button></h3><p>{product.description || 'Discover the details. Find your everyday favorite.'}</p><ProductPurchase product={product} imageUrl={image} className="sf-add-button" label="Add to Bag" /></div>
         </article>;
       })}</div>}
     </main>
 
     <section className="sf-story sf-container" id="store-info">
-      <div><span className="sf-kicker">A STORE WITH A POINT OF VIEW</span><h2>Good finds.<br />A personal touch.</h2></div>
+      <div><span className="sf-kicker">A STORE WITH A POINT OF VIEW</span><h2>{hero.story_title||<>Good finds.<br />A personal touch.</>}</h2></div>
       <div><p>{store.description || `Welcome to ${store.name}. Explore a collection brought together with care, and find the pieces that fit your everyday.`}</p><a href="#catalog" className="sf-text-link">Discover the collection <ArrowRight size={17} /></a></div>
       <span className="sf-story-monogram" aria-hidden="true">{store.name.charAt(0)}</span>
     </section>
-    <footer className="sf-footer"><div className="sf-footer-main sf-container"><div className="sf-footer-brand"><strong>{store.name}</strong><p>Your everyday, thoughtfully selected.</p></div><div><h3>Explore</h3><a href="#catalog">Shop all products</a>{(store.site_pages||[]).map(page=><Link key={page.slug} href={`/site/${store.slug}/${page.slug}`}>{page.title}</Link>)}{categories.length > 0 && <a href="#collections">Our collections</a>}{!preview && <Link href={trackUrl}>Track your order</Link>}</div><div><h3>Here to help</h3>{store.contact_email && <a href={`mailto:${store.contact_email}`}>{store.contact_email}</a>}{store.contact_phone && <a href={`tel:${store.contact_phone}`}>{store.contact_phone}</a>}{store.address && <p><MapPin size={14} />{store.address}</p>}{!store.contact_email && !store.contact_phone && <p>Contact details will be shared by the store.</p>}</div><div><h3>Made for your everyday</h3><p>Shop in Bangladeshi Taka.<br />Pay on delivery.<br />Track your order online.</p><span className="sf-footer-payment"><CreditCard size={16} /> CASH ON DELIVERY</span></div></div><div className="sf-footer-bottom sf-container"><span>© {new Date().getFullYear()} {store.name}</span><span>Thoughtfully powered by Arise Store <ArrowUpRight size={12} /></span></div></footer>
+    <footer className="sf-footer"><div className="sf-footer-main sf-container"><div className="sf-footer-brand"><strong>{store.name}</strong><p>{hero.footer_text||'Your everyday, thoughtfully selected.'}</p></div><div><h3>Explore</h3><a href="#catalog">Shop all products</a>{(store.site_pages||[]).map(page=><Link key={page.slug} href={`/site/${store.slug}/${page.slug}`}>{page.title}</Link>)}{categories.length > 0 && <a href="#collections">Our collections</a>}{!preview && <Link href={trackUrl}>Track your order</Link>}</div><div><h3>Here to help</h3>{store.contact_email && <a href={`mailto:${store.contact_email}`}>{store.contact_email}</a>}{store.contact_phone && <a href={`tel:${store.contact_phone}`}>{store.contact_phone}</a>}{store.address && <p><MapPin size={14} />{store.address}</p>}{!store.contact_email && !store.contact_phone && <p>Contact details will be shared by the store.</p>}</div><div><h3>Made for your everyday</h3><p>Shop in Bangladeshi Taka.<br />Pay on delivery.<br />Track your order online.</p><span className="sf-footer-payment"><CreditCard size={16} /> CASH ON DELIVERY</span></div></div><div className="sf-footer-bottom sf-container"><span>© {new Date().getFullYear()} {store.name}</span><span>Thoughtfully powered by Arise Store <ArrowUpRight size={12} /></span></div></footer>
 
     {selectedProduct && <dialog ref={quickView} className="sf-quick-dialog" aria-labelledby="quick-view-title" onClose={() => setSelectedProduct(null)} onClick={event => { if (event.target === event.currentTarget) closeQuickView(); }}>
       <button type="button" className="sf-dialog-close" aria-label="Close product details" onClick={closeQuickView}><X size={22} /></button><div className="sf-quick-grid"><ProductImage src={selectedProduct.images?.find((image: any) => image.is_primary)?.image_url || selectedProduct.images?.[0]?.image_url} alt={selectedProduct.name} className="sf-quick-image" /><div className="sf-quick-copy"><span className="sf-kicker">THE DETAILS</span><h2 id="quick-view-title">{selectedProduct.name}</h2><p>{selectedProduct.description || 'A thoughtfully selected addition to your everyday.'}</p>{selectedProduct.sku && <small>SKU: {selectedProduct.sku}</small>}<ProductPurchase product={selectedProduct} imageUrl={selectedProduct.images?.[0]?.image_url} className="sf-add-button" label="Add to Bag" onAdded={closeQuickView} /><p className="sf-quick-note"><Check size={15} />Cash on Delivery · Delivery calculated at checkout</p></div></div>

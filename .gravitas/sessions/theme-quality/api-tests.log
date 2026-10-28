@@ -1,0 +1,33 @@
+................................s....................................... [ 54%]
+.............................F..............................             [100%]
+=================================== FAILURES ===================================
+_______ test_store_story_footer_and_button_are_editable_with_safe_links ________
+
+client = <starlette.testclient.TestClient object at 0x78702b9f4c20>
+store = {'shop': '5475afa2-e1e3-412a-ae84-404efb12149a', 'slug': 's-93d46118ca404d8aa067b48c501b5514', 'product': 'b0e9c304-1901-4908-966e-db773dc24e75', 'email': '93d46118ca404d8aa067b48c501b5514@example.com', ...}
+
+    def test_store_story_footer_and_button_are_editable_with_safe_links(client, store):
+        path = f"/api/v1/shops/{store['shop']}/storefront-content"
+        payload = {'hero':{'title':'A considered edit', 'subtitle':'', 'button_url':'#store-info', 'story_title':'A personal point of view', 'footer_text':'Made for your everyday.'}, 'promotion':{'enabled':False}}
+        response = client.put(path, headers=store['owner'], json=payload)
+>       assert response.status_code == 200, response.text
+E       AssertionError: {"detail":"Select a theme before customizing your storefront."}
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+services/api/tests/test_theme_quality.py:65: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-10-28 07:13:27,266 INFO arise.http request_id=b411e3b102a44d07bf6041cdb6e7a203 method=PUT path=/api/v1/shops/5475afa2-e1e3-412a-ae84-404efb12149a/storefront-content status=404 duration_ms=5.4
+2026-10-28 07:13:27,266 INFO httpx HTTP Request: PUT http://testserver/api/v1/shops/5475afa2-e1e3-412a-ae84-404efb12149a/storefront-content "HTTP/1.1 404 Not Found"
+------------------------------ Captured log call -------------------------------
+INFO     arise.http:middleware.py:95 request_id=b411e3b102a44d07bf6041cdb6e7a203 method=PUT path=/api/v1/shops/5475afa2-e1e3-412a-ae84-404efb12149a/storefront-content status=404 duration_ms=5.4
+INFO     httpx:_client.py:1025 HTTP Request: PUT http://testserver/api/v1/shops/5475afa2-e1e3-412a-ae84-404efb12149a/storefront-content "HTTP/1.1 404 Not Found"
+=============================== warnings summary ===============================
+venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/farhankabirsifat/Desktop/Arise_Store/venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED services/api/tests/test_theme_quality.py::test_store_story_footer_and_button_are_editable_with_safe_links
+1 failed, 130 passed, 1 skipped, 1 warning in 36.19s

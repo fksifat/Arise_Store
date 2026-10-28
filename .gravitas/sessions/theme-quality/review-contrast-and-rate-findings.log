@@ -1,0 +1,612 @@
+
+Running 36 tests using 1 worker
+
+(node:1002537) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/theme-quality.spec.ts:14:6 › business-studio: its own account, editable design, desktop and mobile (4.6s)
+  ✓   2 e2e/theme-quality.spec.ts:14:6 › business-classic: its own account, editable design, desktop and mobile (3.7s)
+  ✓   3 e2e/theme-quality.spec.ts:14:6 › business-bold: its own account, editable design, desktop and mobile (3.2s)
+  ✓   4 e2e/theme-quality.spec.ts:14:6 › portfolio-canvas: its own account, editable design, desktop and mobile (3.7s)
+  ✓   5 e2e/theme-quality.spec.ts:14:6 › portfolio-minimal: its own account, editable design, desktop and mobile (3.8s)
+  ✓   6 e2e/theme-quality.spec.ts:14:6 › portfolio-noir: its own account, editable design, desktop and mobile (4.2s)
+  ✓   7 e2e/theme-quality.spec.ts:14:6 › blog-journal: its own account, editable design, desktop and mobile (3.5s)
+  ✓   8 e2e/theme-quality.spec.ts:14:6 › blog-notebook: its own account, editable design, desktop and mobile (3.6s)
+  ✘   9 e2e/theme-quality.spec.ts:14:6 › blog-dispatch: its own account, editable design, desktop and mobile (3.2s)
+(node:1011997) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 e2e/theme-quality.spec.ts:14:6 › landing-launch: its own account, editable design, desktop and mobile (4.1s)
+  ✘  11 e2e/theme-quality.spec.ts:14:6 › landing-focus: its own account, editable design, desktop and mobile (3.1s)
+(node:1015544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  12 e2e/theme-quality.spec.ts:14:6 › landing-spotlight: its own account, editable design, desktop and mobile (3.5s)
+(node:1017815) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  13 e2e/theme-quality.spec.ts:14:6 › agency-collective: its own account, editable design, desktop and mobile (5.2s)
+  ✓  14 e2e/theme-quality.spec.ts:14:6 › agency-atelier: its own account, editable design, desktop and mobile (5.9s)
+  ✓  15 e2e/theme-quality.spec.ts:14:6 › agency-works: its own account, editable design, desktop and mobile (5.0s)
+  ✘  16 e2e/theme-quality.spec.ts:14:6 › other-canvas: its own account, editable design, desktop and mobile (3.6s)
+(node:1022253) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  17 e2e/theme-quality.spec.ts:14:6 › other-simple: its own account, editable design, desktop and mobile (4.1s)
+  ✓  18 e2e/theme-quality.spec.ts:14:6 › other-statement: its own account, editable design, desktop and mobile (4.3s)
+  ✘  19 e2e/theme-quality.spec.ts:14:6 › fashion-modern: its own account, editable design, desktop and mobile (3.6s)
+(node:1022904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  20 e2e/theme-quality.spec.ts:14:6 › fashion-noir: its own account, editable design, desktop and mobile (5.2s)
+  ✘  21 e2e/theme-quality.spec.ts:14:6 › fashion-runway: its own account, editable design, desktop and mobile (10.4s)
+(node:1023600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  22 e2e/theme-quality.spec.ts:14:6 › tech-cosmetics: its own account, editable design, desktop and mobile (183ms)
+(node:1023702) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  23 e2e/theme-quality.spec.ts:14:6 › tech-circuit: its own account, editable design, desktop and mobile (177ms)
+(node:1023831) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  24 e2e/theme-quality.spec.ts:14:6 › tech-studio: its own account, editable design, desktop and mobile (193ms)
+(node:1023938) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  25 e2e/theme-quality.spec.ts:14:6 › general-store: its own account, editable design, desktop and mobile (178ms)
+(node:1024051) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  26 e2e/theme-quality.spec.ts:14:6 › market-fresh: its own account, editable design, desktop and mobile (187ms)
+(node:1024158) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  27 e2e/theme-quality.spec.ts:14:6 › market-express: its own account, editable design, desktop and mobile (218ms)
+(node:1024269) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  28 e2e/theme-quality.spec.ts:14:6 › home-living: its own account, editable design, desktop and mobile (193ms)
+(node:1024359) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  29 e2e/theme-quality.spec.ts:14:6 › home-gallery: its own account, editable design, desktop and mobile (194ms)
+(node:1024543) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  30 e2e/theme-quality.spec.ts:14:6 › home-scandi: its own account, editable design, desktop and mobile (194ms)
+(node:1024632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  31 e2e/theme-quality.spec.ts:14:6 › beauty-studio: its own account, editable design, desktop and mobile (3.4s)
+(node:1024858) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  32 e2e/theme-quality.spec.ts:14:6 › beauty-botanica: its own account, editable design, desktop and mobile (3.6s)
+(node:1025136) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  33 e2e/theme-quality.spec.ts:14:6 › beauty-atelier: its own account, editable design, desktop and mobile (3.7s)
+(node:1025392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  34 e2e/theme-quality.spec.ts:14:6 › sport-performance: its own account, editable design, desktop and mobile (5.2s)
+  ✓  35 e2e/theme-quality.spec.ts:14:6 › sport-trail: its own account, editable design, desktop and mobile (5.1s)
+  ✘  36 e2e/theme-quality.spec.ts:14:6 › sport-club: its own account, editable design, desktop and mobile (3.4s)
+
+
+  1) e2e/theme-quality.spec.ts:14:6 › blog-dispatch: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    4.421062418037981
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-blog-dispatc-b5018-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-blog-dispatc-b5018-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-blog-dispatc-b5018-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/theme-quality.spec.ts:14:6 › landing-focus: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    4.485977066258119
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-landing-focu-d0226-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-landing-focu-d0226-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-landing-focu-d0226-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) e2e/theme-quality.spec.ts:14:6 › landing-spotlight: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    4.359576554861431
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-landing-spot-272a8-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-landing-spot-272a8-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-landing-spot-272a8-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) e2e/theme-quality.spec.ts:14:6 › other-canvas: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    4.44059685618007
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-other-canvas-32e2c-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-other-canvas-32e2c-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-other-canvas-32e2c-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) e2e/theme-quality.spec.ts:14:6 › fashion-modern: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    4.439285039457173
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-fashion-mode-9c095-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-fashion-mode-9c095-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-fashion-mode-9c095-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) e2e/theme-quality.spec.ts:14:6 › fashion-runway: its own account, editable design, desktop and mobile 
+
+    TimeoutError: locator.fill: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Brand color hex', { exact: true })
+
+
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+    > 26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+         |                                                         ^
+      27 |   await page.getByRole('combobox',{name:'Heading typography',exact:true}).selectOption('serif');
+      28 |   await page.getByRole('button',{name:'Save brand style',exact:true}).click();
+      29 |   await expect(page.getByRole('status').filter({hasText:'Brand style saved.'})).toBeVisible();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:26:57
+
+    Error Context: test-results/theme-quality-fashion-runw-217bd-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-fashion-runw-217bd-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-fashion-runw-217bd-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) e2e/theme-quality.spec.ts:14:6 › tech-cosmetics: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-tech-cosmeti-e08e1-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-tech-cosmeti-e08e1-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-tech-cosmeti-e08e1-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) e2e/theme-quality.spec.ts:14:6 › tech-circuit: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-tech-circuit-7ca07-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-tech-circuit-7ca07-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-tech-circuit-7ca07-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) e2e/theme-quality.spec.ts:14:6 › tech-studio: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-tech-studio--9d5eb-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-tech-studio--9d5eb-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-tech-studio--9d5eb-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) e2e/theme-quality.spec.ts:14:6 › general-store: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-general-stor-7649a-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-general-stor-7649a-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-general-stor-7649a-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) e2e/theme-quality.spec.ts:14:6 › market-fresh: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-market-fresh-03c56-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-market-fresh-03c56-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-market-fresh-03c56-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) e2e/theme-quality.spec.ts:14:6 › market-express: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-market-expre-c1955-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-market-expre-c1955-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-market-expre-c1955-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) e2e/theme-quality.spec.ts:14:6 › home-living: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-home-living--5435a-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-home-living--5435a-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-home-living--5435a-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  14) e2e/theme-quality.spec.ts:14:6 › home-gallery: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-home-gallery-5ff6d-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-home-gallery-5ff6d-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-home-gallery-5ff6d-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15) e2e/theme-quality.spec.ts:14:6 › home-scandi: its own account, editable design, desktop and mobile 
+
+    TypeError: expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property whose value must be a number
+
+    Received has type:  object
+    Received has value: {"detail": "Too many requests. Try again shortly."}
+
+      21 |   const headers={Origin:new URL(baseURL!).origin};
+      22 |   const who=await page.request.get('/api/v1/auth/me');expect(who.status()).toBe(200);expect((await who.json()).email).toBe(account.email);
+    > 23 |   const shops=await(await page.request.get('/api/v1/shops')).json();expect(shops).toHaveLength(1);expect(shops[0].id).toBe(account.site_id);
+         |                                                                                   ^
+      24 |   await page.setViewportSize({width:1440,height:1000});
+      25 |   await page.goto('/dashboard/themes');
+      26 |   await page.getByLabel('Brand color hex',{exact:true}).fill('#245d50');
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:23:83
+
+    Error Context: test-results/theme-quality-home-scandi--c02d2-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-home-scandi--c02d2-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-home-scandi--c02d2-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  16) e2e/theme-quality.spec.ts:14:6 › beauty-studio: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    3.617222144051728
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-beauty-studi-a0cf4-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-beauty-studi-a0cf4-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-beauty-studi-a0cf4-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  17) e2e/theme-quality.spec.ts:14:6 › beauty-botanica: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    3.4717978400267726
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-beauty-botan-0a670-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-beauty-botan-0a670-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-beauty-botan-0a670-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  18) e2e/theme-quality.spec.ts:14:6 › beauty-atelier: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    3.683127348226855
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-beauty-ateli-66c1f-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-beauty-ateli-66c1f-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-beauty-ateli-66c1f-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  19) e2e/theme-quality.spec.ts:14:6 › sport-club: its own account, editable design, desktop and mobile 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.5
+    Received:    3.3644703225977817
+
+      83 |     const text=rgb(getComputedStyle(element).color);if(text.length===4)for(let i=0;i<3;i++)text[i]=text[i]*text[3]+background[i]*(1-text[3]);
+      84 |     const a=luminance(text),b=luminance(background);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    > 85 |    });expect(contrast).toBeGreaterThanOrEqual(4.5);
+         |                        ^
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+      88 |     const menu=account.website_type==='online_store'?visitor.getByRole('button',{name:'Open menu',exact:true}):visitor.locator('summary[aria-label="Open website navigation"]');await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:85:24
+
+    Error Context: test-results/theme-quality-sport-club-i-9c68d-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-sport-club-i-9c68d-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-sport-club-i-9c68d-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  19 failed
+    e2e/theme-quality.spec.ts:14:6 › blog-dispatch: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › landing-focus: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › landing-spotlight: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › other-canvas: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › fashion-modern: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › fashion-runway: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › tech-cosmetics: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › tech-circuit: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › tech-studio: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › general-store: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › market-fresh: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › market-express: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › home-living: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › home-gallery: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › home-scandi: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › beauty-studio: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › beauty-botanica: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › beauty-atelier: its own account, editable design, desktop and mobile 
+    e2e/theme-quality.spec.ts:14:6 › sport-club: its own account, editable design, desktop and mobile 
+  17 passed (2.2m)

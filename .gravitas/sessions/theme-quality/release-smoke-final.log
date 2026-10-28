@@ -1,0 +1,26 @@
+
+Running 19 tests using 1 worker
+
+(node:1130221) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/theme-quality.spec.ts:14:6 › business-studio: its own account, editable design, desktop and mobile (7.1s)
+  ✓   2 e2e/theme-quality.spec.ts:14:6 › business-classic: its own account, editable design, desktop and mobile (6.3s)
+  ✓   3 e2e/theme-quality.spec.ts:14:6 › business-bold: its own account, editable design, desktop and mobile (6.0s)
+  ✓   4 e2e/theme-quality.spec.ts:14:6 › portfolio-canvas: its own account, editable design, desktop and mobile (6.7s)
+  ✓   5 e2e/theme-quality.spec.ts:14:6 › portfolio-minimal: its own account, editable design, desktop and mobile (6.6s)
+  ✓   6 e2e/theme-quality.spec.ts:14:6 › portfolio-noir: its own account, editable design, desktop and mobile (6.4s)
+  ✓   7 e2e/theme-quality.spec.ts:14:6 › blog-journal: its own account, editable design, desktop and mobile (6.0s)
+  ✓   8 e2e/theme-quality.spec.ts:14:6 › blog-notebook: its own account, editable design, desktop and mobile (5.9s)
+  ✓   9 e2e/theme-quality.spec.ts:14:6 › blog-dispatch: its own account, editable design, desktop and mobile (6.0s)
+  ✓  10 e2e/theme-quality.spec.ts:14:6 › landing-launch: its own account, editable design, desktop and mobile (6.2s)
+  ✓  11 e2e/theme-quality.spec.ts:14:6 › landing-focus: its own account, editable design, desktop and mobile (6.0s)
+  ✓  12 e2e/theme-quality.spec.ts:14:6 › landing-spotlight: its own account, editable design, desktop and mobile (6.1s)
+  ✓  13 e2e/theme-quality.spec.ts:14:6 › agency-collective: its own account, editable design, desktop and mobile (6.5s)
+  ✓  14 e2e/theme-quality.spec.ts:14:6 › agency-atelier: its own account, editable design, desktop and mobile (6.5s)
+  ✓  15 e2e/theme-quality.spec.ts:14:6 › agency-works: its own account, editable design, desktop and mobile (7.0s)
+  ✓  16 e2e/theme-quality.spec.ts:14:6 › other-canvas: its own account, editable design, desktop and mobile (6.1s)
+  ✓  17 e2e/theme-quality.spec.ts:14:6 › other-simple: its own account, editable design, desktop and mobile (6.3s)
+  ✓  18 e2e/theme-quality.spec.ts:14:6 › other-statement: its own account, editable design, desktop and mobile (6.1s)
+  ✓  19 e2e/theme-quality.spec.ts:14:6 › general-store: its own account, editable design, desktop and mobile (6.7s)
+
+  19 passed (2.0m)

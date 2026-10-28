@@ -74,9 +74,9 @@ test('merchant edits and customer browsing work across all themes on desktop and
     await expect(page.getByRole('heading',{name:'Updated Blue Shirt',exact:true})).not.toBeVisible();
     await page.getByLabel('Search products').fill('');
     await page.getByLabel('Sort by').selectOption('price_asc');
-    await expect(page.locator('main h4')).toHaveText(['Travel Bag','Updated Blue Shirt']);
+    await expect(page.locator('main h3')).toHaveText(['Travel Bag','Updated Blue Shirt']);
     await page.getByLabel('Sort by').selectOption('price_desc');
-    await expect(page.locator('main h4')).toHaveText(['Updated Blue Shirt','Travel Bag']);
+    await expect(page.locator('main h3')).toHaveText(['Updated Blue Shirt','Travel Bag']);
     await page.setViewportSize({width:390,height:844});
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
     await expect(page.getByRole('link',{name:'Track an order',exact:true})).toBeVisible();

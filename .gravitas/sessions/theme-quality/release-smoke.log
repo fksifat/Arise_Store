@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+(node:1117713) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 e2e/theme-quality.spec.ts:14:6 › business-studio: its own account, editable design, desktop and mobile (7.4s)
+  ✓  2 e2e/theme-quality.spec.ts:14:6 › landing-focus: its own account, editable design, desktop and mobile (6.2s)
+  ✓  3 e2e/theme-quality.spec.ts:14:6 › general-store: its own account, editable design, desktop and mobile (6.9s)
+
+  3 passed (21.2s)

@@ -18,6 +18,7 @@ async function mockMerchant(page: Page) {
       : path.endsWith('/orders') ? orders
       : path.endsWith('/subscription') ? {plan_name:'Starter',status:'trial',billing_interval:'monthly',current_period_end:'2026-11-08T09:00:00Z'}
       : path.endsWith('/domains') ? [{id:'domain',hostname:'shop.example.com',domain_type:'custom',verification_status:'pending',routing_status:'inactive',verification_record:'_arise-verification.shop.example.com',verification_value:'x'.repeat(120)}]
+      : path.endsWith('/theme-settings') ? {theme_key:'fashion-modern',settings:{brand:{}}}
       : [];
     return route.fulfill({json:data});
   });

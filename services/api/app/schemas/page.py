@@ -41,6 +41,10 @@ class PageSection(ContentItem):
     type: Literal['hero', 'text', 'features', 'gallery', 'faq', 'contact', 'cta', 'posts', 'testimonials']
     enabled: bool = Field(True, strict=True)
     eyebrow: str = Field('', max_length=80)
+    anchor: str = Field('', max_length=64, pattern=r'^(?:[A-Za-z][A-Za-z0-9_-]*)?$')
+    layout: Literal['default', 'center', 'image_left'] = 'default'
+    spacing: Literal['default', 'compact', 'relaxed'] = 'default'
+    tone: Literal['default', 'soft', 'accent'] = 'default'
     heading: str = Field('', max_length=160)
     body: str = Field('', max_length=12000)
     items: list[ContentItem] = Field(default_factory=list, max_length=12)
@@ -64,6 +68,9 @@ class PageContent(BaseModel):
     def unique_sections(self):
         if len({section.id for section in self.sections}) != len(self.sections):
             raise ValueError('Each section needs a unique ID')
+        anchors = [section.anchor or section.id for section in self.sections]
+        if len(set(anchors)) != len(anchors) or 'website-main' in anchors:
+            raise ValueError('Each section needs a unique anchor; website-main is reserved')
         return self
 
 

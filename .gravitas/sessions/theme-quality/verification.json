@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-28",
+  "checks": {
+    "36-account desktop/mobile walkthrough": {
+      "result": "PASS",
+      "evidence": "theme-review-final.log",
+      "observed": "36 passed"
+    },
+    "Final affected-theme walkthrough": {
+      "result": "PASS",
+      "evidence": "release-smoke-final.log",
+      "observed": "19 passed"
+    },
+    "Browser regression": {
+      "result": "PASS",
+      "evidence": "browser-regression-final.log",
+      "observed": "26 passed"
+    },
+    "PostgreSQL suite": {
+      "result": "PASS",
+      "evidence": "postgres-tests-final.log",
+      "observed": "132 passed"
+    },
+    "Default API suite": {
+      "result": "PASS",
+      "evidence": "api-tests-final.log",
+      "observed": "131 passed, 1 skipped"
+    },
+    "Production build": {
+      "result": "PASS",
+      "evidence": "build-release.log",
+      "observed": "Image arise-store-web Built"
+    },
+    "TypeScript": {
+      "result": "PASS",
+      "evidence": "typecheck-final.log",
+      "observed": "tsc --noEmit"
+    }
+  },
+  "manual_review": "Four overview sheets, full mobile examples, editor controls and live Chrome sample pages inspected.",
+  "privacy": "36 distinct local owner accounts and sites, 72 screenshots, 36 catalog previews. Credentials are ignored and mode 0600.",
+  "limits": [
+    "No remote deployment",
+    "No full load/security audit",
+    "Contrast is sampled, not a complete accessibility certification",
+    "Trial fixture accounts retained"
+  ]
+}

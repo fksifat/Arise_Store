@@ -1,0 +1,1034 @@
+--- a/apps/web/src/app/dashboard/_components/WebsiteThemes.tsx
++++ b/apps/web/src/app/dashboard/_components/WebsiteThemes.tsx
+@@ -6,11 +6,12 @@
+ import {websiteTheme,websiteType} from '@/lib/sites';
+ import {ProductImage} from '@/components/ProductImage';
+ import {PageState} from './PageState';
++import {BrandControls} from './BrandControls';
+ 
+ export function WebsiteThemes(){
+- const {shop}=useMerchant();const [library,setLibrary]=useState<any[]>([]);const [setting,setSetting]=useState<any>(null);const [color,setColor]=useState('#2358a8');const [error,setError]=useState('');const [notice,setNotice]=useState('');const [busy,setBusy]=useState(false);const [retry,setRetry]=useState(0);
+- useEffect(()=>{let cancelled=false;setSetting(null);setError('');Promise.all([fetchApi<any[]>(`/themes?website_type=${shop.website_type}`),fetchApi<any>(`/shops/${shop.id}/theme-settings`)]).then(([themes,current])=>{if(cancelled)return;setLibrary(themes);setSetting(current);setColor(current.settings.brand?.primary_color||websiteTheme(current.theme_key)?.accent||'#2358a8');}).catch(error=>{if(!cancelled)setError(error.message);});return()=>{cancelled=true;};},[shop.id,retry]);
+- const save=async(theme:any,brandOnly=false)=>{if(busy)return;setBusy(true);setError('');setNotice('');try{const previous=websiteTheme(setting.theme_key);const custom=setting.settings.brand?.primary_color;const chosen=brandOnly?color:(custom&&custom!==previous?.accent?custom:websiteTheme(theme.theme_key)!.accent);const updated=await fetchApi<any>(`/shops/${shop.id}/theme-settings`,{method:'PUT',body:JSON.stringify({theme_key:theme.theme_key,settings_json:{...setting.settings,brand:{...setting.settings.brand,primary_color:chosen}}})});setSetting(updated);setColor(chosen);setNotice(brandOnly?'Brand color saved.':`${theme.name} is now applied. Your page content is unchanged.`);}catch(error:any){setError(error.message);}finally{setBusy(false);}};
++ const {shop}=useMerchant();const [library,setLibrary]=useState<any[]>([]);const [setting,setSetting]=useState<any>(null);const [error,setError]=useState('');const [notice,setNotice]=useState('');const [busy,setBusy]=useState(false);const [retry,setRetry]=useState(0);
++ useEffect(()=>{let cancelled=false;setSetting(null);setError('');Promise.all([fetchApi<any[]>(`/themes?website_type=${shop.website_type}`),fetchApi<any>(`/shops/${shop.id}/theme-settings`)]).then(([themes,current])=>{if(cancelled)return;setLibrary(themes);setSetting(current);}).catch(error=>{if(!cancelled)setError(error.message);});return()=>{cancelled=true;};},[shop.id,retry]);
++ const save=async(theme:any)=>{if(busy)return;setBusy(true);setError('');setNotice('');try{const previous=websiteTheme(setting.theme_key);const custom=setting.settings.brand?.primary_color;const chosen=custom&&custom!==previous?.accent?custom:websiteTheme(theme.theme_key)!.accent;const updated=await fetchApi<any>(`/shops/${shop.id}/theme-settings`,{method:'PUT',body:JSON.stringify({theme_key:theme.theme_key,settings_json:{...setting.settings,brand:{...setting.settings.brand,primary_color:chosen}}})});setSetting(updated);setNotice(`${theme.name} is now applied. Your page content is unchanged.`);}catch(error:any){setError(error.message);}finally{setBusy(false);}};
+  if(!setting)return <PageState loading={!error} error={error} onRetry={()=>setRetry(value=>value+1)}/>;
+- return <div className="mx-auto max-w-7xl space-y-6 p-5 sm:p-8"><header className="rounded-2xl border bg-[#f6f3ed] p-7"><p className="text-xs uppercase tracking-widest text-slate-400">{websiteType(shop.website_type).label}</p><h1 className="mt-3 text-3xl font-semibold">Find your website’s look.</h1><p className="mt-3 max-w-xl text-sm leading-6 text-slate-500">Compare three designs for this website type. Your pages and posts stay in place when you change the theme.</p></header>{notice&&<p role="status" className="rounded-xl bg-emerald-50 p-4 text-sm text-emerald-800">{notice}</p>}{error&&<p role="alert" className="rounded-xl bg-rose-50 p-4 text-sm text-rose-700">{error}</p>}<section className="flex flex-wrap items-center gap-4 rounded-xl border bg-white p-5"><label className="flex items-center gap-3 text-xs font-semibold">Brand color<input type="color" value={color} onChange={event=>setColor(event.target.value)} className="h-10 w-14 rounded border bg-white p-1"/></label><span className="font-mono text-xs text-slate-400">{color}</span><button disabled={busy} onClick={()=>save({theme_key:setting.theme_key},true)} className="rounded-lg border px-4 py-2.5 text-xs disabled:opacity-40">Save brand color</button><p className="text-xs text-slate-400">Theme and color changes affect published pages immediately.</p></section><div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">{library.map(theme=><article key={theme.id} data-website-theme={theme.theme_key} className={`overflow-hidden rounded-xl border bg-white ${setting.theme_key===theme.theme_key?'ring-1 ring-slate-900':''}`}><Link href={`/themes/${theme.theme_key}`} target="_blank"><ProductImage src={theme.preview_image_url} alt={`${theme.name} preview`} className="aspect-[16/11] w-full border-b object-cover object-top"/></Link><div className="space-y-4 p-5"><h2 className="text-lg font-semibold">{theme.name}</h2><p className="text-xs leading-6 text-slate-500">{theme.description}</p><div className="flex gap-3"><Link href={`/themes/${theme.theme_key}`} target="_blank" className="flex-1 rounded-lg border px-3 py-3 text-center text-xs">Preview</Link><button disabled={busy||setting.theme_key===theme.theme_key} onClick={()=>save(theme)} className="flex-1 rounded-lg bg-slate-900 px-3 py-3 text-xs text-white disabled:bg-slate-100 disabled:text-slate-400">{setting.theme_key===theme.theme_key?'Currently active':'Apply theme'}</button></div></div></article>)}</div></div>;
++ return <div className="mx-auto max-w-7xl space-y-6 p-5 sm:p-8"><header className="rounded-2xl border bg-[#f6f3ed] p-7"><p className="text-xs uppercase tracking-widest text-slate-400">{websiteType(shop.website_type).label}</p><h1 className="mt-3 text-3xl font-semibold">Find your website’s look.</h1><p className="mt-3 max-w-xl text-sm leading-6 text-slate-500">Compare three designs for this website type. Your pages and posts stay in place when you change the theme.</p></header>{notice&&<p role="status" className="rounded-xl bg-emerald-50 p-4 text-sm text-emerald-800">{notice}</p>}{error&&<p role="alert" className="rounded-xl bg-rose-50 p-4 text-sm text-rose-700">{error}</p>}<BrandControls key={setting.theme_key} setting={setting} onSaved={updated=>{setSetting(updated);setNotice('');}}/><div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">{library.map(theme=><article key={theme.id} data-website-theme={theme.theme_key} className={`overflow-hidden rounded-xl border bg-white ${setting.theme_key===theme.theme_key?'ring-1 ring-slate-900':''}`}><Link href={`/themes/${theme.theme_key}`} target="_blank"><ProductImage src={theme.preview_image_url} alt={`${theme.name} preview`} className="aspect-[16/11] w-full border-b object-cover object-top"/></Link><div className="space-y-4 p-5"><h2 className="text-lg font-semibold">{theme.name}</h2><p className="text-xs leading-6 text-slate-500">{theme.description}</p><div className="flex gap-3"><Link href={`/themes/${theme.theme_key}`} target="_blank" className="flex-1 rounded-lg border px-3 py-3 text-center text-xs">Preview</Link><button disabled={busy||setting.theme_key===theme.theme_key} onClick={()=>save(theme)} className="flex-1 rounded-lg bg-slate-900 px-3 py-3 text-xs text-white disabled:bg-slate-100 disabled:text-slate-400">{setting.theme_key===theme.theme_key?'Currently active':'Apply theme'}</button></div></div></article>)}</div></div>;
+ }
+--- a/apps/web/src/app/dashboard/pages/[pageId]/page.tsx
++++ b/apps/web/src/app/dashboard/pages/[pageId]/page.tsx
+@@ -30,15 +30,16 @@
+  const updateSection=(fields:Partial<Section>)=>setDraft({...draft,sections:draft.sections.map((item:Section)=>item.id===selected?{...item,...fields}:item)});
+  const move=(index:number,direction:number)=>{const sections=[...draft.sections];[sections[index],sections[index+direction]]=[sections[index+direction],sections[index]];setDraft({...draft,sections});};
+  const add=()=>{const id='section-'+crypto.randomUUID();const added={id,type:addType,enabled:true,heading:sectionTypes.find(([key])=>key===addType)?.[1]||'',body:'',items:['features','gallery','faq','testimonials'].includes(addType)?[itemOf()]:[]};setDraft({...draft,sections:[...draft.sections,added]});setSelected(id);};
++ const moveItem=(index:number,direction:number)=>{const items=[...(section?.items||[])];[items[index],items[index+direction]]=[items[index+direction],items[index]];updateSection({items});};
+  const textField=(label:string,field:keyof Section,multi=false,max=160)=><div><label htmlFor={`section-editor-${field}`} className="block text-xs font-semibold text-slate-600">{label}</label>{multi?<textarea id={`section-editor-${field}`} rows={field==='body'?6:3} maxLength={max} value={String(section?.[field]||'')} onChange={event=>updateSection({[field]:event.target.value})} className={inputStyle}/>:<input id={`section-editor-${field}`} maxLength={max} value={String(section?.[field]||'')} onChange={event=>updateSection({[field]:event.target.value})} className={inputStyle}/>}</div>;
+  return <div data-unsaved={dirty} className="space-y-5 p-4 sm:p-7"><header className="flex flex-wrap items-start justify-between gap-4"><div><a href={page.kind==='post'?'/dashboard/blog':'/dashboard/pages'} className="text-xs text-slate-500 underline">← Back to {page.kind==='post'?'posts':'pages'}</a><h1 className="mt-3 break-words text-2xl font-semibold">{page.kind==='post'?'Post editor':'Page editor'}</h1><p className="mt-2 text-xs text-slate-500">{shop.status!=='published'?'Website is not public · ':''}{dirty?'Unsaved changes — save before leaving.':page.published_slug?(page.has_unpublished_changes?'Saved draft has unpublished changes.':'Saved and published.'): 'Saved draft · Only you and authorized team members can see it.'}</p></div><div className="flex flex-wrap gap-2"><button type="submit" form="page-editor-form" disabled={busy||!dirty} className="flex items-center gap-2 rounded-lg border bg-white px-4 py-2.5 text-xs disabled:opacity-40"><Save size={14}/>{busy?'Working…':'Save draft'}</button><button disabled={busy||dirty} onClick={()=>publish('publish')} className="rounded-lg bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white disabled:opacity-40">Publish {page.kind==='post'?'post':'page'}</button><Link href={`/preview/${shop.slug}/${pageId}`} target="_blank" className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2.5 text-xs"><Eye size={14}/>Preview saved draft</Link>{shop.status==='published'&&page.published_slug&&<a href={contentPath(shop,{kind:page.kind,slug:page.published_slug})} target="_blank" className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2.5 text-xs">View published <ExternalLink size={13}/></a>}</div></header>
+  {dirty&&<p className="rounded-lg bg-amber-50 p-3 text-xs text-amber-900">Save your draft before publishing. The live page keeps its last published version.</p>}{notice&&<p role="status" className="rounded-lg bg-emerald-50 p-4 text-xs text-emerald-800">{notice} <Link href="/dashboard" onNavigate={event=>{if(dirty&&!window.confirm('Discard unsaved changes and open Overview?'))event.preventDefault();}} className="underline">Open Overview</Link></p>}{error&&<div role="alert" className="rounded-lg bg-rose-50 p-4 text-xs text-rose-700">{error}<button onClick={()=>setConfirm('reload')} className="ml-3 underline">Reload saved content</button></div>}
+  <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(330px,440px)_minmax(0,1fr)]"><form id="page-editor-form" onSubmit={save} className="min-w-0 space-y-5"><section className="space-y-4 rounded-xl border bg-white p-5"><h2 className="text-sm font-semibold">Page details</h2><label className="block text-xs font-semibold">Title<input required maxLength={160} value={draft.title} onChange={event=>setDraft({...draft,title:event.target.value})} className={inputStyle}/></label><label className="block text-xs font-semibold">URL name<input required disabled={page.slug==='home'} pattern="[a-z0-9]+(-[a-z0-9]+)*" maxLength={80} value={draft.slug} onChange={event=>setDraft({...draft,slug:event.target.value.toLowerCase()})} className={inputStyle}/></label><div><label htmlFor="page-search-description" className="block text-xs font-semibold">Search description</label><textarea id="page-search-description" maxLength={300} rows={2} value={draft.description} onChange={event=>setDraft({...draft,description:event.target.value})} className={inputStyle}/></div><p className="text-[11px] leading-5 text-slate-400">The title and search description are used in the published page’s metadata. URL changes take effect when you publish.</p></section>
+  <section className="space-y-4 rounded-xl border bg-white p-5"><h2 className="text-sm font-semibold">Sections · {draft.sections.length}/30</h2><p className="text-xs leading-5 text-slate-500">Select a section to edit it. Use the arrows to reorder your page.</p><div className="space-y-2">{draft.sections.map((item:Section,index:number)=><div key={item.id} className={`flex items-center gap-1 rounded-lg border p-2 ${item.id===selected?'border-slate-800 bg-slate-50':'border-slate-200'}`}><button type="button" onClick={()=>setSelected(item.id)} className="min-w-0 flex-1 px-1 text-left text-xs"><span className="block truncate font-semibold">{item.heading||sectionTypes.find(([key])=>key===item.type)?.[1]}</span><span className="mt-1 block text-[10px] text-slate-400">{item.type} · {item.enabled===false?'Hidden':'Visible'}</span></button><button type="button" disabled={index===0} aria-label={`Move section ${index+1} up`} onClick={()=>move(index,-1)} className="p-1.5 disabled:opacity-25"><ArrowUp size={15}/></button><button type="button" disabled={index===draft.sections.length-1} aria-label={`Move section ${index+1} down`} onClick={()=>move(index,1)} className="p-1.5 disabled:opacity-25"><ArrowDown size={15}/></button><button type="button" aria-label={`Remove section ${index+1}`} onClick={()=>{setDraft({...draft,sections:draft.sections.filter((section:Section)=>section.id!==item.id)});if(selected===item.id)setSelected('');}} className="p-1.5 text-rose-600"><Trash2 size={14}/></button></div>)}</div><div className="flex gap-2"><select aria-label="New section type" value={addType} onChange={event=>setAddType(event.target.value)} className="min-w-0 flex-1 rounded-lg border p-2 text-xs">{sectionTypes.map(([key,label])=><option key={key} value={key}>{label}</option>)}</select><button type="button" disabled={draft.sections.length>=30} onClick={add} className="flex items-center gap-1 rounded-lg bg-slate-900 px-3 text-xs text-white disabled:opacity-40"><Plus size={14}/>Add section</button></div></section>
+- {section&&<section className="space-y-4 rounded-xl border bg-white p-5"><h2 className="text-sm font-semibold">Edit section</h2><label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={section.enabled!==false} onChange={event=>updateSection({enabled:event.target.checked})}/>Show section</label>{textField('Small heading','eyebrow',false,80)}{textField('Section heading','heading')}{textField('Section text','body',true,12000)}{textField('Section image URL','image_url',false,2048)}{textField('Image description','image_alt',false,200)}{textField('Button text','button_text',false,60)}{textField('Button URL','button_url',false,2048)}<p className="text-[11px] leading-5 text-slate-400">Use https:// links, /site paths, #section anchors, mailto: or tel: links. Contact sections use details from Settings.</p>
+- {['features','gallery','faq','testimonials'].includes(section.type)&&<div className="space-y-4 border-t pt-4"><h3 className="text-xs font-semibold">Section items · {(section.items||[]).length}/12</h3>{(section.items||[]).map((item,index)=><div key={index} className="space-y-3 rounded-lg border bg-slate-50 p-3"><div className="flex justify-between gap-3"><h4 className="text-xs font-semibold">Item {index+1}</h4><button type="button" onClick={()=>updateSection({items:section.items!.filter((_,itemIndex)=>itemIndex!==index)})} className="text-[11px] text-rose-700">Remove item {index+1}</button></div>{(['heading','body','image_url','image_alt','button_text','button_url'] as const).map(field=><div key={field}><label htmlFor={`section-item-${index}-${field}`} className="block text-[11px] font-semibold">{`Item ${index+1} ${field.replaceAll('_',' ')}`}</label>{field==='body'?<textarea id={`section-item-${index}-${field}`} rows={3} maxLength={2000} value={item[field]||''} onChange={event=>updateSection({items:section.items!.map((entry,itemIndex)=>itemIndex===index?{...entry,[field]:event.target.value}:entry)})} className={inputStyle}/>:<input id={`section-item-${index}-${field}`} maxLength={field.includes('url')?2048:field==='heading'?120:field==='image_alt'?200:60} value={item[field]||''} onChange={event=>updateSection({items:section.items!.map((entry,itemIndex)=>itemIndex===index?{...entry,[field]:event.target.value}:entry)})} className={inputStyle}/>}</div>)}</div>)}<button type="button" disabled={(section.items||[]).length>=12} onClick={()=>updateSection({items:[...(section.items||[]),itemOf()]})} className="rounded-lg border px-3 py-2 text-xs disabled:opacity-40">Add item</button></div>}</section>}
++ {section&&<section className="space-y-4 rounded-xl border bg-white p-5"><h2 className="text-sm font-semibold">Edit section</h2><label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={section.enabled!==false} onChange={event=>updateSection({enabled:event.target.checked})}/>Show section</label><div className="grid gap-4 sm:grid-cols-2">{([['layout','Layout',[['default','Theme default'],['center','Centered'],['image_left','Image on the left']]],['spacing','Section spacing',[['default','Comfortable'],['compact','Compact'],['relaxed','Spacious']]],['tone','Background',[['default','Theme default'],['soft','Soft'],['accent','Brand color']]]] as const).map(([field,label,options])=><label key={field} className="block text-xs font-semibold text-slate-600">{label}<select aria-label={label} value={section[field]||'default'} onChange={event=>updateSection({[field]:event.target.value})} className={inputStyle}>{options.map(([value,name])=><option key={value} value={value}>{name}</option>)}</select></label>)}</div>{textField('Section anchor','anchor',false,64)}<p className="text-[11px] leading-5 text-slate-500">Link here with <code>#{section.anchor||section.id}</code>. Use letters, numbers and dashes, starting with a letter.</p>{textField('Small heading','eyebrow',false,80)}{textField('Section heading','heading',true)}{textField('Section text','body',true,12000)}{textField('Section image URL','image_url',false,2048)}{textField('Image description','image_alt',false,200)}{textField('Button text','button_text',false,60)}{textField('Button URL','button_url',false,2048)}<p className="text-[11px] leading-5 text-slate-400">Use https:// links, /site paths, #section anchors, mailto: or tel: links. Contact sections use details from Settings.</p>
++ {['features','gallery','faq','testimonials'].includes(section.type)&&<div className="space-y-4 border-t pt-4"><h3 className="text-xs font-semibold">Section items · {(section.items||[]).length}/12</h3>{(section.items||[]).map((item,index)=><div key={index} className="space-y-3 rounded-lg border bg-slate-50 p-3"><div className="flex justify-between gap-3"><h4 className="text-xs font-semibold">Item {index+1}</h4><span className="flex gap-1"><button type="button" disabled={index===0} aria-label={`Move item ${index+1} up`} onClick={()=>moveItem(index,-1)} className="p-1 disabled:opacity-25"><ArrowUp size={14}/></button><button type="button" disabled={index===(section.items||[]).length-1} aria-label={`Move item ${index+1} down`} onClick={()=>moveItem(index,1)} className="p-1 disabled:opacity-25"><ArrowDown size={14}/></button></span><button type="button" onClick={()=>updateSection({items:section.items!.filter((_,itemIndex)=>itemIndex!==index)})} className="text-[11px] text-rose-700">Remove item {index+1}</button></div>{(section.type==='faq'||section.type==='testimonials'?(['heading','body'] as const):(['heading','body','image_url','image_alt','button_text','button_url'] as const)).map(field=><div key={field}><label htmlFor={`section-item-${index}-${field}`} className="block text-[11px] font-semibold">{`Item ${index+1} ${field.replaceAll('_',' ')}`}</label>{field==='body'?<textarea id={`section-item-${index}-${field}`} rows={3} maxLength={2000} value={item[field]||''} onChange={event=>updateSection({items:section.items!.map((entry,itemIndex)=>itemIndex===index?{...entry,[field]:event.target.value}:entry)})} className={inputStyle}/>:<input id={`section-item-${index}-${field}`} maxLength={field.includes('url')?2048:field==='heading'?120:field==='image_alt'?200:60} value={item[field]||''} onChange={event=>updateSection({items:section.items!.map((entry,itemIndex)=>itemIndex===index?{...entry,[field]:event.target.value}:entry)})} className={inputStyle}/>}</div>)}</div>)}<button type="button" disabled={(section.items||[]).length>=12} onClick={()=>updateSection({items:[...(section.items||[]),itemOf()]})} className="rounded-lg border px-3 py-2 text-xs disabled:opacity-40">Add item</button></div>}</section>}
+  <section className="space-y-3 rounded-xl border bg-white p-5"><h2 className="text-sm font-semibold">Publication</h2><p className="text-xs leading-5 text-slate-500">Publishing updates the saved page only. Publish the website from Overview to make published content available to everyone.</p>{page.published_slug&&<button type="button" disabled={busy||dirty} onClick={()=>publish('unpublish')} className="mr-3 rounded-lg border px-3 py-2 text-xs disabled:opacity-40">Unpublish content</button>}{page.slug!=='home'&&!page.published_slug&&<button type="button" disabled={busy||dirty} onClick={()=>setConfirm('delete')} className="text-xs text-rose-700 disabled:opacity-40">Delete draft</button>}</section>
+- </form><section aria-label="Live draft preview" className="min-w-0"><div className="mb-3 flex items-center justify-between gap-3"><h2 className="text-xs font-semibold text-slate-500">Live draft preview · Links disabled</h2><div role="group" aria-label="Preview size" className="flex gap-2"><button aria-pressed={!phone} onClick={()=>setPhone(false)} className={`rounded-lg border px-3 py-2 text-xs ${!phone?'bg-slate-900 text-white':'bg-white'}`}>Desktop</button><button aria-pressed={phone} onClick={()=>setPhone(true)} className={`rounded-lg border px-3 py-2 text-xs ${phone?'bg-slate-900 text-white':'bg-white'}`}>Mobile</button></div></div><div className="max-h-[85vh] overflow-auto rounded-xl border bg-white"><div style={{maxWidth:phone?390:undefined}} className="mx-auto"><Website site={previewSite||{...shop,theme_key:theme.theme_key,brand:theme.settings.brand,navigation:[],recent_posts:[]}} page={{...draft,kind:page.kind}} preview/></div></div></section></div>
++ </form><section aria-label="Live draft preview" className="min-w-0"><div className="mb-3 flex items-center justify-between gap-3"><h2 className="text-xs font-semibold text-slate-500">Live draft preview · Links disabled</h2><div role="group" aria-label="Preview size" className="flex gap-2"><button aria-pressed={!phone} onClick={()=>setPhone(false)} className={`rounded-lg border px-3 py-2 text-xs ${!phone?'bg-slate-900 text-white':'bg-white'}`}>Desktop</button><button aria-pressed={phone} onClick={()=>setPhone(true)} className={`rounded-lg border px-3 py-2 text-xs ${phone?'bg-slate-900 text-white':'bg-white'}`}>Mobile</button></div></div><div className="max-h-[85vh] overflow-auto rounded-xl border bg-white"><div style={{maxWidth:phone?390:undefined}} className="mx-auto"><Website site={previewSite||{...shop,theme_key:theme.theme_key,brand:theme.settings.brand,navigation:[],recent_posts:[]}} page={{...draft,kind:page.kind}} preview embedded/></div></div></section></div>
+  {confirm&&<Modal titleId="content-confirm-title" onClose={()=>setConfirm(null)} preventClose={busy}><div className="space-y-4 p-6"><h2 id="content-confirm-title" className="text-lg font-semibold">{confirm==='delete'?'Delete this draft?':'Discard unsaved edits and reload?'}</h2><p className="text-sm leading-6 text-slate-500">{confirm==='delete'?'The unpublished draft will be permanently removed.':'Your local edits will be replaced by the latest saved version.'}</p><div className="flex gap-3"><button disabled={busy} onClick={()=>confirm==='delete'?remove():(setRetry(value=>value+1),setConfirm(null),setError(''),setNotice(''))} className="rounded-lg bg-rose-700 px-4 py-3 text-xs font-semibold text-white disabled:opacity-40">{confirm==='delete'?'Delete draft':'Discard edits and reload'}</button><button disabled={busy} onClick={()=>setConfirm(null)} className="rounded-lg border px-4 py-3 text-xs">Cancel</button></div></div></Modal>}
+  </div>;
+ }
+--- a/apps/web/src/app/dashboard/themes/page.tsx
++++ b/apps/web/src/app/dashboard/themes/page.tsx
+@@ -9,6 +9,7 @@
+ import { isOnlineStore } from '@/lib/sites';
+ import { WebsiteThemes } from '../_components/WebsiteThemes';
+ import { ProductImage } from '@/components/ProductImage';
++import { BrandControls } from '../_components/BrandControls';
+ 
+ function StoreThemesPage() {
+   const { shop } = useMerchant();
+@@ -62,6 +63,7 @@
+     {error && <div role="alert" className="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">{error}<button onClick={loadData} className="ml-3 underline">Try again</button></div>}
+     {notice && <div role="status" className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800"><CheckCircle2 size={17} />{notice}</div>}
+     {!loading && !shop && !error && <p className="rounded-xl border p-4 text-sm">Create a store before applying a theme. <Link href="/register" className="underline">Create a store</Link></p>}
++    {currentSetting && <BrandControls key={currentSetting.theme_key} setting={currentSetting} onSaved={updated=>{setCurrentSetting(updated);setNotice('');}} />}
+     <div id="theme-library" className="flex scroll-mt-24 flex-wrap items-center gap-2" role="group" aria-label="Theme categories">{groups.map(group => <button key={group} onClick={() => setCategory(group)} aria-label={group} aria-pressed={category === group} className={`rounded-full border px-4 py-2 text-xs ${category === group ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-200 bg-white text-slate-600'}`}>{group}<span aria-hidden="true" className="ml-2 opacity-60">{group === 'All themes' ? themes.length : themes.filter(theme => getStorefrontTheme(theme.theme_key).category === group).length}</span></button>)}<span className="ml-auto text-xs text-slate-400">{filtered.length} designs{category !== 'All themes' ? ` in ${category}` : ` across ${groups.length - 1} categories`}</span></div>
+     {loading ? <div className="flex min-h-48 items-center justify-center gap-3 text-sm text-slate-500"><Loader2 size={18} className="animate-spin" />Loading your theme library…</div>  : <div className="space-y-10">{groups.filter(group => group !== 'All themes' && (category === 'All themes' || category === group)).map(group => <section key={group} aria-label={`${group} theme designs`} className="space-y-5"><header className="flex flex-wrap items-end justify-between gap-3"><div><p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Made for {group.toLowerCase()}</p><h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">{group} themes</h2><p className="mt-2 text-xs text-slate-500">{themes.filter(theme => getStorefrontTheme(theme.theme_key).category === group).length} distinct designs. Preview a layout, then make it yours.</p></div>{category === 'All themes' && <button type="button" aria-label={`Browse ${group} themes`} onClick={() => { setCategory(group); document.getElementById('theme-library')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-600">Explore category <ArrowRight size={13}/></button>}</header><div className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">{filtered.filter(theme => getStorefrontTheme(theme.theme_key).category === group).map(theme => {
+       const preset = getStorefrontTheme(theme.theme_key);
+--- a/apps/web/src/app/themes/[themeKey]/WebsiteThemePreview.tsx
++++ b/apps/web/src/app/themes/[themeKey]/WebsiteThemePreview.tsx
+@@ -4,5 +4,5 @@
+ export function WebsiteThemePreview({preset}:{preset:typeof websiteThemes[number]}){
+  const type=websiteType(preset.website_type);
+  const site={name:preset.name,slug:'theme-preview',website_type:preset.website_type,theme_key:preset.key,brand:{primary_color:preset.accent},description:type.description,contact_email:'hello@example.com',contact_phone:null,address:null,navigation:[],recent_posts:preset.website_type==='blog'?[{title:'A first story worth sharing',slug:'first-story',description:'An example article to show how your writing will look.',published_at:'2026-10-26T00:00:00Z'},{title:'Ideas for the everyday',slug:'ideas',description:'Share your perspective, one post at a time.',published_at:'2026-10-25T00:00:00Z'}]:[]};
+- return <><div className="flex flex-wrap items-center justify-between gap-3 bg-slate-950 px-5 py-3 text-xs text-white"><span><strong>{preset.name}</strong> · Theme preview with sample content</span><div className="flex flex-wrap gap-2"><Link href={`/register?theme=${preset.key}`} className="rounded border border-white/40 px-3 py-2">Use this theme →</Link><Link href="/#themes" className="rounded border border-white/40 px-3 py-2">All website themes</Link></div></div><nav aria-label={`${type.label} themes`} className="flex flex-wrap items-center justify-center gap-2 border-b bg-slate-50 p-3 text-xs"><span className="mr-3 font-semibold">{type.label}</span>{websiteThemes.filter(theme=>theme.website_type===preset.website_type).map(theme=><Link key={theme.key} href={`/themes/${theme.key}`} aria-current={theme.key===preset.key?'page':undefined} className={`rounded-full border px-3 py-2 ${theme.key===preset.key?'border-slate-900 bg-slate-900 text-white':'bg-white text-slate-600'}`}>{theme.name}</Link>)}</nav><Website site={site} page={{title:'Home',sections:websiteStarters[preset.website_type]}} preview/></>;
++ return <><div className="flex flex-wrap items-center justify-between gap-3 bg-slate-950 px-5 py-3 text-xs text-white"><span><strong>{preset.name}</strong> · Theme preview with sample content</span><div className="flex flex-wrap gap-2"><Link href={`/register?theme=${preset.key}`} className="rounded border border-white/40 px-3 py-2">Use this theme →</Link><Link href="/#themes" className="rounded border border-white/40 px-3 py-2">All website themes</Link></div></div><nav aria-label={`${type.label} themes`} className="flex flex-wrap items-center justify-center gap-2 border-b bg-slate-50 p-3 text-xs"><span className="mr-3 font-semibold">{type.label}</span>{websiteThemes.filter(theme=>theme.website_type===preset.website_type).map(theme=><Link key={theme.key} href={`/themes/${theme.key}`} aria-current={theme.key===preset.key?'page':undefined} className={`rounded-full border px-3 py-2 ${theme.key===preset.key?'border-slate-900 bg-slate-900 text-white':'bg-white text-slate-600'}`}>{theme.name}</Link>)}</nav><Website site={site} page={{title:'Home',slug:'home',sections:websiteStarters[preset.website_type]}} preview/></>;
+ }
+--- a/apps/web/src/components/themes/Storefront.tsx
++++ b/apps/web/src/components/themes/Storefront.tsx
+@@ -47,6 +47,8 @@
+   };
+   const closeQuickView = () => { quickView.current?.close(); setSelectedProduct(null); };
+ 
++  useEffect(() => {if(!menuOpen)return;const close=(event:KeyboardEvent)=>{if(event.key==='Escape')setMenuOpen(false);};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close);},[menuOpen]);
++
+   useEffect(() => {
+     if (!selectedProduct || !quickView.current) return;
+     if (!quickView.current.open) quickView.current.showModal();
+@@ -55,7 +57,7 @@
+     return () => { document.body.style.overflow = previous; };
+   }, [selectedProduct]);
+ 
+-  return <div className={`sf sf--${preset.family} sf--${preset.key}${preset.family !== preset.key ? ' sf-variant' : ''}`} style={{ '--sf-accent': accent, '--sf-on-accent': onAccent } as CSSProperties}>
++  return <div className={`sf sf--${preset.family} sf--${preset.key}${preset.family !== preset.key ? ' sf-variant' : ''}`} data-font={settings.brand?.font_family||'theme'} style={{ '--sf-accent': accent, '--sf-on-accent': onAccent } as CSSProperties}>
+     <a href="#catalog" className="sf-skip">Skip to products</a>
+     <div className="sf-utility">
+       <span><Truck size={13} aria-hidden="true" /> Cash on Delivery available</span>
+@@ -85,6 +87,7 @@
+         {(store.site_pages||[]).map(page=><Link key={page.slug} href={`/site/${store.slug}/${page.slug}`}>{page.title}</Link>)}
+         <a href="#catalog" onClick={() => setMenuOpen(false)}>Shop all <ArrowUpRight size={16} /></a>
+         {categories.map(category => <button type="button" key={category.id} onClick={() => chooseCategory(category.id)}>{category.name}<ChevronRight size={16} /></button>)}
++        <a href="#store-info" onClick={()=>setMenuOpen(false)}>Our store <ArrowUpRight size={16}/></a>
+         {!preview && <Link href={trackUrl}>Track an order <Package size={16} /></Link>}
+       </nav>}
+     </header>
+@@ -99,8 +102,8 @@
+       <div className="sf-hero-copy">
+         <span className="sf-eyebrow"><span />{hero.eyebrow || preset.eyebrow}</span>
+         <h1>{hero.title || legacyHero?.title || preset.title}</h1>
+-        <p>{hero.subtitle || legacyHero?.subtitle || preset.subtitle}</p>
+-        <div className="sf-hero-actions"><a href="#catalog" className="sf-primary-link">{hero.button_text || 'Shop the collection'} <ArrowRight size={18} /></a><a href={categories.length ? '#collections' : '#store-info'} className="sf-text-link">{categories.length ? 'Explore collections' : 'Meet the store'} <ArrowDown size={15} /></a></div>
++        <p>{hero.subtitle ?? legacyHero?.subtitle ?? preset.subtitle}</p>
++        <div className="sf-hero-actions"><a href={hero.button_url||'#catalog'} className="sf-primary-link">{hero.button_text || 'Shop the collection'} <ArrowRight size={18} /></a><a href={categories.length ? '#collections' : '#store-info'} className="sf-text-link">{categories.length ? 'Explore collections' : 'Meet the store'} <ArrowDown size={15} /></a></div>
+         <div className="sf-hero-caption"><span className="sf-caption-line" /> A fresh perspective on everyday essentials.</div>
+       </div>
+       <div className="sf-hero-media">
+@@ -142,17 +145,17 @@
+         const sale = product.compare_at_price_minor > startingPrice(product);
+         return <article key={product.id} className="sf-product-card">
+           <button type="button" className="sf-product-photo-button" aria-label={`View ${product.name}`} onClick={() => setSelectedProduct(product)}><ProductImage src={image} alt={product.name} className="sf-product-photo" />{sale && <span className="sf-sale-badge">{product.variants?.some((variant: any) => variant.is_active) ? 'Sale options' : 'Special price'}</span>}<span className="sf-quick-view">View details <ArrowUpRight size={16} /></span></button>
+-          <div className="sf-product-copy"><span className="sf-product-category">{categories.find(category => product.category_ids.includes(category.id))?.name || preset.category}</span><h4><button type="button" onClick={() => setSelectedProduct(product)}>{product.name}</button></h4><p>{product.description || 'Discover the details. Find your everyday favorite.'}</p><ProductPurchase product={product} imageUrl={image} className="sf-add-button" label="Add to Bag" /></div>
++          <div className="sf-product-copy"><span className="sf-product-category">{categories.find(category => product.category_ids.includes(category.id))?.name || preset.category}</span><h3><button type="button" onClick={() => setSelectedProduct(product)}>{product.name}</button></h3><p>{product.description || 'Discover the details. Find your everyday favorite.'}</p><ProductPurchase product={product} imageUrl={image} className="sf-add-button" label="Add to Bag" /></div>
+         </article>;
+       })}</div>}
+     </main>
+ 
+     <section className="sf-story sf-container" id="store-info">
+-      <div><span className="sf-kicker">A STORE WITH A POINT OF VIEW</span><h2>Good finds.<br />A personal touch.</h2></div>
++      <div><span className="sf-kicker">A STORE WITH A POINT OF VIEW</span><h2>{hero.story_title||<>Good finds.<br />A personal touch.</>}</h2></div>
+       <div><p>{store.description || `Welcome to ${store.name}. Explore a collection brought together with care, and find the pieces that fit your everyday.`}</p><a href="#catalog" className="sf-text-link">Discover the collection <ArrowRight size={17} /></a></div>
+       <span className="sf-story-monogram" aria-hidden="true">{store.name.charAt(0)}</span>
+     </section>
+-    <footer className="sf-footer"><div className="sf-footer-main sf-container"><div className="sf-footer-brand"><strong>{store.name}</strong><p>Your everyday, thoughtfully selected.</p></div><div><h3>Explore</h3><a href="#catalog">Shop all products</a>{(store.site_pages||[]).map(page=><Link key={page.slug} href={`/site/${store.slug}/${page.slug}`}>{page.title}</Link>)}{categories.length > 0 && <a href="#collections">Our collections</a>}{!preview && <Link href={trackUrl}>Track your order</Link>}</div><div><h3>Here to help</h3>{store.contact_email && <a href={`mailto:${store.contact_email}`}>{store.contact_email}</a>}{store.contact_phone && <a href={`tel:${store.contact_phone}`}>{store.contact_phone}</a>}{store.address && <p><MapPin size={14} />{store.address}</p>}{!store.contact_email && !store.contact_phone && <p>Contact details will be shared by the store.</p>}</div><div><h3>Made for your everyday</h3><p>Shop in Bangladeshi Taka.<br />Pay on delivery.<br />Track your order online.</p><span className="sf-footer-payment"><CreditCard size={16} /> CASH ON DELIVERY</span></div></div><div className="sf-footer-bottom sf-container"><span>© {new Date().getFullYear()} {store.name}</span><span>Thoughtfully powered by Arise Store <ArrowUpRight size={12} /></span></div></footer>
++    <footer className="sf-footer"><div className="sf-footer-main sf-container"><div className="sf-footer-brand"><strong>{store.name}</strong><p>{hero.footer_text||'Your everyday, thoughtfully selected.'}</p></div><div><h3>Explore</h3><a href="#catalog">Shop all products</a>{(store.site_pages||[]).map(page=><Link key={page.slug} href={`/site/${store.slug}/${page.slug}`}>{page.title}</Link>)}{categories.length > 0 && <a href="#collections">Our collections</a>}{!preview && <Link href={trackUrl}>Track your order</Link>}</div><div><h3>Here to help</h3>{store.contact_email && <a href={`mailto:${store.contact_email}`}>{store.contact_email}</a>}{store.contact_phone && <a href={`tel:${store.contact_phone}`}>{store.contact_phone}</a>}{store.address && <p><MapPin size={14} />{store.address}</p>}{!store.contact_email && !store.contact_phone && <p>Contact details will be shared by the store.</p>}</div><div><h3>Made for your everyday</h3><p>Shop in Bangladeshi Taka.<br />Pay on delivery.<br />Track your order online.</p><span className="sf-footer-payment"><CreditCard size={16} /> CASH ON DELIVERY</span></div></div><div className="sf-footer-bottom sf-container"><span>© {new Date().getFullYear()} {store.name}</span><span>Thoughtfully powered by Arise Store <ArrowUpRight size={12} /></span></div></footer>
+ 
+     {selectedProduct && <dialog ref={quickView} className="sf-quick-dialog" aria-labelledby="quick-view-title" onClose={() => setSelectedProduct(null)} onClick={event => { if (event.target === event.currentTarget) closeQuickView(); }}>
+       <button type="button" className="sf-dialog-close" aria-label="Close product details" onClick={closeQuickView}><X size={22} /></button><div className="sf-quick-grid"><ProductImage src={selectedProduct.images?.find((image: any) => image.is_primary)?.image_url || selectedProduct.images?.[0]?.image_url} alt={selectedProduct.name} className="sf-quick-image" /><div className="sf-quick-copy"><span className="sf-kicker">THE DETAILS</span><h2 id="quick-view-title">{selectedProduct.name}</h2><p>{selectedProduct.description || 'A thoughtfully selected addition to your everyday.'}</p>{selectedProduct.sku && <small>SKU: {selectedProduct.sku}</small>}<ProductPurchase product={selectedProduct} imageUrl={selectedProduct.images?.[0]?.image_url} className="sf-add-button" label="Add to Bag" onAdded={closeQuickView} /><p className="sf-quick-note"><Check size={15} />Cash on Delivery · Delivery calculated at checkout</p></div></div>
+--- a/apps/web/src/components/themes/storefront.css
++++ b/apps/web/src/components/themes/storefront.css
+@@ -1,6 +1,6 @@
+ .sf{
+ --sf-ink:#252321;
+---sf-muted:#73716d;
++--sf-muted:#65635f;
+ --sf-paper:#fff;
+ --sf-line:#e8e6e2;
+ --sf-accent:#292522;
+@@ -520,12 +520,12 @@
+ letter-spacing:1.4px;
+ font-size:7px;
+ color:var(--sf-muted)}
+-.sf-product-card h4{
++.sf-product-card h3{
+ font-size:12px;
+ font-weight:500;
+ line-height:1.5;
+ margin:6px 0}
+-.sf-product-card h4 button{
++.sf-product-card h3 button{
+ border:0;
+ background:none;
+ text-align:left;
+@@ -823,7 +823,7 @@
+ .sf--general-store{
+ --sf-paper:#fcfdf9;
+ --sf-ink:#183a2d;
+---sf-muted:#718176;
++--sf-muted:#536b5c;
+ --sf-line:#dfe7df}
+ .sf--general-store .sf-utility{
+ background:#164d37}
+@@ -918,7 +918,7 @@
+ 
+ .sf--tech-cosmetics{
+ --sf-ink:#151e2c;
+---sf-muted:#75808f;
++--sf-muted:#586577;
+ --sf-line:#e4e8ee}
+ .sf--tech-cosmetics .sf-utility{
+ background:#172239}
+@@ -993,7 +993,7 @@
+ .sf--home-living{
+ --sf-paper:#faf8f4;
+ --sf-ink:#42392f;
+---sf-muted:#8a7e71;
++--sf-muted:#6e6255;
+ --sf-line:#e6dfd5}
+ .sf--home-living .sf-utility{
+ background:#625342}
+@@ -1047,7 +1047,7 @@
+ .sf--beauty-studio{
+ --sf-paper:#fffdfc;
+ --sf-ink:#4a2937;
+---sf-muted:#91717f;
++--sf-muted:#735361;
+ --sf-line:#eddee4}
+ .sf--beauty-studio .sf-utility{
+ background:#71394e}
+@@ -1114,7 +1114,7 @@
+ 
+ .sf--sport-performance{
+ --sf-ink:#161916;
+---sf-muted:#72786e;
++--sf-muted:#5c6357;
+ --sf-paper:#f7f8f3;
+ --sf-line:#dfe3d9}
+ .sf--sport-performance .sf-utility{
+@@ -1199,7 +1199,7 @@
+ font-weight:800;
+ letter-spacing:-1.7px;
+ text-transform:uppercase}
+-.sf--sport-performance .sf-product-card h4{
++.sf--sport-performance .sf-product-card h3{
+ font-weight:700}
+ .sf--sport-performance .sf-add-button{
+ background:#161916;
+@@ -1449,6 +1449,7 @@
+ font-size:7px}
+ .sf--general-store .sf-hero{
+ margin:18px 16px 0;
++grid-template-columns:minmax(0,1fr);
+ border-radius:15px}
+ .sf--general-store .sf-hero-copy{
+ padding:34px 25px}
+@@ -1621,7 +1622,7 @@
+ .sf-product-category{
+ font-size:6px;
+ letter-spacing:1px}
+-.sf-product-card h4{
++.sf-product-card h3{
+ font-size:11px;
+ line-height:1.45;
+ margin:4px 0}
+@@ -1760,7 +1761,7 @@
+ .sf-nav{font-size:13px;}
+ .sf-service-strip strong{font-size:12px;}
+ .sf-service-strip small{font-size:10px;}
+-.sf-product-card h4{font-size:14px;}
++.sf-product-card h3{font-size:14px;}
+ .sf-product-category{font-size:9px;}
+ .sf-product-copy>p{font-size:11px;min-height:37px;}
+ .sf-price strong{font-size:15px;}
+@@ -1801,3 +1802,5 @@
+ 
+ .sf-nav a { max-width:130px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+ .sf-footer-main a { overflow-wrap:anywhere; }
++
++.sf button:focus-visible,.sf a:focus-visible,.sf input:focus-visible,.sf select:focus-visible{outline-color:var(--sf-ink)}
+--- a/apps/web/src/components/website/Website.tsx
++++ b/apps/web/src/components/website/Website.tsx
+@@ -5,9 +5,10 @@
+ import { ArrowUpRight, ArrowRight, Mail, Phone, MapPin, Menu } from 'lucide-react';
+ import { websiteTheme, publicSitePath, contentPath, type Section } from '@/lib/sites';
+ import { businessDate } from '@/lib/business';
++import {ProductImage} from '@/components/ProductImage';
+ import './website.css';
+ 
+-export function Website({site,page,preview=false,feed}:{site:any;page:any;preview?:boolean;feed?:any}){
++export function Website({site,page,preview=false,embedded=false,feed}:{site:any;page:any;preview?:boolean;embedded?:boolean;feed?:any}){
+   const theme=websiteTheme(site.theme_key);
+   const color=site.brand?.primary_color || theme?.accent || '#2358a8';
+   const accent=/^#[0-9a-f]{6}$/i.test(color)?color:'#2358a8';
+@@ -16,24 +17,26 @@
+   const sections:Section[]=(page.sections||[]).filter(section=>section.enabled!==false);
+   const hasHero=sections.some(section=>section.type==='hero');
+   let heroCount=0;
++  const Content=embedded?'div':'main';
+   const navigation=(site.navigation||[]).map(item=>({...item,href:contentPath(site,item)}));
++  if(page.slug==='home'){const labels:Record<string,string>={features:'Services',gallery:'Selected work',text:'About',contact:'Contact'};for(const section of sections.filter(item=>labels[item.type]).slice(0,3)){navigation.push({title:labels[section.type],href:`#${section.anchor||section.id}`});}}
+   if((site.recent_posts||[]).length || site.website_type==='blog')navigation.push({title:'Blog',href:`/site/${site.slug}/blog`,slug:'blog'});
+   const cancel=(event:React.MouseEvent)=>{if(preview)event.preventDefault();};
+   const postCards=(items:any[])=><div className="wb-grid">{items.map(post=><article key={post.slug} className="wb-post"><p className="wb-eyebrow">{post.published_at?businessDate(post.published_at):'Article'}</p><h3><a href={contentPath(site,{...post,kind:'post'})} onClick={cancel}>{post.title}</a></h3>{post.description && <p>{post.description}</p>}<a className="wb-text-link" href={contentPath(site,{...post,kind:'post'})} onClick={cancel}>Read article <ArrowUpRight size={16}/></a></article>)}</div>;
+-  return <div className={`wb wb--${theme?.presentation||'studio'}${preview?' wb--preview':''}`} style={{'--wb-accent':accent,'--wb-on-accent':onAccent} as CSSProperties}>
++  return <div className={`wb wb--${theme?.presentation||'studio'} wb-theme-${theme?.key||'default'}${preview?' wb--preview':''}`} data-font={site.brand?.font_family||'theme'} style={{'--wb-accent':accent,'--wb-on-accent':onAccent} as CSSProperties}>
+     <a href="#website-main" className="wb-skip">Skip to content</a>
+     <header className="wb-header"><div className="wb-container wb-header-inner"><a href={publicSitePath(site)} onClick={cancel} className="wb-brand">{site.logo_url?<img src={site.logo_url} alt=""/>:<span aria-hidden="true">{site.name?.charAt(0)||'A'}</span>}<strong>{site.name}</strong></a>
+       <nav className="wb-desktop-nav" aria-label="Website navigation"><a href={publicSitePath(site)} onClick={cancel}>Home</a>{navigation.slice(0,5).map(item=><a key={item.href} href={item.href} onClick={cancel}>{item.title}</a>)}{navigation.length>5&&<details className="wb-more"><summary>More</summary><div>{navigation.slice(5).map(item=><a key={item.href} href={item.href} onClick={cancel}>{item.title}</a>)}</div></details>}</nav>
+       <details className="wb-mobile-menu"><summary aria-label="Open website navigation"><Menu size={22}/></summary><nav aria-label="Mobile website navigation"><a href={publicSitePath(site)} onClick={cancel}>Home</a>{navigation.map(item=><a key={item.href} href={item.href} onClick={cancel}>{item.title}</a>)}</nav></details>
+     </div></header>
+-    <main id="website-main">
++    <Content id="website-main">
+       {(!hasHero||page.kind==='post'||feed)&&<header className="wb-container wb-page-title"><p className="wb-eyebrow">{page.kind==='post'?'From the journal':site.name}</p><h1>{page.title}</h1>{page.description&&<p>{page.description}</p>}{page.published_at&&<time dateTime={page.published_at}>{businessDate(page.published_at)}</time>}</header>}
+       {sections.map(section=>{
+         const Heading=section.type==='hero'&&page.kind!=='post'&&heroCount++===0?'h1':'h2';
+-        return <section key={section.id} id={section.id} className={`wb-section wb-section--${section.type}${section.image_url?' wb-section--with-image':''}`}><div className="wb-container">
++        return <section key={section.id} id={section.anchor||section.id} className={`wb-section wb-section--${section.type} wb-layout-${section.layout||'default'} wb-space-${section.spacing||'default'} wb-tone-${section.tone||'default'}${section.image_url?' wb-section--with-image':''}`}><div className="wb-container">
+           <div className="wb-section-copy">{section.eyebrow&&<p className="wb-eyebrow">{section.eyebrow}</p>}{section.heading&&<Heading>{section.heading}</Heading>}{section.body&&<p className="wb-body">{section.body}</p>}{section.button_text&&section.button_url&&<a href={section.button_url} onClick={cancel} className="wb-button">{section.button_text}<ArrowRight size={16}/></a>}</div>
+-          {section.image_url&&<img className="wb-section-image" src={section.image_url} alt={section.image_alt||''} loading={section.type==='hero'?'eager':'lazy'}/>}
+-          {['features','gallery'].includes(section.type)&&<div className="wb-grid">{(section.items||[]).map((item,index)=><article key={index} className="wb-card">{item.image_url&&<img src={item.image_url} alt={item.image_alt||''} loading="lazy"/>}<span className="wb-card-number">{String(index+1).padStart(2,'0')}</span>{item.heading&&<h3>{item.heading}</h3>}{item.body&&<p>{item.body}</p>}{item.button_text&&item.button_url&&<a className="wb-text-link" href={item.button_url} onClick={cancel}>{item.button_text}<ArrowUpRight size={16}/></a>}</article>)}</div>}
++          {section.image_url&&<ProductImage className="wb-section-image" src={section.image_url} alt={section.image_alt||'Section image'} loading={section.type==='hero'?'eager':'lazy'}/>}
++          {['features','gallery'].includes(section.type)&&<div className="wb-grid">{(section.items||[]).map((item,index)=><article key={index} className="wb-card">{item.image_url&&<ProductImage src={item.image_url} alt={item.image_alt||item.heading||'Gallery image'}/>}<span className="wb-card-number">{String(index+1).padStart(2,'0')}</span>{item.heading&&<h3>{item.heading}</h3>}{item.body&&<p>{item.body}</p>}{item.button_text&&item.button_url&&<a className="wb-text-link" href={item.button_url} onClick={cancel}>{item.button_text}<ArrowUpRight size={16}/></a>}</article>)}</div>}
+           {section.type==='testimonials'&&<div className="wb-grid">{(section.items||[]).map((item,index)=><figure key={index} className="wb-card"><blockquote className="wb-body">{item.body}</blockquote><figcaption className="wb-eyebrow">{item.heading}</figcaption></figure>)}</div>}
+           {section.type==='faq'&&<div className="wb-faq">{(section.items||[]).map((item,index)=><details key={index}><summary>{item.heading}</summary><p>{item.body}</p></details>)}</div>}
+           {section.type==='contact'&&<div className="wb-contact">{site.contact_email&&<a href={`mailto:${site.contact_email}`} onClick={cancel}><Mail size={18}/>{site.contact_email}</a>}{site.contact_phone&&<a href={`tel:${site.contact_phone}`} onClick={cancel}><Phone size={18}/>{site.contact_phone}</a>}{site.address&&<p><MapPin size={18}/>{site.address}</p>}</div>}
+@@ -41,7 +44,7 @@
+         </div></section>;
+       })}
+       {feed&&<section className="wb-container wb-feed">{feed.items.length?postCards(feed.items):<p className="wb-empty">New stories are on the way.</p>}<nav aria-label="Blog pages" className="wb-pagination">{feed.page>1&&<Link href={`?page=${feed.page-1}`}>← Previous</Link>}<span>Page {feed.page}</span>{feed.page*feed.page_size<feed.total&&<Link href={`?page=${feed.page+1}`}>Next →</Link>}</nav></section>}
+-    </main>
++    </Content>
+     <footer className="wb-footer"><div className="wb-container"><a className="wb-footer-name" href={publicSitePath(site)} onClick={cancel}>{site.name}</a><p>{site.description||'A space for ideas, information and the things that matter.'}</p><span>Built with Arise</span></div></footer>
+   </div>;
+ }
+--- a/apps/web/src/components/website/website.css
++++ b/apps/web/src/components/website/website.css
+@@ -1,11 +1,33 @@
+-.wb{--wb-paper:#fff;--wb-ink:#142237;--wb-muted:#627185;--wb-line:#dfe6ee;background:var(--wb-paper);color:var(--wb-ink);font:15px/1.75 Arial,Helvetica,sans-serif;container-type:inline-size;container-name:website;overflow-wrap:anywhere}
++.wb{--wb-paper:#fff;--wb-ink:#142237;--wb-muted:#586779;--wb-line:#dfe6ee;background:var(--wb-paper);color:var(--wb-ink);font:15px/1.75 Arial,Helvetica,sans-serif;container-type:inline-size;container-name:website;overflow-wrap:anywhere}
+ .wb *{box-sizing:border-box}.wb h1,.wb h2,.wb h3,.wb p{margin:0}.wb a{color:inherit;text-decoration:none}.wb a:focus-visible,.wb summary:focus-visible{outline:2px solid var(--wb-accent);outline-offset:5px}.wb-container{width:100%;max-width:1200px;margin:auto;padding:0 40px}.wb-skip{position:absolute;left:10px;top:0;transform:translateY(-200%);background:var(--wb-paper);padding:12px 20px;z-index:60}.wb-skip:focus{transform:none}
+ .wb-header{border-bottom:1px solid var(--wb-line);background:var(--wb-paper)}.wb-header-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;min-height:88px}.wb-brand{display:flex;align-items:center;gap:12px;min-width:0;max-width:40%;line-height:1.25}.wb-brand strong{font-size:19px;letter-spacing:-.6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wb-brand>span,.wb-brand>img{display:flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border-radius:9px;background:var(--wb-accent);color:var(--wb-on-accent);object-fit:contain;font-weight:700}.wb-desktop-nav{display:flex;align-items:center;gap:24px;font-size:12px}.wb-desktop-nav>a{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wb-mobile-menu{display:none}.wb-more{position:relative}.wb-more>div{position:absolute;right:0;top:35px;z-index:50;min-width:200px;max-height:320px;overflow:auto;padding:10px;background:var(--wb-paper);border:1px solid var(--wb-line);box-shadow:0 12px 30px #0002}.wb-more a{display:block;padding:8px}.wb summary{cursor:pointer}
+ .wb-section{padding:78px 0;border-bottom:1px solid var(--wb-line);scroll-margin-top:24px}.wb-section--hero{padding:90px 0;background:#f3f6fa}.wb-section-copy{max-width:780px}.wb h1{font-size:clamp(40px,6cqw,78px);line-height:1.05;letter-spacing:-.055em;font-weight:650;white-space:pre-line}.wb h2{font-size:clamp(29px,4cqw,43px);line-height:1.2;letter-spacing:-1.5px;font-weight:550}.wb h3{font-size:21px;line-height:1.35;letter-spacing:-.4px;font-weight:550}.wb-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2.2px;font-weight:600;color:var(--wb-muted);margin-bottom:22px!important}.wb-body{font-size:16px;color:var(--wb-muted);line-height:1.95;white-space:pre-line;margin-top:24px!important;max-width:680px}.wb-button{display:inline-flex;align-items:center;justify-content:center;gap:22px;padding:15px 23px;margin-top:30px;background:var(--wb-accent);color:var(--wb-on-accent)!important;border-radius:5px;font-size:12px;font-weight:600;max-width:100%}.wb-section--with-image>.wb-container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:50px;align-items:center}.wb-section-image{width:100%;min-width:0;max-height:520px;object-fit:cover;border-radius:10px}.wb-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-top:38px}.wb-card,.wb-post{min-width:0;border-top:1px solid var(--wb-line);padding:24px 0}.wb-card>img{width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:20px;border-radius:5px}.wb-card-number{display:block;color:var(--wb-accent);font-size:10px;letter-spacing:2px;margin-bottom:16px}.wb-card>p,.wb-post>p{margin-top:14px;color:var(--wb-muted);white-space:pre-line;font-size:14px}.wb-text-link{display:inline-flex;gap:10px;align-items:center;font-size:12px;border-bottom:1px solid currentColor;padding-bottom:4px;margin-top:20px}.wb-section--text .wb-section-copy{max-width:760px}.wb-section--cta{text-align:center;background:#f3f6fa}.wb-section--cta .wb-section-copy{margin:auto}.wb-section--cta .wb-body{margin-left:auto!important;margin-right:auto!important}.wb-contact{display:flex;flex-wrap:wrap;gap:20px 35px;margin-top:35px}.wb-contact a,.wb-contact p{display:flex;align-items:center;gap:12px;min-width:0;max-width:100%}.wb-contact svg{flex-shrink:0}.wb-faq{max-width:850px;margin-top:35px}.wb-faq details{border-top:1px solid var(--wb-line);padding:20px 0}.wb-faq summary{font-size:17px;font-weight:550}.wb-faq p{color:var(--wb-muted);padding-top:15px;white-space:pre-line}.wb-empty{color:var(--wb-muted);padding:30px 0}.wb-page-title{padding-top:65px;padding-bottom:45px;border-bottom:1px solid var(--wb-line)}.wb-page-title>p:not(.wb-eyebrow){margin-top:25px;color:var(--wb-muted);max-width:700px}.wb-page-title time{display:block;margin-top:20px;font-size:12px;color:var(--wb-muted)}.wb-feed{padding-top:40px;padding-bottom:60px}.wb-post .wb-eyebrow{margin-top:0}.wb-pagination{display:flex;align-items:center;justify-content:center;gap:30px;margin-top:40px;font-size:13px}.wb-pagination a{border:1px solid var(--wb-line);padding:10px 15px;border-radius:5px}.wb-footer{padding:50px 0;background:#f3f6fa}.wb-footer-name{font-size:24px;letter-spacing:-.7px;font-weight:600}.wb-footer p{max-width:550px;margin:15px 0 25px;color:var(--wb-muted);font-size:13px}.wb-footer span{font-size:10px;letter-spacing:1px;color:var(--wb-muted)}
+-.wb--editorial{--wb-paper:#fbf8f0;--wb-ink:#3f392f;--wb-muted:#817769;--wb-line:#e5ddce}.wb--editorial h1,.wb--editorial h2,.wb--editorial .wb-brand strong{font-family:Georgia,serif;font-weight:400}.wb--editorial .wb-section--hero{background:#f1ebde;text-align:center}.wb--editorial .wb-section--hero .wb-section-copy{margin:auto}.wb--editorial .wb-section--hero .wb-body{margin-left:auto!important;margin-right:auto!important}.wb--editorial .wb-button{border-radius:0}.wb--editorial .wb-footer,.wb--editorial .wb-section--cta{background:#ede5d6}
++.wb--editorial{--wb-paper:#fbf8f0;--wb-ink:#3f392f;--wb-muted:#6c6255;--wb-line:#e5ddce}.wb--editorial h1,.wb--editorial h2,.wb--editorial .wb-brand strong{font-family:Georgia,serif;font-weight:400}.wb--editorial .wb-section--hero{background:#f1ebde;text-align:center}.wb--editorial .wb-section--hero .wb-section-copy{margin:auto}.wb--editorial .wb-section--hero .wb-body{margin-left:auto!important;margin-right:auto!important}.wb--editorial .wb-button{border-radius:0}.wb--editorial .wb-footer,.wb--editorial .wb-section--cta{background:#ede5d6}
+ .wb--bold{--wb-paper:#111926;--wb-ink:#f4f7fb;--wb-muted:#acbbce;--wb-line:#2d3b50}.wb--bold .wb-section--hero{background:#182236}.wb--bold h1{font-size:clamp(43px,7cqw,96px);font-weight:750;letter-spacing:-.055em}.wb--bold .wb-footer,.wb--bold .wb-section--cta{background:#182236}.wb--bold .wb-button{border-radius:0}.wb--bold .wb-section--gallery .wb-card>img{border-radius:0}
+-.wb--canvas{--wb-paper:#fffaf5;--wb-ink:#302720;--wb-muted:#897467;--wb-line:#e9dacf}.wb--canvas .wb-section--hero{background:transparent;padding:95px 0 70px}.wb--canvas h1{font-size:clamp(44px,8cqw,110px);font-weight:500}.wb--canvas .wb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:45px}.wb--canvas .wb-card>img{aspect-ratio:5/4;border-radius:0}.wb--canvas .wb-footer{background:#eee3d7}
++.wb--canvas{--wb-paper:#fffaf5;--wb-ink:#302720;--wb-muted:#716052;--wb-line:#e9dacf}.wb--canvas .wb-section--hero{background:transparent;padding:95px 0 70px}.wb--canvas h1{font-size:clamp(44px,8cqw,110px);font-weight:500}.wb--canvas .wb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:45px}.wb--canvas .wb-card>img{aspect-ratio:5/4;border-radius:0}.wb--canvas .wb-footer{background:#eee3d7}
+ .wb--journal .wb-container{max-width:940px}.wb--journal h1,.wb--journal h2,.wb--journal h3,.wb--journal .wb-brand strong{font-family:Georgia,serif;font-weight:400}.wb--journal .wb-section--hero{background:var(--wb-paper);padding:85px 0 60px}.wb--journal .wb-grid{grid-template-columns:1fr}.wb--journal .wb-post{padding:30px 0}.wb--journal .wb-post h3{font-size:30px}.wb--journal .wb-header-inner{min-height:85px}.wb--journal .wb-footer{background:#f7f4f1}
+ .wb--split .wb-section--hero .wb-section-copy{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);column-gap:60px;max-width:none;align-items:start}.wb--split .wb-section--hero .wb-eyebrow{grid-column:1/-1}.wb--split .wb-section--hero h1{grid-column:1;grid-row:2/4}.wb--split .wb-section--hero .wb-body{grid-column:2;margin-top:0!important}.wb--split .wb-section--hero .wb-button{grid-column:2;justify-self:start}.wb--split .wb-section--hero.wb-section--with-image .wb-section-copy{display:block}.wb--split .wb-section--hero.wb-section--with-image .wb-body{margin-top:25px!important}
+ @container website (max-width:760px){.wb-container{padding-left:25px;padding-right:25px}.wb-header-inner{min-height:74px;gap:15px}.wb-brand{max-width:78%}.wb-brand strong{font-size:17px}.wb-desktop-nav{display:none}.wb-mobile-menu{display:block;position:relative}.wb-mobile-menu>summary{list-style:none;display:flex;padding:8px}.wb-mobile-menu>nav{position:absolute;right:0;top:45px;min-width:240px;max-width:calc(100cqw - 40px);max-height:60vh;overflow:auto;background:var(--wb-paper);border:1px solid var(--wb-line);padding:10px 16px;z-index:30;box-shadow:0 15px 30px #0002}.wb-mobile-menu nav a{display:block;padding:10px 0;border-bottom:1px solid var(--wb-line)}.wb-section{padding:45px 0}.wb-section--hero,.wb--canvas .wb-section--hero,.wb--journal .wb-section--hero{padding:55px 0}.wb-section--with-image>.wb-container{grid-template-columns:minmax(0,1fr);gap:30px}.wb-body{font-size:14px;margin-top:20px!important}.wb-grid,.wb--canvas .wb-grid{grid-template-columns:minmax(0,1fr);gap:16px;margin-top:25px}.wb h3{font-size:20px}.wb-card,.wb-post{padding:22px 0}.wb-contact{display:grid;gap:18px;font-size:13px}.wb--split .wb-section--hero .wb-section-copy{display:block}.wb--split .wb-section--hero .wb-body{margin-top:25px!important}.wb-section-image{max-height:340px}.wb-footer{padding:35px 0}.wb-footer-name{font-size:22px}.wb-page-title{padding-top:45px;padding-bottom:35px}.wb-pagination{gap:15px}}
+ @media(prefers-reduced-motion:reduce){.wb *{scroll-behavior:auto!important;transition:none!important}}
++
++/* Keep editorial treatments inside the website, including the narrow editor preview. */
++.wb{--wb-soft:#f2f5f8;--wb-heading-font:Arial,Helvetica,sans-serif;text-rendering:optimizeLegibility}
++.wb .wb-header-inner{min-height:90px}.wb .wb-header{position:relative;z-index:20}.wb h1,.wb h2,.wb h3{font-family:var(--wb-heading-font);text-wrap:balance;white-space:pre-line}.wb h1{font-weight:600;line-height:1.06}.wb h2{font-weight:500;line-height:1.15}.wb .wb-section-copy{min-width:0}.wb .wb-body{max-width:56ch}.wb .wb-section--hero{padding:80px 0}.wb .wb-section--hero .wb-section-image{aspect-ratio:4/5;max-height:560px;border-radius:3px}.wb .wb-section--with-image>.wb-container{gap:clamp(28px,5cqw,76px)}
++.wb .wb-section--with-image>.wb-container>.wb-grid,.wb .wb-section--with-image>.wb-container>.wb-faq,.wb .wb-section--with-image>.wb-container>.wb-contact,.wb .wb-section--with-image>.wb-container>.wb-empty{grid-column:1/-1;width:100%}.wb .wb-section-image{display:block;background:var(--wb-soft)}.wb .wb-card>img,.wb .wb-card>[role=img]{width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:22px}.wb .wb-card-number{color:var(--wb-ink);opacity:.65}.wb .wb-card{padding-top:25px}.wb .wb-grid{gap:32px}.wb .wb-card>p{max-width:44ch;line-height:1.8}.wb .wb-button{min-height:48px;padding:15px 22px;gap:30px;border-radius:3px;transition:transform .18s}.wb .wb-button:hover{transform:translateY(-2px)}.wb .wb-button:focus-visible,.wb a:focus-visible,.wb summary:focus-visible{outline-color:var(--wb-ink)}.wb .wb-footer{background:var(--wb-soft);border-top:1px solid var(--wb-line)}.wb .wb-footer .wb-container{display:grid;grid-template-columns:1fr 1fr;gap:20px 60px}.wb .wb-footer p{margin:0;max-width:45ch}.wb .wb-footer span{grid-column:1/-1;padding-top:24px;border-top:1px solid var(--wb-line)}
++.wb--editorial{--wb-soft:#f0eadd;--wb-heading-font:Georgia,'Times New Roman',serif}.wb--editorial h1,.wb--editorial h2,.wb--editorial .wb-brand strong{font-weight:400}.wb--editorial .wb-section--hero.wb-section--with-image>.wb-container{display:flex;flex-direction:column;gap:48px}.wb--editorial .wb-section--hero .wb-section-copy{max-width:850px}.wb--editorial .wb-section--hero .wb-section-image{width:100%;max-height:430px;aspect-ratio:21/9;object-position:center}.wb--editorial .wb-section--hero h1{font-size:clamp(44px,6cqw,80px);letter-spacing:-.05em}.wb--editorial .wb-grid{gap:44px}
++.wb--bold{--wb-soft:#182236}.wb--bold .wb-section--hero{background:var(--wb-paper)}.wb--bold .wb-section--hero h1{font-size:clamp(45px,5.8cqw,84px);font-weight:600}.wb--bold .wb-section--hero .wb-section-image{border-radius:0}.wb--bold .wb-card{border-top:1px solid var(--wb-line)}.wb--bold .wb-button{border-radius:0}.wb--bold .wb-section--text{background:var(--wb-soft)}
++.wb--canvas{--wb-soft:#f0e6db}.wb--canvas .wb-section--hero h1{font-size:clamp(48px,6.8cqw,96px);font-weight:500}.wb--canvas .wb-section--hero .wb-section-image{aspect-ratio:4/5;max-height:590px}.wb--canvas .wb-section--gallery .wb-card:nth-child(even){padding-top:100px}.wb--canvas .wb-section--gallery .wb-card>img{aspect-ratio:4/5}.wb--canvas .wb-section--gallery .wb-card{border-top:0}
++.wb--journal{--wb-soft:#f5f1eb;--wb-heading-font:Georgia,'Times New Roman',serif}.wb--journal .wb-section--hero.wb-section--with-image>.wb-container{display:flex;flex-direction:column;gap:40px;text-align:center}.wb--journal .wb-section--hero .wb-section-copy{margin:auto}.wb--journal .wb-section--hero .wb-body{margin-inline:auto}.wb--journal .wb-section--hero .wb-section-image{width:100%;aspect-ratio:21/9;max-height:360px}.wb--journal .wb-section--posts .wb-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}.wb--journal .wb-post h3{font-size:25px}.wb--journal .wb-section--posts .wb-post{padding-block:24px}.wb--journal .wb-page-title{max-width:840px}
++.wb--split .wb-section--hero.wb-section--with-image .wb-section-copy{display:block}.wb--split .wb-section--hero .wb-section-image{border-radius:12px}.wb--split .wb-card{border-top:0;padding:28px;background:var(--wb-soft);border-radius:10px}
++.wb-theme-business-studio .wb-section--hero .wb-section-image{border-radius:120px 4px 4px 4px}.wb-theme-business-studio .wb-section--features .wb-card{padding:30px;background:var(--wb-soft);border-top:0}.wb-theme-business-classic .wb-section--hero{background:#f1ebde}.wb-theme-business-bold .wb-section--hero .wb-section-image{box-shadow:20px 20px 0 #26374c}
++.wb-theme-portfolio-canvas .wb-section--hero{background:#efe4d8}.wb-theme-portfolio-canvas .wb-section--hero .wb-section-image{border-radius:45% 45% 0 0}.wb-theme-portfolio-minimal{--wb-paper:#fbfbf9;--wb-soft:#eeefec;--wb-ink:#252a2e;--wb-muted:#5c6469}.wb-theme-portfolio-minimal .wb-section-image,.wb-theme-portfolio-minimal .wb-card img{filter:grayscale(1)}.wb-theme-portfolio-minimal .wb-card{padding-inline:0;background:transparent}.wb-theme-portfolio-noir{--wb-paper:#171716;--wb-soft:#242320;--wb-line:#3b3a35}.wb-theme-portfolio-noir .wb-section--hero .wb-section-image{border-radius:48% 48% 0 0}.wb-theme-portfolio-noir .wb-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
++.wb-theme-blog-journal{--wb-paper:#fffcf7;--wb-line:#e7dfd4;--wb-muted:#6f655b}.wb-theme-blog-notebook .wb-section--hero{background:#edf0e7}.wb-theme-blog-notebook{--wb-soft:#edf0e7}.wb-theme-blog-dispatch .wb-section--hero{background:#edf2f8}.wb-theme-blog-dispatch .wb-section--hero .wb-section-image{aspect-ratio:1/1;max-height:470px}.wb-theme-blog-dispatch .wb-section--posts{border-top:4px solid var(--wb-accent)}
++.wb-theme-landing-launch{--wb-paper:#191527;--wb-soft:#27203c;--wb-line:#403652;--wb-muted:#c2bace}.wb-theme-landing-launch .wb-section--hero .wb-section-image{border-radius:22px;box-shadow:20px 20px 0 #342b4b}.wb-theme-landing-focus .wb-section--hero{background:#eef4f8}.wb-theme-landing-focus .wb-section--hero .wb-section-image{order:-1;aspect-ratio:1/1}.wb-theme-landing-spotlight{--wb-soft:#f8eee9}.wb-theme-landing-spotlight .wb-section--hero{background:#f8eee9}.wb-theme-landing-spotlight .wb-section--hero .wb-section-image{border-radius:120px 120px 4px 4px}
++.wb-theme-agency-collective{--wb-paper:#17191e;--wb-soft:#23262f;--wb-line:#373b46}.wb-theme-agency-collective .wb-section--hero .wb-section-image{aspect-ratio:1/1;box-shadow:16px 16px 0 #34313f}.wb-theme-agency-atelier{--wb-heading-font:Georgia,'Times New Roman',serif;--wb-soft:#ece4d8}.wb-theme-agency-works{--wb-paper:#f7f9f3;--wb-soft:#e8eee2;--wb-ink:#273c30;--wb-muted:#5e7063;--wb-line:#d7dfd1}.wb-theme-agency-works .wb-section--hero .wb-section-image{border-radius:0;aspect-ratio:1/1}.wb-theme-agency-works .wb-section--gallery .wb-card{padding-top:0}
++.wb-theme-other-canvas .wb-section--hero{background:#edf3f5}.wb-theme-other-canvas .wb-section--hero .wb-section-image{border-radius:50% 50% 5px 5px}.wb-theme-other-simple .wb-section--hero .wb-section-copy{max-width:740px}.wb-theme-other-statement{--wb-paper:#122622;--wb-soft:#1b3530;--wb-muted:#abc7be;--wb-line:#34524a}.wb-theme-other-statement .wb-section--hero .wb-section-image{border-radius:0 100px 0 0}
++.wb[data-font=sans]{--wb-heading-font:Arial,Helvetica,sans-serif}.wb[data-font=serif]{--wb-heading-font:Georgia,'Times New Roman',serif}.wb[data-font=sans] h1,.wb[data-font=sans] h2,.wb[data-font=sans] h3,.wb[data-font=sans] .wb-brand strong{font-family:var(--wb-heading-font)}.wb[data-font=serif] h1,.wb[data-font=serif] h2,.wb[data-font=serif] h3,.wb[data-font=serif] .wb-brand strong{font-family:var(--wb-heading-font);font-weight:400}
++.wb .wb-section.wb-layout-center>.wb-container{display:block;text-align:center}.wb .wb-layout-center .wb-section-copy,.wb .wb-layout-center .wb-body{margin-inline:auto}.wb .wb-layout-center .wb-section-image{width:100%;max-width:900px;aspect-ratio:16/9;margin:40px auto 0}.wb .wb-section.wb-layout-image_left.wb-section--with-image>.wb-container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);text-align:left}.wb .wb-layout-image_left .wb-section-image{order:-1;margin:0;width:100%;aspect-ratio:4/5}.wb .wb-layout-image_left .wb-section-copy{margin:0}
++.wb .wb-section.wb-tone-soft{background:var(--wb-soft)}.wb .wb-section.wb-tone-accent{background:var(--wb-accent);color:var(--wb-on-accent);--wb-ink:var(--wb-on-accent);--wb-muted:var(--wb-on-accent);--wb-line:color-mix(in srgb,var(--wb-on-accent) 25%,transparent)}.wb .wb-tone-accent .wb-button{background:var(--wb-on-accent);color:var(--wb-accent)!important}.wb .wb-section.wb-space-compact{padding-block:42px}.wb .wb-section.wb-space-relaxed{padding-block:115px}
++@container website (max-width:760px){.wb .wb-header-inner{min-height:76px}.wb .wb-section--hero{padding-block:50px}.wb .wb-section--hero h1{font-size:clamp(40px,10cqw,62px)}.wb .wb-section--hero .wb-section-image{max-height:440px;aspect-ratio:4/3}.wb .wb-section--with-image>.wb-container{gap:32px}.wb .wb-grid,.wb--journal .wb-section--posts .wb-grid,.wb-theme-portfolio-noir .wb-grid{grid-template-columns:1fr;gap:22px}.wb .wb-section--gallery .wb-card:nth-child(even){padding-top:22px}.wb .wb-footer .wb-container{grid-template-columns:1fr;gap:18px}.wb .wb-footer span{padding-top:18px}.wb .wb-section.wb-layout-image_left.wb-section--with-image>.wb-container{display:flex;flex-direction:column;align-items:stretch}.wb .wb-layout-image_left .wb-section-image{order:-1;aspect-ratio:4/3}.wb .wb-section.wb-space-compact{padding-block:28px}.wb .wb-section.wb-space-relaxed{padding-block:72px}.wb .wb-layout-center .wb-section-image{margin-top:30px}.wb--editorial .wb-section--hero.wb-section--with-image>.wb-container,.wb--journal .wb-section--hero.wb-section--with-image>.wb-container{gap:32px}.wb-theme-business-bold .wb-section--hero .wb-section-image,.wb-theme-agency-collective .wb-section--hero .wb-section-image,.wb-theme-landing-launch .wb-section--hero .wb-section-image{box-shadow:8px 8px 0 var(--wb-line)}}
++@media(prefers-reduced-motion:reduce){.wb .wb-button:hover{transform:none}}
++.wb .wb-tone-accent .wb-card{background:transparent}.wb .wb-tone-accent .wb-card-number{opacity:1}
+--- a/apps/web/src/lib/sites.ts
++++ b/apps/web/src/lib/sites.ts
+@@ -5,7 +5,7 @@
+ export const websiteThemes = catalog.themes;
+ export const websiteStarters = catalog.starters as Record<string, Section[]>;
+ export type SectionItem = { heading: string; body: string; image_url: string; image_alt: string; button_text: string; button_url: string };
+-export type Section = Partial<SectionItem> & { id: string; type: string; enabled?: boolean; eyebrow?: string; items?: Partial<SectionItem>[] };
++export type Section = Partial<SectionItem> & { id: string; type: string; enabled?: boolean; eyebrow?: string; anchor?: string; layout?: 'default'|'center'|'image_left'; spacing?: 'default'|'compact'|'relaxed'; tone?: 'default'|'soft'|'accent'; items?: Partial<SectionItem>[] };
+ export const isOnlineStore = (site: any) => !site.website_type || site.website_type === 'online_store';
+ export const publicSitePath = (site: any) => `${isOnlineStore(site) ? '/store' : '/site'}/${site.slug}`;
+ export const websiteType = (key: string) => websiteTypes.find(type => type.key === key) || websiteTypes.find(type => type.key === 'online_store')!;
+--- a/services/api/app/schemas/page.py
++++ b/services/api/app/schemas/page.py
+@@ -41,6 +41,10 @@
+     type: Literal['hero', 'text', 'features', 'gallery', 'faq', 'contact', 'cta', 'posts', 'testimonials']
+     enabled: bool = Field(True, strict=True)
+     eyebrow: str = Field('', max_length=80)
++    anchor: str = Field('', max_length=64, pattern=r'^(?:[A-Za-z][A-Za-z0-9_-]*)?$')
++    layout: Literal['default', 'center', 'image_left'] = 'default'
++    spacing: Literal['default', 'compact', 'relaxed'] = 'default'
++    tone: Literal['default', 'soft', 'accent'] = 'default'
+     heading: str = Field('', max_length=160)
+     body: str = Field('', max_length=12000)
+     items: list[ContentItem] = Field(default_factory=list, max_length=12)
+@@ -64,6 +68,9 @@
+     def unique_sections(self):
+         if len({section.id for section in self.sections}) != len(self.sections):
+             raise ValueError('Each section needs a unique ID')
++        anchors = [section.anchor or section.id for section in self.sections]
++        if len(set(anchors)) != len(anchors) or 'website-main' in anchors:
++            raise ValueError('Each section needs a unique anchor; website-main is reserved')
+         return self
+ 
+ 
+--- a/services/api/app/schemas/theme.py
++++ b/services/api/app/schemas/theme.py
+@@ -1,8 +1,7 @@
+-from typing import Optional, Any, Dict
++from typing import Optional, Any, Dict, Literal
+ from datetime import datetime
+ from pydantic import ConfigDict, BaseModel, Field, field_validator
+-from urllib.parse import urlsplit
+-from app.schemas.page import WebsiteType
++from app.schemas.page import WebsiteType, safe_url
+ 
+ 
+ class BannerContent(BaseModel):
+@@ -11,6 +10,10 @@
+     subtitle: str = Field('', max_length=500)
+     button_text: str = Field('', max_length=60)
+     image_alt: str = Field('', max_length=160)
++    button_url: str = Field('#catalog', max_length=2048)
++    story_title: str = Field('', max_length=120)
++    footer_text: str = Field('', max_length=160)
++    _link = field_validator('button_url')(lambda value: safe_url(value))
+ 
+ 
+ class PromotionSettings(BaseModel):
+@@ -27,12 +30,7 @@
+     @field_validator('banner_url')
+     @classmethod
+     def valid_banner_url(cls, value):
+-        if not value:
+-            return None
+-        parsed = urlsplit(value)
+-        if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
+-            raise ValueError('Use an http or https banner image URL')
+-        return value
++        return safe_url(value, image=True) if value else None
+ 
+ class ThemeResponse(BaseModel):
+     id: str
+@@ -47,6 +45,11 @@
+ 
+     model_config = ConfigDict(from_attributes=True, str_strip_whitespace=True)
+ 
++class BrandContent(BaseModel):
++    model_config = ConfigDict(extra='allow')
++    primary_color: Optional[str] = Field(None, pattern=r'^#[0-9a-fA-F]{6}$')
++    font_family: Literal['theme', 'sans', 'serif'] = 'theme'
++
+ class ShopThemeSettingUpdate(BaseModel):
+     theme_key: Optional[str] = None
+     settings_json: Dict[str, Any]
+@@ -54,6 +57,8 @@
+     @field_validator('settings_json')
+     @classmethod
+     def validate_storefront_fields(cls, value):
++        if 'brand' in value:
++            BrandContent.model_validate(value['brand'])
+         if 'hero' in value:
+             BannerContent.model_validate(value['hero'])
+         if 'promotion' in value:
+--- a/services/api/app/website_catalog.json
++++ b/services/api/app/website_catalog.json
+@@ -50,8 +50,8 @@
+       "name": "Business Studio",
+       "presentation": "studio",
+       "accent": "#2358a8",
+-      "description": "A studio design for business website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A contemporary studio with an architectural image treatment, crisp blue details and a clear three-part service story.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/business-studio.jpg"
+     },
+     {
+@@ -60,8 +60,8 @@
+       "name": "Business Classic",
+       "presentation": "editorial",
+       "accent": "#245d50",
+-      "description": "A editorial design for business website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A warm, editorial business website with generous imagery, quiet serif typography and a confident green accent.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/business-classic.jpg"
+     },
+     {
+@@ -70,8 +70,8 @@
+       "name": "Business Bold",
+       "presentation": "bold",
+       "accent": "#b7dbf5",
+-      "description": "A bold design for business website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A confident dark business website with strong typography, framed photography and a clear service-led structure.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/business-bold.jpg"
+     },
+     {
+@@ -80,8 +80,8 @@
+       "name": "Portfolio Canvas",
+       "presentation": "canvas",
+       "accent": "#b04b2c",
+-      "description": "A canvas design for portfolio pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "An expressive portfolio with warm paper tones, oversized type and an alternating image-led project gallery.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/portfolio-canvas.jpg"
+     },
+     {
+@@ -90,8 +90,8 @@
+       "name": "Portfolio Minimal",
+       "presentation": "split",
+       "accent": "#39434e",
+-      "description": "A split design for portfolio pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A restrained monochrome portfolio with precise spacing, grayscale imagery and a quiet focus on the work.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/portfolio-minimal.jpg"
+     },
+     {
+@@ -100,8 +100,8 @@
+       "name": "Portfolio Noir",
+       "presentation": "bold",
+       "accent": "#edc993",
+-      "description": "A bold design for portfolio pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A cinematic portfolio with charcoal surfaces, warm highlights and generous two-column project stories.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/portfolio-noir.jpg"
+     },
+     {
+@@ -110,8 +110,8 @@
+       "name": "The Journal",
+       "presentation": "journal",
+       "accent": "#843d50",
+-      "description": "A journal design for blog pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A considered journal with serif typography, panoramic photography and an intimate reading experience.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/blog-journal.jpg"
+     },
+     {
+@@ -120,8 +120,8 @@
+       "name": "Notebook",
+       "presentation": "editorial",
+       "accent": "#4a6652",
+-      "description": "A editorial design for blog pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A quiet notebook with soft sage details, warm paper surfaces and a generous editorial rhythm.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/blog-notebook.jpg"
+     },
+     {
+@@ -130,8 +130,8 @@
+       "name": "Dispatch",
+       "presentation": "studio",
+       "accent": "#2756a3",
+-      "description": "A studio design for blog pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A crisp modern journal with a split introduction, strong blue details and a clear article grid.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/blog-dispatch.jpg"
+     },
+     {
+@@ -140,8 +140,8 @@
+       "name": "Launch",
+       "presentation": "bold",
+       "accent": "#ccb6ff",
+-      "description": "A bold design for landing page pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A focused product launch page with a dark plum palette, framed product photography and direct calls to action.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/landing-launch.jpg"
+     },
+     {
+@@ -150,8 +150,8 @@
+       "name": "Focus",
+       "presentation": "split",
+       "accent": "#285b89",
+-      "description": "A split design for landing page pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A calm product page with image-first storytelling, cool blue surfaces and clear benefit cards.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/landing-focus.jpg"
+     },
+     {
+@@ -160,8 +160,8 @@
+       "name": "Spotlight",
+       "presentation": "studio",
+       "accent": "#ad4635",
+-      "description": "A studio design for landing page pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A warm product showcase with sculptural image framing, expressive typography and terracotta details.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/landing-spotlight.jpg"
+     },
+     {
+@@ -170,8 +170,8 @@
+       "name": "The Collective",
+       "presentation": "bold",
+       "accent": "#c8b7fa",
+-      "description": "A bold design for agency website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A confident creative studio with dark surfaces, lilac details and large image-led project stories.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/agency-collective.jpg"
+     },
+     {
+@@ -180,8 +180,8 @@
+       "name": "Agency Atelier",
+       "presentation": "editorial",
+       "accent": "#76513a",
+-      "description": "A editorial design for agency website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "An editorial agency website with warm neutrals, elegant serif type and panoramic studio imagery.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/agency-atelier.jpg"
+     },
+     {
+@@ -190,8 +190,8 @@
+       "name": "Selected Works",
+       "presentation": "canvas",
+       "accent": "#236250",
+-      "description": "A canvas design for agency website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A fresh creative portfolio with moss accents, generous photography and an alternating project gallery.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/agency-works.jpg"
+     },
+     {
+@@ -200,8 +200,8 @@
+       "name": "Blank Canvas",
+       "presentation": "studio",
+       "accent": "#3a5668",
+-      "description": "A studio design for other website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A welcoming modular website with soft blue surfaces, rounded photography and clear content sections.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/other-canvas.jpg"
+     },
+     {
+@@ -210,8 +210,8 @@
+       "name": "Simple Pages",
+       "presentation": "editorial",
+       "accent": "#435c79",
+-      "description": "A editorial design for other website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "A calm editorial website with quiet serif type, spacious reading and a warm, uncluttered structure.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/other-simple.jpg"
+     },
+     {
+@@ -220,8 +220,8 @@
+       "name": "Statement",
+       "presentation": "bold",
+       "accent": "#a7dccf",
+-      "description": "A bold design for other website pages, with editable sections and responsive layouts.",
+-      "version": "1.0.0",
++      "description": "An expressive website with deep teal surfaces, oversized typography and a strong visual introduction.",
++      "version": "1.1.0",
+       "preview_image_url": "/themes/previews/other-statement.jpg"
+     }
+   ],
+@@ -230,74 +230,78 @@
+       {
+         "id": "intro",
+         "type": "hero",
+-        "heading": "Your next chapter starts here.",
+-        "eyebrow": "Business website",
+-        "body": "Introduce your business, explain what you do, and make it easy for people to reach you.",
+-        "button_text": "Explore",
+-        "button_url": "#details"
++        "heading": "Thoughtful design.\nA better everyday.",
++        "eyebrow": "INDEPENDENT DESIGN STUDIO",
++        "body": "Clear ideas, considered spaces and a practical path forward. We help you turn what comes next into something that feels right.",
++        "button_text": "Discover more",
++        "button_url": "#details",
++        "image_url": "/themes/assets/home.jpg",
++        "image_alt": "A considered interior with natural light and warm materials"
+       },
+       {
+         "id": "details",
+         "type": "features",
+-        "heading": "What you will find here",
++        "heading": "Good work starts with a clear idea.",
+         "items": [
+           {
+-            "heading": "A clear introduction",
+-            "body": "Explain what you do and who your website is for."
+-          },
+-          {
+-            "heading": "Details that matter",
+-            "body": "Share the services, information or ideas visitors need."
+-          },
+-          {
+-            "heading": "An easy next step",
+-            "body": "Help visitors explore your pages or get in touch."
++            "heading": "Discover",
++            "body": "A conversation about your goals, your people and what a successful next chapter could look like."
++          },
++          {
++            "heading": "Design",
++            "body": "A focused direction, developed with care. Every detail earns its place."
++          },
++          {
++            "heading": "Bring it to life",
++            "body": "A clear plan and thoughtful support from the first sketch to the finishing touches."
+           }
+         ]
+       },
+       {
+         "id": "about",
+         "type": "text",
+-        "heading": "A little about us",
+-        "body": "Use this space to share your story, your approach and what matters to you."
+-      },
+-      {
+-        "id": "contact",
+-        "type": "contact",
+-        "heading": "Let’s start a conversation.",
+-        "body": "Get in touch to ask a question or talk about your next project."
++        "heading": "A small studio.\nA considered approach.",
++        "body": "We believe the best work makes everyday life a little better. Our approach brings curiosity, clear communication and attention to the details that matter."
++      },
++      {
++        "id": "contact",
++        "type": "contact",
++        "heading": "Let’s make something\nworth coming back to.",
++        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
+       }
+     ],
+     "portfolio": [
+       {
+         "id": "intro",
+         "type": "hero",
+-        "heading": "Work with a point of view.",
+-        "eyebrow": "Portfolio",
+-        "body": "A personal collection of projects, ideas and the details behind the work.",
+-        "button_text": "Explore",
+-        "button_url": "#details"
++        "heading": "A point of view.\nMade tangible.",
++        "eyebrow": "DESIGN / OBJECTS / EVERYDAY LIFE",
++        "body": "A collection of ideas, objects and places. Exploring the space between useful and unexpected, one considered detail at a time.",
++        "button_text": "Explore the work",
++        "button_url": "#details",
++        "image_url": "/themes/assets/chair.jpg",
++        "image_alt": "A sculptural chair with considered proportions"
+       },
+       {
+         "id": "details",
+         "type": "gallery",
+-        "heading": "Selected work",
++        "heading": "Selected work,\nclosely considered.",
+         "items": [
+           {
+-            "heading": "Project one",
+-            "body": "Add a project description and show the details that matter.",
++            "heading": "Room to breathe",
++            "body": "An interior concept exploring light, texture and the feeling of being at home.",
+             "image_url": "/themes/assets/home.jpg",
+-            "image_alt": "An interior with natural materials"
+-          },
+-          {
+-            "heading": "Project two",
+-            "body": "Tell the story behind another piece of your work.",
+-            "image_url": "/themes/assets/tech.jpg",
+-            "image_alt": "Studio headphones"
+-          },
+-          {
+-            "heading": "Project three",
+-            "body": "Share an idea, a case study or a creative experiment.",
++            "image_alt": "A warm contemporary living space"
++          },
++          {
++            "heading": "A quieter kind of light",
++            "body": "A lighting study shaped around the rituals of an ordinary evening.",
++            "image_url": "/themes/assets/lamp.jpg",
++            "image_alt": "A warm sculptural table lamp"
++          },
++          {
++            "heading": "Form follows everyday",
++            "body": "An object study in proportion, comfort and natural materials.",
+             "image_url": "/themes/assets/chair.jpg",
+             "image_alt": "A sculptural chair"
+           }
+@@ -306,174 +310,182 @@
+       {
+         "id": "about",
+         "type": "text",
+-        "heading": "A little about me",
+-        "body": "Use this space to share your story, your approach and what matters to you."
+-      },
+-      {
+-        "id": "contact",
+-        "type": "contact",
+-        "heading": "Let’s start a conversation.",
+-        "body": "Get in touch to ask a question or talk about your next project."
++        "heading": "Curious by nature.\nConsidered by design.",
++        "body": "I work across design, objects and visual storytelling. I am drawn to good questions, useful ideas and work that becomes more interesting the closer you look."
++      },
++      {
++        "id": "contact",
++        "type": "contact",
++        "heading": "Have a project in mind?\nI’d love to hear it.",
++        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
+       }
+     ],
+     "blog": [
+       {
+         "id": "intro",
+         "type": "hero",
+-        "heading": "Notes worth sharing.",
+-        "eyebrow": "Blog",
+-        "body": "Stories, observations and ideas, gathered in one place.",
+-        "button_text": "Explore",
+-        "button_url": "#details"
++        "heading": "For the curious.\nFor the everyday.",
++        "eyebrow": "A JOURNAL OF THINGS WORTH NOTICING",
++        "body": "Notes on design, places and daily rituals. A slower look at the ideas and details that make ordinary days feel a little more considered.",
++        "button_text": "Discover more",
++        "button_url": "#details",
++        "image_url": "/themes/assets/home.jpg",
++        "image_alt": "A light-filled space for reading and reflection"
+       },
+       {
+         "id": "details",
+         "type": "posts",
+-        "heading": "Latest writing"
+-      },
+-      {
+-        "id": "about",
+-        "type": "text",
+-        "heading": "A little about me",
+-        "body": "Use this space to share your story, your approach and what matters to you."
+-      },
+-      {
+-        "id": "contact",
+-        "type": "contact",
+-        "heading": "Let’s start a conversation.",
+-        "body": "Get in touch to ask a question or talk about your next project."
++        "heading": "From the journal"
++      },
++      {
++        "id": "about",
++        "type": "text",
++        "heading": "A little space\nfor a different perspective.",
++        "body": "This journal is a place to notice things, ask better questions and share what stays with us. Essays, observations and ideas, collected at a human pace."
++      },
++      {
++        "id": "contact",
++        "type": "contact",
++        "heading": "Keep the\nconversation going.",
++        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
+       }
+     ],
+     "landing_page": [
+       {
+         "id": "intro",
+         "type": "hero",
+-        "heading": "One idea. A clear next step.",
+-        "eyebrow": "Landing page",
+-        "body": "Present your offer, explain the benefits and invite people to learn more.",
+-        "button_text": "Explore",
+-        "button_url": "#details"
++        "heading": "Less noise.\nMore room to focus.",
++        "eyebrow": "MEET YOUR NEXT EVERYDAY ESSENTIAL",
++        "body": "Make space for the work, music and moments that matter. Thoughtful sound, intuitive details and a calmer kind of everyday.",
++        "button_text": "Discover more",
++        "button_url": "#details",
++        "image_url": "/themes/assets/tech.jpg",
++        "image_alt": "Studio photograph of carefully designed over-ear headphones"
+       },
+       {
+         "id": "details",
+         "type": "features",
+-        "heading": "What you will find here",
++        "heading": "Made for the way\nyour day unfolds.",
+         "items": [
+           {
+-            "heading": "A clear introduction",
+-            "body": "Explain what you do and who your website is for."
+-          },
+-          {
+-            "heading": "Details that matter",
+-            "body": "Share the services, information or ideas visitors need."
+-          },
+-          {
+-            "heading": "An easy next step",
+-            "body": "Help visitors explore your pages or get in touch."
++            "heading": "Stay in your flow",
++            "body": "A considered listening experience that makes room for your own pace."
++          },
++          {
++            "heading": "Keep things simple",
++            "body": "Useful details and an intuitive feel. Less time figuring things out, more time enjoying them."
++          },
++          {
++            "heading": "Make it yours",
++            "body": "At your desk, on a walk or between chapters. An everyday companion, on your terms."
+           }
+         ]
+       },
+       {
+         "id": "about",
+         "type": "text",
+-        "heading": "A little about us",
+-        "body": "Use this space to share your story, your approach and what matters to you."
+-      },
+-      {
+-        "id": "contact",
+-        "type": "contact",
+-        "heading": "Let’s start a conversation.",
+-        "body": "Get in touch to ask a question or talk about your next project."
++        "heading": "Good design\ngets out of the way.",
++        "body": "We start with the everyday and ask what could feel better. The result is a focused collection of useful ideas, made with care and built around real life."
++      },
++      {
++        "id": "contact",
++        "type": "contact",
++        "heading": "Ready for\na different kind of everyday?",
++        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
+       }
+     ],
+     "agency": [
+       {
+         "id": "intro",
+         "type": "hero",
+-        "heading": "Good ideas. Thoughtfully made.",
+-        "eyebrow": "Agency website",
+-        "body": "Bring your services and selected work together in a website that feels like your team.",
+-        "button_text": "Explore",
+-        "button_url": "#details"
++        "heading": "Good ideas deserve\ngreat company.",
++        "eyebrow": "STRATEGY / IDENTITY / DIGITAL",
++        "body": "We connect clear thinking with thoughtful design. Bringing brands, experiences and ambitious next chapters to life, together.",
++        "button_text": "Explore the work",
++        "button_url": "#details",
++        "image_url": "/themes/assets/home.jpg",
++        "image_alt": "A creative studio interior with considered natural materials"
+       },
+       {
+         "id": "details",
+         "type": "gallery",
+-        "heading": "Selected work",
++        "heading": "Different challenges.\nA shared point of view.",
+         "items": [
+           {
+-            "heading": "Project one",
+-            "body": "Add a project description and show the details that matter.",
++            "heading": "A sense of place",
++            "body": "An interiors concept with a warm, welcoming visual language.",
+             "image_url": "/themes/assets/home.jpg",
+-            "image_alt": "An interior with natural materials"
+-          },
+-          {
+-            "heading": "Project two",
+-            "body": "Tell the story behind another piece of your work.",
+-            "image_url": "/themes/assets/tech.jpg",
+-            "image_alt": "Studio headphones"
+-          },
+-          {
+-            "heading": "Project three",
+-            "body": "Share an idea, a case study or a creative experiment.",
+-            "image_url": "/themes/assets/chair.jpg",
+-            "image_alt": "A sculptural chair"
++            "image_alt": "An interior design concept"
++          },
++          {
++            "heading": "Made to move",
++            "body": "An identity direction for a modern everyday collection.",
++            "image_url": "/themes/assets/fashion.jpg",
++            "image_alt": "A thoughtfully styled clothing collection"
++          },
++          {
++            "heading": "Everyday, reimagined",
++            "body": "A digital product concept that makes useful things feel simple.",
++            "image_url": "/themes/assets/phone.jpg",
++            "image_alt": "A modern smartphone"
+           }
+         ]
+       },
+       {
+         "id": "about",
+         "type": "text",
+-        "heading": "A little about us",
+-        "body": "Use this space to share your story, your approach and what matters to you."
+-      },
+-      {
+-        "id": "contact",
+-        "type": "contact",
+-        "heading": "Let’s start a conversation.",
+-        "body": "Get in touch to ask a question or talk about your next project."
++        "heading": "Small enough to care.\nCurious enough to go further.",
++        "body": "We are a collaborative studio working across strategy, identity and digital experiences. Good questions, honest conversations and a shared attention to craft guide the work."
++      },
++      {
++        "id": "contact",
++        "type": "contact",
++        "heading": "Tell us what\nyou’re thinking.",
++        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
+       }
+     ],
+     "other": [
+       {
+         "id": "intro",
+         "type": "hero",
+-        "heading": "Make this space your own.",
+-        "eyebrow": "Other website",
+-        "body": "A flexible starting point for your ideas, information and next chapter.",
+-        "button_text": "Explore",
+-        "button_url": "#details"
++        "heading": "Good things start\nwith shared interests.",
++        "eyebrow": "A PLACE FOR YOUR NEXT CHAPTER",
++        "body": "Bring your ideas, stories and people together. A considered space for the things you care about and the possibilities ahead.",
++        "button_text": "Discover more",
++        "button_url": "#details",
++        "image_url": "/themes/assets/sport.jpg",
++        "image_alt": "A light-filled training studio with exercise equipment"
+       },
+       {
+         "id": "details",
+         "type": "features",
+-        "heading": "What you will find here",
++        "heading": "A little room\nfor what matters.",
+         "items": [
+           {
+-            "heading": "A clear introduction",
+-            "body": "Explain what you do and who your website is for."
+-          },
+-          {
+-            "heading": "Details that matter",
+-            "body": "Share the services, information or ideas visitors need."
+-          },
+-          {
+-            "heading": "An easy next step",
+-            "body": "Help visitors explore your pages or get in touch."
++            "heading": "Explore an idea",
++            "body": "Discover a perspective, a useful resource or a new way of looking at familiar things."
++          },
++          {
++            "heading": "Find your people",
++            "body": "Make space for shared interests, thoughtful conversations and connections that grow."
++          },
++          {
++            "heading": "Take the next step",
++            "body": "Start small, stay curious and see where a good idea can take you."
+           }
+         ]
+       },
+       {
+         "id": "about",
+         "type": "text",
+-        "heading": "A little about us",
+-        "body": "Use this space to share your story, your approach and what matters to you."
+-      },
+-      {
+-        "id": "contact",
+-        "type": "contact",
+-        "heading": "Let’s start a conversation.",
+-        "body": "Get in touch to ask a question or talk about your next project."
++        "heading": "Make room\nfor something good.",
++        "body": "Every worthwhile thing starts somewhere. This is our space to share what we are learning, the things we care about and what we are making next."
++      },
++      {
++        "id": "contact",
++        "type": "contact",
++        "heading": "There’s always room\nfor a good conversation.",
++        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
+       }
+     ]
+   }

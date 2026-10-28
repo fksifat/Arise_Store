@@ -1,0 +1,54 @@
+ Image arise-store-api:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.03kB done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.api
+#2 transferring dockerfile: 614B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 2.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 197B done
+#4 DONE 0.0s
+
+#5 [base 1/6] FROM docker.io/library/python:3.12-slim@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f
+#5 resolve docker.io/library/python:3.12-slim@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 310.72kB 0.0s done
+#6 DONE 0.0s
+
+#7 [base 2/6] WORKDIR /app
+#7 CACHED
+
+#8 [base 3/6] COPY services/api/requirements.txt .
+#8 CACHED
+
+#9 [base 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [base 5/6] COPY services/api /app
+#10 DONE 0.1s
+
+#11 [base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#11 DONE 1.1s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.3s done
+#12 exporting manifest sha256:1a4394116b7d4adee753cad824a0d78b8f93001abe7c5379db3bcc1a95cf3ed9 0.0s done
+#12 exporting config sha256:b623f3bb4d2cae1547ef169dbe6b6e3c3033a7107a5a0eaec632222ee4c4af23 0.0s done
+#12 exporting attestation manifest sha256:a906a590725410fed1f081387b87600f7b4ad989968b510d33ffffcc12db318f
+#12 exporting attestation manifest sha256:a906a590725410fed1f081387b87600f7b4ad989968b510d33ffffcc12db318f 0.1s done
+#12 exporting manifest list sha256:31a6b9aa41cfee5573054153d0e4bb02adfb1fa9dc4b980db660209f023f1aa3 0.0s done
+#12 naming to docker.io/library/arise-store-api:local done
+#12 unpacking to docker.io/library/arise-store-api:local 0.1s done
+#12 DONE 0.6s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ Image arise-store-api:local Built 

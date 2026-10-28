@@ -1,0 +1,72 @@
+
+Running 36 tests using 1 worker
+
+(node:997320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 e2e/theme-quality.spec.ts:14:6 › business-studio: its own account, editable design, desktop and mobile (1.5m)
+(node:1000052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   2 e2e/theme-quality.spec.ts:14:6 › business-classic: its own account, editable design, desktop and mobile (12.7s)
+
+
+  1) e2e/theme-quality.spec.ts:14:6 › business-studio: its own account, editable design, desktop and mobile 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Open website navigation', exact: true })
+
+
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+    > 88 |     const menu=visitor.getByRole('button',{name:account.website_type==='online_store'?'Open menu':'Open website navigation',exact:true});await menu.click();
+         |                                                                                                                                                     ^
+      89 |     await expect(visitor.getByRole('navigation',{name:account.website_type==='online_store'?'Mobile navigation':'Mobile website navigation',exact:true})).toBeVisible();
+      90 |     if(account.website_type==='online_store'){await visitor.keyboard.press('Escape');await expect(menu).toHaveAttribute('aria-expanded','false');}
+      91 |     else await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:88:149
+
+    Error Context: test-results/theme-quality-business-stu-d432a-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-business-stu-d432a-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-business-stu-d432a-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/theme-quality.spec.ts:14:6 › business-classic: its own account, editable design, desktop and mobile 
+
+    Test was interrupted.
+
+    Error: locator.click: Test ended.
+    Call log:
+      - waiting for getByRole('button', { name: 'Open website navigation', exact: true })
+
+
+      86 |    expect(await visitor.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+      87 |    if(width===390){
+    > 88 |     const menu=visitor.getByRole('button',{name:account.website_type==='online_store'?'Open menu':'Open website navigation',exact:true});await menu.click();
+         |                                                                                                                                                     ^
+      89 |     await expect(visitor.getByRole('navigation',{name:account.website_type==='online_store'?'Mobile navigation':'Mobile website navigation',exact:true})).toBeVisible();
+      90 |     if(account.website_type==='online_store'){await visitor.keyboard.press('Escape');await expect(menu).toHaveAttribute('aria-expanded','false');}
+      91 |     else await menu.click();
+        at /home/farhankabirsifat/Desktop/Arise_Store/apps/web/e2e/theme-quality.spec.ts:88:149
+
+    Error Context: test-results/theme-quality-business-cla-f4137-e-design-desktop-and-mobile/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-quality-business-cla-f4137-e-design-desktop-and-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-quality-business-cla-f4137-e-design-desktop-and-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    e2e/theme-quality.spec.ts:14:6 › business-studio: its own account, editable design, desktop and mobile 
+  1 interrupted
+    e2e/theme-quality.spec.ts:14:6 › business-classic: its own account, editable design, desktop and mobile 
+  34 did not run

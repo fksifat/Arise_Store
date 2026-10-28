@@ -1,0 +1,193 @@
+ Image arise-store-api:local Building 
+ Image arise-store-web Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.50kB done
+#1 DONE 0.0s
+
+#2 [web internal] load build definition from Dockerfile.web
+#2 transferring dockerfile: 34B
+#2 transferring dockerfile: 800B 0.0s done
+#2 DONE 0.1s
+
+#3 [api internal] load build definition from Dockerfile.api
+#3 transferring dockerfile: 614B done
+#3 DONE 0.1s
+
+#4 [web internal] load metadata for docker.io/library/node:24-alpine
+#4 ...
+
+#5 [api internal] load metadata for docker.io/library/python:3.12-slim
+#5 DONE 2.2s
+
+#6 [api internal] load .dockerignore
+#6 transferring context: 197B done
+#6 DONE 0.0s
+
+#7 [api base 1/6] FROM docker.io/library/python:3.12-slim@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f
+#7 resolve docker.io/library/python:3.12-slim@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f 0.0s done
+#7 DONE 0.0s
+
+#8 [api internal] load build context
+#8 transferring context: 34.20kB done
+#8 DONE 0.0s
+
+#9 [api base 2/6] WORKDIR /app
+#9 CACHED
+
+#10 [api base 3/6] COPY services/api/requirements.txt .
+#10 CACHED
+
+#11 [api base 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#11 CACHED
+
+#12 [api base 5/6] COPY services/api /app
+#12 DONE 0.1s
+
+#4 [web internal] load metadata for docker.io/library/node:24-alpine
+#4 DONE 3.0s
+
+#13 [api base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#13 ...
+
+#6 [web internal] load .dockerignore
+#6 transferring context: 197B done
+#6 DONE 0.0s
+
+#14 [web builder 1/8] FROM docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
+#14 resolve docker.io/library/node:24-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 0.1s done
+#14 DONE 0.1s
+
+#15 [web internal] load build context
+#15 transferring context: 6.62MB 0.1s done
+#15 DONE 0.1s
+
+#16 [web builder 3/8] COPY apps/web/package*.json ./
+#16 CACHED
+
+#17 [web builder 2/8] WORKDIR /app
+#17 CACHED
+
+#18 [web builder 4/8] RUN npm ci
+#18 CACHED
+
+#19 [web builder 5/8] COPY apps/web ./
+#19 DONE 0.2s
+
+#13 [api base 6/6] RUN useradd --create-home --uid 10001 arise && mkdir -p /app/uploads && chown -R arise:arise /app
+#13 DONE 1.2s
+
+#20 [web builder 6/8] COPY services/api/app/theme_catalog.json /services/api/app/theme_catalog.json
+#20 DONE 0.2s
+
+#21 [api] exporting to image
+#21 exporting layers
+#21 ...
+
+#22 [web builder 7/8] COPY services/api/app/website_catalog.json /services/api/app/website_catalog.json
+#22 DONE 0.2s
+
+#21 [api] exporting to image
+#21 exporting layers 0.4s done
+#21 exporting manifest sha256:9529bc8e1242c420aeb5029480011cf0c7728d93ecdc7ff8af2bd2ffa54ffaa1 0.0s done
+#21 exporting config sha256:64c787790bf06f65fc75c150366aafbc735341edeaec29573d3192f9521f4b11 0.0s done
+#21 exporting attestation manifest sha256:a970ee1ce5141f78e2e7dd587d4ddc85d0083c7de7de8459e03ae6d4ceb64de6
+#21 exporting attestation manifest sha256:a970ee1ce5141f78e2e7dd587d4ddc85d0083c7de7de8459e03ae6d4ceb64de6 0.1s done
+#21 exporting manifest list sha256:8625d06b2ea003ad963571e41e05ea8523c13ac1139f4b47264dbf9c6c73cd08 0.0s done
+#21 naming to docker.io/library/arise-store-api:local done
+#21 unpacking to docker.io/library/arise-store-api:local 0.1s done
+#21 DONE 0.8s
+
+#23 [web builder 8/8] RUN npm run build
+#23 ...
+
+#24 [api] resolving provenance for metadata file
+#24 DONE 0.0s
+
+#23 [web builder 8/8] RUN npm run build
+#23 0.775 
+#23 0.775 > arise-store-web@1.0.0 build
+#23 0.775 > next build --webpack
+#23 0.775 
+#23 1.421 ▲ Next.js 16.4.1 (webpack)
+#23 1.456 ✓ Running next.config.mjs took 34ms
+#23 1.523 
+#23 1.561   Creating an optimized production build ...
+#23 14.81 ✓ Compiled successfully in 10.2s
+#23 14.82   Running TypeScript ...
+#23 21.20   Finished TypeScript in 6.4s ...
+#23 21.20   Collecting page data using 7 workers ...
+#23 23.04   Generating static pages using 7 workers (0/54) ...
+#23 23.77   Generating static pages using 7 workers (13/54) 
+#23 23.88   Generating static pages using 7 workers (26/54) 
+#23 23.90   Generating static pages using 7 workers (40/54) 
+#23 24.08 ✓ Generating static pages using 7 workers (54/54) in 1039ms
+#23 24.27   Finalizing page optimization ...
+#23 24.27   Collecting build traces ...
+#23 37.74 
+#23 37.74 Route (app)
+#23 37.74 ┌ ○ /
+#23 37.74 ├ ○ /_not-found
+#23 37.74 ├ ○ /admin
+#23 37.74 ├ ○ /dashboard
+#23 37.74 ├ ○ /dashboard/blog
+#23 37.74 ├ ○ /dashboard/categories
+#23 37.74 ├ ○ /dashboard/customers
+#23 37.74 ├ ○ /dashboard/domains
+#23 37.74 ├ ○ /dashboard/orders
+#23 37.74 ├ ƒ /dashboard/orders/[orderId]/invoice
+#23 37.74 ├ ○ /dashboard/pages
+#23 37.74 ├ ƒ /dashboard/pages/[pageId]
+#23 37.74 ├ ○ /dashboard/products
+#23 37.74 ├ ○ /dashboard/reports
+#23 37.74 ├ ○ /dashboard/settings
+#23 37.74 ├ ○ /dashboard/subscription
+#23 37.74 ├ ○ /dashboard/themes
+#23 37.74 ├ ƒ /health
+#23 37.74 ├ ƒ /login
+#23 37.74 ├ ƒ /preview/[slug]/[pageId]
+#23 37.74 ├ ○ /register
+#23 37.74 ├ ƒ /site/[slug]/[[...path]]
+#23 37.74 ├ ƒ /store/[slug]
+#23 37.74 ├ ƒ /store/[slug]/track
+#23 37.74 └   /themes/[themeKey]
+#23 37.74   ├ ● /themes/fashion-modern
+#23 37.74   ├ ● /themes/fashion-noir
+#23 37.74   ├ ● /themes/fashion-runway
+#23 37.74   └ ● [+33 more paths]
+#23 37.74 
+#23 37.74 
+#23 37.74 ○  (Static)   prerendered as static content
+#23 37.74 ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+#23 37.74 ƒ  (Dynamic)  server-rendered on demand
+#23 37.74 
+#23 DONE 37.9s
+
+#17 [web builder 2/8] WORKDIR /app
+#17 CACHED
+
+#25 [web runner 3/5] COPY --from=builder --chown=node:node /app/.next/standalone ./
+#25 DONE 0.6s
+
+#26 [web runner 4/5] COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+#26 DONE 0.2s
+
+#27 [web runner 5/5] COPY --from=builder --chown=node:node /app/public ./public
+#27 DONE 0.2s
+
+#28 [web] exporting to image
+#28 exporting layers
+#28 exporting layers 1.9s done
+#28 exporting manifest sha256:23233a166bf539b735921104599628f44ae3a9ec92239d4e25db4b68edd48dff 0.0s done
+#28 exporting config sha256:c4d7ead28b2cac97879c84ed6c31c230da918e71e41e6c9c1bc9860c8fe91337 0.0s done
+#28 exporting attestation manifest sha256:3519e896608ce0ed974ea68746967a665bf42d8b1de57fd6c452b75807ef897c 0.0s done
+#28 exporting manifest list sha256:619ba66def954f8ed744d2d9aab2ad566333293deecfd43e936413c7cf067fab
+#28 exporting manifest list sha256:619ba66def954f8ed744d2d9aab2ad566333293deecfd43e936413c7cf067fab 0.0s done
+#28 naming to docker.io/library/arise-store-web:latest done
+#28 unpacking to docker.io/library/arise-store-web:latest
+#28 unpacking to docker.io/library/arise-store-web:latest 0.5s done
+#28 DONE 2.6s
+
+#29 [web] resolving provenance for metadata file
+#29 DONE 0.0s
+ Image arise-store-web Built 
+ Image arise-store-api:local Built 

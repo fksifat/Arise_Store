@@ -1,8 +1,7 @@
-from typing import Optional, Any, Dict
+from typing import Optional, Any, Dict, Literal
 from datetime import datetime
 from pydantic import ConfigDict, BaseModel, Field, field_validator
-from urllib.parse import urlsplit
-from app.schemas.page import WebsiteType
+from app.schemas.page import WebsiteType, safe_url
 
 
 class BannerContent(BaseModel):
@@ -11,6 +10,10 @@ class BannerContent(BaseModel):
     subtitle: str = Field('', max_length=500)
     button_text: str = Field('', max_length=60)
     image_alt: str = Field('', max_length=160)
+    button_url: str = Field('#catalog', max_length=2048)
+    story_title: str = Field('', max_length=120)
+    footer_text: str = Field('', max_length=160)
+    _link = field_validator('button_url')(lambda value: safe_url(value))
 
 
 class PromotionSettings(BaseModel):
@@ -27,12 +30,7 @@ class StorefrontContentUpdate(BaseModel):
     @field_validator('banner_url')
     @classmethod
     def valid_banner_url(cls, value):
-        if not value:
-            return None
-        parsed = urlsplit(value)
-        if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
-            raise ValueError('Use an http or https banner image URL')
-        return value
+        return safe_url(value, image=True) if value else None
 
 class ThemeResponse(BaseModel):
     id: str
@@ -47,6 +45,11 @@ class ThemeResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True, str_strip_whitespace=True)
 
+class BrandContent(BaseModel):
+    model_config = ConfigDict(extra='allow')
+    primary_color: Optional[str] = Field(None, pattern=r'^#[0-9a-fA-F]{6}$')
+    font_family: Literal['theme', 'sans', 'serif'] = 'theme'
+
 class ShopThemeSettingUpdate(BaseModel):
     theme_key: Optional[str] = None
     settings_json: Dict[str, Any]
@@ -54,6 +57,8 @@ class ShopThemeSettingUpdate(BaseModel):
     @field_validator('settings_json')
     @classmethod
     def validate_storefront_fields(cls, value):
+        if 'brand' in value:
+            BrandContent.model_validate(value['brand'])
         if 'hero' in value:
             BannerContent.model_validate(value['hero'])
         if 'promotion' in value:

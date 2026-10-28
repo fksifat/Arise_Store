@@ -1,0 +1,42 @@
+
+> arise-store-web@1.0.0 test:e2e
+> playwright test
+
+
+Running 29 tests using 1 worker
+
+(node:1125739) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/commerce.spec.ts:5:5 › merchant registration uses a cookie session and opens the dashboard (1.1s)
+  ✓   2 e2e/commerce.spec.ts:20:5 › variant checkout recovers a lost successful response even after stock sells out (1.8s)
+  ✓   3 e2e/dashboard.spec.ts:27:5 › overview separates delivered value, active products and low-stock options (501ms)
+  ✓   4 e2e/dashboard.spec.ts:42:5 › merchant pages recover request failures and remain usable on mobile (2.2s)
+  ✓   5 e2e/dashboard.spec.ts:82:5 › merchant completes store setup, fulfillment, billing request and store switching (4.5s)
+  ✓   6 e2e/dashboard.spec.ts:164:5 › settings preserve edits on failure and domain verification reports ownership separately from hosting (735ms)
+  -   7 e2e/demo-login.spec.ts:9:7 › Demo Merchant quick fill signs into the correct dashboard
+  -   8 e2e/demo-login.spec.ts:9:7 › Platform Admin quick fill signs into the correct dashboard
+  ✓   9 e2e/marketing.spec.ts:9:5 › Themes and Live Demos navigate to separate design and store sections (1.2s)
+  ✓  10 e2e/marketing.spec.ts:44:5 › unavailable demos show an empty state without dead store links (319ms)
+  ✓  11 e2e/marketing.spec.ts:56:5 › only available sample stores are offered when one demo is missing (258ms)
+  ✓  12 e2e/operations.spec.ts:6:5 › merchant reviews customers and reports, exports filtered orders, and prints a saved invoice (3.0s)
+  ✓  13 e2e/operations.spec.ts:96:5 › customer pagination and reporting failures are recoverable without leaking other store data (812ms)
+  ✓  14 e2e/polish.spec.ts:5:5 › mobile navigation, registration labels and password visibility work (814ms)
+  ✓  15 e2e/polish.spec.ts:33:5 › expired private sessions return to sign in with an explanation (293ms)
+  ✓  16 e2e/polish.spec.ts:42:5 › options, stock conflict recovery and an empty-bag checkout recovery work end to end (2.7s)
+  ✓  17 e2e/polish.spec.ts:123:5 › admin load failures and action failures are explicit and recoverable (627ms)
+  ✓  18 e2e/promotions.spec.ts:5:5 › merchant customizes banner and offers in Settings; every theme preserves them and checkout records the discount (21.7s)
+  ✓  19 e2e/promotions.spec.ts:85:5 › custom banner text stays within every mobile theme layout (2.3s)
+  -  20 e2e/theme-quality.spec.ts:12:23 › 36-account theme review requires the private local manifest
+  ✓  21 e2e/themes.spec.ts:5:5 › related previews switch between designs without carrying an open bag or preview notice (719ms)
+  ✓  22 e2e/themes.spec.ts:21:5 › all theme demos support mobile browsing, quick view and honest preview checkout (10.4s)
+  ✓  23 e2e/themes.spec.ts:56:5 › gallery applies all themes without publishing drafts or losing custom branding, then every theme checks out (13.3s)
+  ✓  24 e2e/ui-walkthrough.spec.ts:13:5 › editor navigation preserves unsaved work and refreshes the published navigation (2.0s)
+  ✓  25 e2e/ui-walkthrough.spec.ts:63:5 › product editor saves and edits same-site image paths (980ms)
+  ✓  26 e2e/usability.spec.ts:5:5 › merchant edits and customer browsing work across all themes on desktop and mobile (17.2s)
+  ✓  27 e2e/website-builder.spec.ts:12:5 › business onboarding, section editing and private-to-public publishing work (3.7s)
+  ✓  28 e2e/website-builder.spec.ts:63:5 › pages, blog posts, color choices and draft URLs keep their publication boundaries (3.2s)
+  ✓  29 e2e/website-builder.spec.ts:86:5 › every non-store website type renders all three themes and keeps commerce separate (5.6s)
+
+  3 skipped
+  26 passed (1.7m)
+Browser test cleanup: removed 13 temporary accounts and their audit events.

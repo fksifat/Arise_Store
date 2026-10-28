@@ -50,8 +50,8 @@
       "name": "Business Studio",
       "presentation": "studio",
       "accent": "#2358a8",
-      "description": "A studio design for business website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A contemporary studio with an architectural image treatment, crisp blue details and a clear three-part service story.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/business-studio.jpg"
     },
     {
@@ -60,8 +60,8 @@
       "name": "Business Classic",
       "presentation": "editorial",
       "accent": "#245d50",
-      "description": "A editorial design for business website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A warm, editorial business website with generous imagery, quiet serif typography and a confident green accent.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/business-classic.jpg"
     },
     {
@@ -70,8 +70,8 @@
       "name": "Business Bold",
       "presentation": "bold",
       "accent": "#b7dbf5",
-      "description": "A bold design for business website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A confident dark business website with strong typography, framed photography and a clear service-led structure.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/business-bold.jpg"
     },
     {
@@ -80,8 +80,8 @@
       "name": "Portfolio Canvas",
       "presentation": "canvas",
       "accent": "#b04b2c",
-      "description": "A canvas design for portfolio pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "An expressive portfolio with warm paper tones, oversized type and an alternating image-led project gallery.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/portfolio-canvas.jpg"
     },
     {
@@ -90,8 +90,8 @@
       "name": "Portfolio Minimal",
       "presentation": "split",
       "accent": "#39434e",
-      "description": "A split design for portfolio pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A restrained monochrome portfolio with precise spacing, grayscale imagery and a quiet focus on the work.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/portfolio-minimal.jpg"
     },
     {
@@ -100,8 +100,8 @@
       "name": "Portfolio Noir",
       "presentation": "bold",
       "accent": "#edc993",
-      "description": "A bold design for portfolio pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A cinematic portfolio with charcoal surfaces, warm highlights and generous two-column project stories.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/portfolio-noir.jpg"
     },
     {
@@ -110,8 +110,8 @@
       "name": "The Journal",
       "presentation": "journal",
       "accent": "#843d50",
-      "description": "A journal design for blog pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A considered journal with serif typography, panoramic photography and an intimate reading experience.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/blog-journal.jpg"
     },
     {
@@ -120,8 +120,8 @@
       "name": "Notebook",
       "presentation": "editorial",
       "accent": "#4a6652",
-      "description": "A editorial design for blog pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A quiet notebook with soft sage details, warm paper surfaces and a generous editorial rhythm.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/blog-notebook.jpg"
     },
     {
@@ -130,8 +130,8 @@
       "name": "Dispatch",
       "presentation": "studio",
       "accent": "#2756a3",
-      "description": "A studio design for blog pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A crisp modern journal with a split introduction, strong blue details and a clear article grid.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/blog-dispatch.jpg"
     },
     {
@@ -140,8 +140,8 @@
       "name": "Launch",
       "presentation": "bold",
       "accent": "#ccb6ff",
-      "description": "A bold design for landing page pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A focused product launch page with a dark plum palette, framed product photography and direct calls to action.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/landing-launch.jpg"
     },
     {
@@ -150,8 +150,8 @@
       "name": "Focus",
       "presentation": "split",
       "accent": "#285b89",
-      "description": "A split design for landing page pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A calm product page with image-first storytelling, cool blue surfaces and clear benefit cards.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/landing-focus.jpg"
     },
     {
@@ -160,8 +160,8 @@
       "name": "Spotlight",
       "presentation": "studio",
       "accent": "#ad4635",
-      "description": "A studio design for landing page pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A warm product showcase with sculptural image framing, expressive typography and terracotta details.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/landing-spotlight.jpg"
     },
     {
@@ -170,8 +170,8 @@
       "name": "The Collective",
       "presentation": "bold",
       "accent": "#c8b7fa",
-      "description": "A bold design for agency website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A confident creative studio with dark surfaces, lilac details and large image-led project stories.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/agency-collective.jpg"
     },
     {
@@ -180,8 +180,8 @@
       "name": "Agency Atelier",
       "presentation": "editorial",
       "accent": "#76513a",
-      "description": "A editorial design for agency website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "An editorial agency website with warm neutrals, elegant serif type and panoramic studio imagery.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/agency-atelier.jpg"
     },
     {
@@ -190,8 +190,8 @@
       "name": "Selected Works",
       "presentation": "canvas",
       "accent": "#236250",
-      "description": "A canvas design for agency website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A fresh creative portfolio with moss accents, generous photography and an alternating project gallery.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/agency-works.jpg"
     },
     {
@@ -200,8 +200,8 @@
       "name": "Blank Canvas",
       "presentation": "studio",
       "accent": "#3a5668",
-      "description": "A studio design for other website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A welcoming modular website with soft blue surfaces, rounded photography and clear content sections.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/other-canvas.jpg"
     },
     {
@@ -210,8 +210,8 @@
       "name": "Simple Pages",
       "presentation": "editorial",
       "accent": "#435c79",
-      "description": "A editorial design for other website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "A calm editorial website with quiet serif type, spacious reading and a warm, uncluttered structure.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/other-simple.jpg"
     },
     {
@@ -220,8 +220,8 @@
       "name": "Statement",
       "presentation": "bold",
       "accent": "#a7dccf",
-      "description": "A bold design for other website pages, with editable sections and responsive layouts.",
-      "version": "1.0.0",
+      "description": "An expressive website with deep teal surfaces, oversized typography and a strong visual introduction.",
+      "version": "1.1.0",
       "preview_image_url": "/themes/previews/other-statement.jpg"
     }
   ],
@@ -230,74 +230,78 @@
       {
         "id": "intro",
         "type": "hero",
-        "heading": "Your next chapter starts here.",
-        "eyebrow": "Business website",
-        "body": "Introduce your business, explain what you do, and make it easy for people to reach you.",
-        "button_text": "Explore",
-        "button_url": "#details"
+        "heading": "Thoughtful design.\nA better everyday.",
+        "eyebrow": "INDEPENDENT DESIGN STUDIO",
+        "body": "Clear ideas, considered spaces and a practical path forward. We help you turn what comes next into something that feels right.",
+        "button_text": "Discover more",
+        "button_url": "#details",
+        "image_url": "/themes/assets/home.jpg",
+        "image_alt": "A considered interior with natural light and warm materials"
       },
       {
         "id": "details",
         "type": "features",
-        "heading": "What you will find here",
+        "heading": "Good work starts with a clear idea.",
         "items": [
           {
-            "heading": "A clear introduction",
-            "body": "Explain what you do and who your website is for."
+            "heading": "Discover",
+            "body": "A conversation about your goals, your people and what a successful next chapter could look like."
           },
           {
-            "heading": "Details that matter",
-            "body": "Share the services, information or ideas visitors need."
+            "heading": "Design",
+            "body": "A focused direction, developed with care. Every detail earns its place."
           },
           {
-            "heading": "An easy next step",
-            "body": "Help visitors explore your pages or get in touch."
+            "heading": "Bring it to life",
+            "body": "A clear plan and thoughtful support from the first sketch to the finishing touches."
           }
         ]
       },
       {
         "id": "about",
         "type": "text",
-        "heading": "A little about us",
-        "body": "Use this space to share your story, your approach and what matters to you."
+        "heading": "A small studio.\nA considered approach.",
+        "body": "We believe the best work makes everyday life a little better. Our approach brings curiosity, clear communication and attention to the details that matter."
       },
       {
         "id": "contact",
         "type": "contact",
-        "heading": "Let’s start a conversation.",
-        "body": "Get in touch to ask a question or talk about your next project."
+        "heading": "Let’s make something\nworth coming back to.",
+        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
       }
     ],
     "portfolio": [
       {
         "id": "intro",
         "type": "hero",
-        "heading": "Work with a point of view.",
-        "eyebrow": "Portfolio",
-        "body": "A personal collection of projects, ideas and the details behind the work.",
-        "button_text": "Explore",
-        "button_url": "#details"
+        "heading": "A point of view.\nMade tangible.",
+        "eyebrow": "DESIGN / OBJECTS / EVERYDAY LIFE",
+        "body": "A collection of ideas, objects and places. Exploring the space between useful and unexpected, one considered detail at a time.",
+        "button_text": "Explore the work",
+        "button_url": "#details",
+        "image_url": "/themes/assets/chair.jpg",
+        "image_alt": "A sculptural chair with considered proportions"
       },
       {
         "id": "details",
         "type": "gallery",
-        "heading": "Selected work",
+        "heading": "Selected work,\nclosely considered.",
         "items": [
           {
-            "heading": "Project one",
-            "body": "Add a project description and show the details that matter.",
+            "heading": "Room to breathe",
+            "body": "An interior concept exploring light, texture and the feeling of being at home.",
             "image_url": "/themes/assets/home.jpg",
-            "image_alt": "An interior with natural materials"
+            "image_alt": "A warm contemporary living space"
           },
           {
-            "heading": "Project two",
-            "body": "Tell the story behind another piece of your work.",
-            "image_url": "/themes/assets/tech.jpg",
-            "image_alt": "Studio headphones"
+            "heading": "A quieter kind of light",
+            "body": "A lighting study shaped around the rituals of an ordinary evening.",
+            "image_url": "/themes/assets/lamp.jpg",
+            "image_alt": "A warm sculptural table lamp"
           },
           {
-            "heading": "Project three",
-            "body": "Share an idea, a case study or a creative experiment.",
+            "heading": "Form follows everyday",
+            "body": "An object study in proportion, comfort and natural materials.",
             "image_url": "/themes/assets/chair.jpg",
             "image_alt": "A sculptural chair"
           }
@@ -306,174 +310,182 @@
       {
         "id": "about",
         "type": "text",
-        "heading": "A little about me",
-        "body": "Use this space to share your story, your approach and what matters to you."
+        "heading": "Curious by nature.\nConsidered by design.",
+        "body": "I work across design, objects and visual storytelling. I am drawn to good questions, useful ideas and work that becomes more interesting the closer you look."
       },
       {
         "id": "contact",
         "type": "contact",
-        "heading": "Let’s start a conversation.",
-        "body": "Get in touch to ask a question or talk about your next project."
+        "heading": "Have a project in mind?\nI’d love to hear it.",
+        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
       }
     ],
     "blog": [
       {
         "id": "intro",
         "type": "hero",
-        "heading": "Notes worth sharing.",
-        "eyebrow": "Blog",
-        "body": "Stories, observations and ideas, gathered in one place.",
-        "button_text": "Explore",
-        "button_url": "#details"
+        "heading": "For the curious.\nFor the everyday.",
+        "eyebrow": "A JOURNAL OF THINGS WORTH NOTICING",
+        "body": "Notes on design, places and daily rituals. A slower look at the ideas and details that make ordinary days feel a little more considered.",
+        "button_text": "Discover more",
+        "button_url": "#details",
+        "image_url": "/themes/assets/home.jpg",
+        "image_alt": "A light-filled space for reading and reflection"
       },
       {
         "id": "details",
         "type": "posts",
-        "heading": "Latest writing"
+        "heading": "From the journal"
       },
       {
         "id": "about",
         "type": "text",
-        "heading": "A little about me",
-        "body": "Use this space to share your story, your approach and what matters to you."
+        "heading": "A little space\nfor a different perspective.",
+        "body": "This journal is a place to notice things, ask better questions and share what stays with us. Essays, observations and ideas, collected at a human pace."
       },
       {
         "id": "contact",
         "type": "contact",
-        "heading": "Let’s start a conversation.",
-        "body": "Get in touch to ask a question or talk about your next project."
+        "heading": "Keep the\nconversation going.",
+        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
       }
     ],
     "landing_page": [
       {
         "id": "intro",
         "type": "hero",
-        "heading": "One idea. A clear next step.",
-        "eyebrow": "Landing page",
-        "body": "Present your offer, explain the benefits and invite people to learn more.",
-        "button_text": "Explore",
-        "button_url": "#details"
+        "heading": "Less noise.\nMore room to focus.",
+        "eyebrow": "MEET YOUR NEXT EVERYDAY ESSENTIAL",
+        "body": "Make space for the work, music and moments that matter. Thoughtful sound, intuitive details and a calmer kind of everyday.",
+        "button_text": "Discover more",
+        "button_url": "#details",
+        "image_url": "/themes/assets/tech.jpg",
+        "image_alt": "Studio photograph of carefully designed over-ear headphones"
       },
       {
         "id": "details",
         "type": "features",
-        "heading": "What you will find here",
+        "heading": "Made for the way\nyour day unfolds.",
         "items": [
           {
-            "heading": "A clear introduction",
-            "body": "Explain what you do and who your website is for."
+            "heading": "Stay in your flow",
+            "body": "A considered listening experience that makes room for your own pace."
           },
           {
-            "heading": "Details that matter",
-            "body": "Share the services, information or ideas visitors need."
+            "heading": "Keep things simple",
+            "body": "Useful details and an intuitive feel. Less time figuring things out, more time enjoying them."
           },
           {
-            "heading": "An easy next step",
-            "body": "Help visitors explore your pages or get in touch."
+            "heading": "Make it yours",
+            "body": "At your desk, on a walk or between chapters. An everyday companion, on your terms."
           }
         ]
       },
       {
         "id": "about",
         "type": "text",
-        "heading": "A little about us",
-        "body": "Use this space to share your story, your approach and what matters to you."
+        "heading": "Good design\ngets out of the way.",
+        "body": "We start with the everyday and ask what could feel better. The result is a focused collection of useful ideas, made with care and built around real life."
       },
       {
         "id": "contact",
         "type": "contact",
-        "heading": "Let’s start a conversation.",
-        "body": "Get in touch to ask a question or talk about your next project."
+        "heading": "Ready for\na different kind of everyday?",
+        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
       }
     ],
     "agency": [
       {
         "id": "intro",
         "type": "hero",
-        "heading": "Good ideas. Thoughtfully made.",
-        "eyebrow": "Agency website",
-        "body": "Bring your services and selected work together in a website that feels like your team.",
-        "button_text": "Explore",
-        "button_url": "#details"
+        "heading": "Good ideas deserve\ngreat company.",
+        "eyebrow": "STRATEGY / IDENTITY / DIGITAL",
+        "body": "We connect clear thinking with thoughtful design. Bringing brands, experiences and ambitious next chapters to life, together.",
+        "button_text": "Explore the work",
+        "button_url": "#details",
+        "image_url": "/themes/assets/home.jpg",
+        "image_alt": "A creative studio interior with considered natural materials"
       },
       {
         "id": "details",
         "type": "gallery",
-        "heading": "Selected work",
+        "heading": "Different challenges.\nA shared point of view.",
         "items": [
           {
-            "heading": "Project one",
-            "body": "Add a project description and show the details that matter.",
+            "heading": "A sense of place",
+            "body": "An interiors concept with a warm, welcoming visual language.",
             "image_url": "/themes/assets/home.jpg",
-            "image_alt": "An interior with natural materials"
+            "image_alt": "An interior design concept"
           },
           {
-            "heading": "Project two",
-            "body": "Tell the story behind another piece of your work.",
-            "image_url": "/themes/assets/tech.jpg",
-            "image_alt": "Studio headphones"
+            "heading": "Made to move",
+            "body": "An identity direction for a modern everyday collection.",
+            "image_url": "/themes/assets/fashion.jpg",
+            "image_alt": "A thoughtfully styled clothing collection"
           },
           {
-            "heading": "Project three",
-            "body": "Share an idea, a case study or a creative experiment.",
-            "image_url": "/themes/assets/chair.jpg",
-            "image_alt": "A sculptural chair"
+            "heading": "Everyday, reimagined",
+            "body": "A digital product concept that makes useful things feel simple.",
+            "image_url": "/themes/assets/phone.jpg",
+            "image_alt": "A modern smartphone"
           }
         ]
       },
       {
         "id": "about",
         "type": "text",
-        "heading": "A little about us",
-        "body": "Use this space to share your story, your approach and what matters to you."
+        "heading": "Small enough to care.\nCurious enough to go further.",
+        "body": "We are a collaborative studio working across strategy, identity and digital experiences. Good questions, honest conversations and a shared attention to craft guide the work."
       },
       {
         "id": "contact",
         "type": "contact",
-        "heading": "Let’s start a conversation.",
-        "body": "Get in touch to ask a question or talk about your next project."
+        "heading": "Tell us what\nyou’re thinking.",
+        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
       }
     ],
     "other": [
       {
         "id": "intro",
         "type": "hero",
-        "heading": "Make this space your own.",
-        "eyebrow": "Other website",
-        "body": "A flexible starting point for your ideas, information and next chapter.",
-        "button_text": "Explore",
-        "button_url": "#details"
+        "heading": "Good things start\nwith shared interests.",
+        "eyebrow": "A PLACE FOR YOUR NEXT CHAPTER",
+        "body": "Bring your ideas, stories and people together. A considered space for the things you care about and the possibilities ahead.",
+        "button_text": "Discover more",
+        "button_url": "#details",
+        "image_url": "/themes/assets/sport.jpg",
+        "image_alt": "A light-filled training studio with exercise equipment"
       },
       {
         "id": "details",
         "type": "features",
-        "heading": "What you will find here",
+        "heading": "A little room\nfor what matters.",
         "items": [
           {
-            "heading": "A clear introduction",
-            "body": "Explain what you do and who your website is for."
+            "heading": "Explore an idea",
+            "body": "Discover a perspective, a useful resource or a new way of looking at familiar things."
           },
           {
-            "heading": "Details that matter",
-            "body": "Share the services, information or ideas visitors need."
+            "heading": "Find your people",
+            "body": "Make space for shared interests, thoughtful conversations and connections that grow."
           },
           {
-            "heading": "An easy next step",
-            "body": "Help visitors explore your pages or get in touch."
+            "heading": "Take the next step",
+            "body": "Start small, stay curious and see where a good idea can take you."
           }
         ]
       },
       {
         "id": "about",
         "type": "text",
-        "heading": "A little about us",
-        "body": "Use this space to share your story, your approach and what matters to you."
+        "heading": "Make room\nfor something good.",
+        "body": "Every worthwhile thing starts somewhere. This is our space to share what we are learning, the things we care about and what we are making next."
       },
       {
         "id": "contact",
         "type": "contact",
-        "heading": "Let’s start a conversation.",
-        "body": "Get in touch to ask a question or talk about your next project."
+        "heading": "There’s always room\nfor a good conversation.",
+        "body": "Have a question, a project or an idea? Let’s talk about what comes next."
       }
     ]
   }
