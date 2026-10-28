@@ -34,10 +34,10 @@ def test_invalid_draft_does_not_replace_saved_progress(client, store):
 
 
 def test_only_successful_setup_creation_clears_owners_draft(client, store):
-    owner = store['owner']
+    owner = store['staff']
     data = progress(step=4, slug=store['slug'])
     assert client.put('/api/v1/setup', headers=owner, json=data).status_code == 200
-    assert client.put('/api/v1/setup', headers=store['staff'], json=progress()).status_code == 200
+    assert client.put('/api/v1/setup', headers=store['owner'], json=progress()).status_code == 200
     failed = client.post('/api/v1/shops', headers=owner, json={**data, 'complete_setup': True})
     assert failed.status_code == 400
     assert client.get('/api/v1/setup', headers=owner).json() == data
@@ -46,13 +46,13 @@ def test_only_successful_setup_creation_clears_owners_draft(client, store):
     assert created.status_code == 201, created.text
     assert created.json()['status'] == 'draft'
     assert client.get('/api/v1/setup', headers=owner).json() is None
-    assert client.get('/api/v1/setup', headers=store['staff']).json() == progress()
+    assert client.get('/api/v1/setup', headers=store['owner']).json() == progress()
     pages = client.get(f"/api/v1/shops/{created.json()['id']}/pages", headers=owner).json()
     assert pages['total'] == 1
 
 
 def test_other_website_creation_keeps_unfinished_setup(client, store):
-    headers = store['owner']
+    headers = store['staff']
     assert client.put('/api/v1/setup', headers=headers, json=progress()).status_code == 200
     result = client.post('/api/v1/shops', headers=headers, json={'name': 'Separate site', 'slug': 'separate-' + uuid4().hex[:16]})
     assert result.status_code == 201

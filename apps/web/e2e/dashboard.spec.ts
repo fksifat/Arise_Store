@@ -2,7 +2,7 @@ import { finishSetup } from './_helpers/setup';
 import { test, expect, type Page } from '@playwright/test';
 
 const runId = process.env.E2E_RUN_ID || Date.now().toString();
-const shop = { id:'shop-one', name:'Merchant Test Store', slug:'merchant-test', status:'draft', description:'Our shop', contact_email:null, contact_phone:null, address:null, logo_url:null, banner_url:null, inside_dhaka_delivery_fee_minor:'2900', outside_dhaka_delivery_fee_minor:'8000' };
+const shop = { id:'shop-one', owner_user_id:'merchant', website_type:'online_store', name:'Merchant Test Store', slug:'merchant-test', status:'draft', description:'Our shop', contact_email:null, contact_phone:null, address:null, logo_url:null, banner_url:null, inside_dhaka_delivery_fee_minor:'2900', outside_dhaka_delivery_fee_minor:'8000' };
 const products = [
   {id:'one',name:'Active item',status:'active',track_inventory:true,stock_quantity:20,price_minor:10000,variants:[],images:[],category_ids:[]},
   {id:'two',name:'Variant item',status:'active',track_inventory:true,stock_quantity:0,price_minor:20000,variants:[{is_active:true,stock_quantity:1},{is_active:true,stock_quantity:20}],images:[],category_ids:[]},
@@ -26,6 +26,131 @@ async function mockMerchant(page: Page) {
   });
 }
 
+test('console toolbar follows navigation and account panels work on mobile and desktop', async ({page}) => {
+  await mockMerchant(page);
+  for (const width of [320,390,1440]) {
+    await page.setViewportSize({width,height:900});
+    await page.goto('/dashboard');
+    const header = page.getByRole('banner',{name:'Console toolbar'});
+    await expect(header.getByText('Overview',{exact:true})).toBeVisible();
+    if(width<768)await header.getByRole('button',{name:'Open navigation',exact:true}).click();
+    const sidebar=width<768?page.getByRole('dialog',{name:'Dashboard navigation',exact:true}):page.locator('.merchant-dashboard > aside');
+    const workspace=sidebar.getByRole('region',{name:'Your workspace',exact:true});
+    await expect(workspace).toBeVisible();
+    await expect(workspace).not.toContainText('Store limit reached');
+    await expect(workspace).not.toContainText('/store/');
+    await expect(workspace).not.toContainText('draft');
+    expect((await workspace.boundingBox())!.y).toBeGreaterThan((await sidebar.getByRole('navigation',{name:'Merchant navigation',exact:true}).boundingBox())!.y);
+    await expect(sidebar.getByRole('button',{name:'Sign out',exact:true})).toHaveCount(0);
+    await expect(sidebar.getByRole('link',{name:'View live store',exact:true})).toHaveCount(0);
+    if(width<768)await page.keyboard.press('Escape');
+    const profile = header.getByRole('button',{name:'Account profile',exact:true});
+    await profile.click();
+    const account = header.getByRole('region',{name:'Account profile',exact:true});
+    await expect(account.getByText('Test Merchant',{exact:true})).toBeVisible();
+    await expect(account.getByText('merchant@example.com',{exact:true})).toBeVisible();
+    await account.getByRole('link',{name:'Account settings',exact:true}).click();
+    await expect(header.getByText('Account settings',{exact:true})).toBeVisible();
+    await expect(account).not.toBeVisible();
+    await page.evaluate(()=>scrollTo(0,500));
+    expect((await header.boundingBox())!.y).toBe(0);
+    const notifications = header.getByRole('button',{name:'Notifications',exact:true});
+    await notifications.click();
+    const panel = header.getByRole('region',{name:'Notifications',exact:true});
+    await expect(panel).toContainText('No notifications to show');
+    const bounds = (await panel.boundingBox())!;
+    expect(bounds.x).toBeGreaterThanOrEqual(0);
+    expect(bounds.x+bounds.width).toBeLessThanOrEqual(width);
+    await profile.click();
+    await expect(panel).not.toBeVisible();
+    await expect(account).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(account).not.toBeVisible();
+    await expect(profile).toBeFocused();
+    await notifications.click();
+    await page.locator('#merchant-content').click({position:{x:4,y:400}});
+    await expect(panel).not.toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+    await page.goto('/dashboard/domains');
+    await expect(header.getByText('Custom Domains',{exact:true})).toBeVisible();
+  }
+  await page.route('**/api/v1/auth/logout',route=>route.fulfill({status:204}));
+  const header = page.getByRole('banner',{name:'Console toolbar'});
+  await header.getByRole('button',{name:'Account profile',exact:true}).click();
+  const loggedOut = page.waitForResponse(response=>response.url().endsWith('/api/v1/auth/logout'));
+  await header.getByRole('region',{name:'Account profile',exact:true}).getByRole('button',{name:'Sign out',exact:true}).click();
+  expect((await loggedOut).status()).toBe(204);
+  await expect(page).toHaveURL(/\/login$/);
+});
+
+test('workspace stays pinned below a scrolling menu and console headers align', async ({page}) => {
+  await mockMerchant(page);
+  for(const [width,height] of [[320,600],[390,844],[1440,600],[1440,900]]){
+    await page.setViewportSize({width,height});
+    await page.goto('/dashboard/settings');
+    const header=page.getByRole('banner',{name:'Console toolbar'});
+    await expect(header.getByText('Settings',{exact:true})).toBeVisible();
+    if(width<768)await header.getByRole('button',{name:'Open navigation',exact:true}).click();
+    const sidebar=width<768?page.getByRole('dialog',{name:'Dashboard navigation',exact:true}):page.locator('.merchant-dashboard > aside');
+    const workspace=sidebar.getByRole('region',{name:'Your workspace',exact:true});
+    const nav=sidebar.getByRole('navigation',{name:'Merchant navigation',exact:true});
+    let box=(await workspace.boundingBox())!;
+    expect(Math.abs(box.y+box.height-height)).toBeLessThanOrEqual(1);
+    if(width>=768){
+      const brand=(await sidebar.locator('.console-sidebar-brand').boundingBox())!;
+      const toolbar=(await header.boundingBox())!;
+      expect(brand.y).toBe(toolbar.y);
+      expect(brand.height).toBe(toolbar.height);
+    }
+    await nav.evaluate(element=>{element.scrollTop=element.scrollHeight;});
+    await expect(nav.getByRole('link',{name:'Settings',exact:true})).toBeInViewport();
+    box=(await workspace.boundingBox())!;
+    expect(Math.abs(box.y+box.height-height)).toBeLessThanOrEqual(1);
+    if(width>=768){
+      await page.evaluate(()=>scrollTo(0,500));
+      box=(await workspace.boundingBox())!;
+      expect(Math.abs(box.y+box.height-height)).toBeLessThanOrEqual(1);
+    }else await page.keyboard.press('Escape');
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+  }
+});
+
+test('desktop sidebar collapses to an accessible rail without affecting mobile navigation', async ({page}) => {
+  await mockMerchant(page);
+  await page.setViewportSize({width:1440,height:600});
+  await page.goto('/dashboard/settings');
+  const sidebar=page.locator('#merchant-sidebar');
+  const expanded=(await sidebar.boundingBox())!.width;
+  const contentLeft=(await page.locator('#merchant-content').boundingBox())!.x;
+  await sidebar.getByRole('button',{name:'Collapse sidebar',exact:true}).click();
+  expect((await sidebar.boundingBox())!.width).toBeLessThan(expanded);
+  expect((await page.locator('#merchant-content').boundingBox())!.x).toBeLessThan(contentLeft);
+  await expect(sidebar.getByRole('button',{name:'Expand sidebar',exact:true})).toHaveAttribute('aria-expanded','false');
+  await sidebar.getByRole('navigation',{name:'Merchant navigation',exact:true}).getByRole('link',{name:'Custom Domains',exact:true}).click();
+  await expect(page.getByRole('banner',{name:'Console toolbar'}).getByText('Custom Domains',{exact:true})).toBeVisible();
+  await expect(sidebar.getByRole('link',{name:'Custom Domains',exact:true})).toHaveAttribute('aria-current','page');
+  const workspace=sidebar.getByRole('region',{name:'Your workspace',exact:true});
+  const box=(await workspace.boundingBox())!;
+  expect(Math.abs(box.y+box.height-600)).toBeLessThanOrEqual(1);
+  await sidebar.getByRole('button',{name:'Expand workspace',exact:true}).click();
+  expect((await sidebar.boundingBox())!.width).toBe(expanded);
+  const collapse=sidebar.getByRole('button',{name:'Collapse sidebar',exact:true});
+  await collapse.focus();
+  await page.keyboard.press('Enter');
+  await expect(sidebar.getByRole('button',{name:'Expand sidebar',exact:true})).toBeFocused();
+  await page.setViewportSize({width:390,height:844});
+  await page.getByRole('button',{name:'Open navigation',exact:true}).click();
+  const drawer=page.getByRole('dialog',{name:'Dashboard navigation',exact:true});
+  await expect(drawer.getByRole('link',{name:'Settings',exact:true})).toBeVisible();
+  await expect(drawer.locator('.console-nav-label').filter({hasText:'Settings'})).toBeVisible();
+  await expect(drawer.getByRole('button',{name:'Expand sidebar',exact:true})).not.toBeVisible();
+  await page.keyboard.press('Escape');
+  await page.setViewportSize({width:1440,height:600});
+  await sidebar.getByRole('button',{name:'Expand sidebar',exact:true}).click();
+  expect((await sidebar.boundingBox())!.width).toBe(expanded);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+});
+
 test('overview separates delivered value, active products and low-stock options', async ({page}) => {
   await mockMerchant(page); await page.goto('/dashboard');
   await expect(page.getByRole('link',{name:'Orders to fulfill: 1',exact:true})).toBeVisible();
@@ -39,6 +164,66 @@ test('overview separates delivered value, active products and low-stock options'
   await expect(page.getByRole('checkbox',{name:/Only low-stock products/})).toBeChecked();
   await expect(page.getByText('Variant item',{exact:true})).toBeVisible();
   await expect(page.getByText('Draft item',{exact:true})).not.toBeVisible();
+});
+
+test('account settings uses real identity and its UI sections stay usable across screen sizes', async ({page}) => {
+  await mockMerchant(page);
+  const mutations:string[]=[];
+  page.on('request',request=>{if(request.url().includes('/api/v1/')&&request.method()!=='GET')mutations.push(request.url());});
+  for(const width of [320,390,768,1440]){
+    await page.setViewportSize({width,height:1000});
+    await page.goto('/dashboard/account');
+    await expect(page.getByRole('heading',{name:'Profile Information',exact:true})).toBeVisible();
+    await expect(page.getByLabel('First name',{exact:true})).toHaveValue('Test');
+    await expect(page.getByLabel('Last name',{exact:true})).toHaveValue('Merchant');
+    await expect(page.getByLabel('Primary email address',{exact:true})).toHaveValue('merchant@example.com');
+    await expect(page.getByLabel('Primary email address',{exact:true})).toHaveAttribute('readonly','');
+    for(const name of ['Save profile details','Change password','Enable 2FA','Sign out other devices','Delete account'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();
+    await expect(page.locator('.account-danger-zone')).toContainText('merchant@example.com');
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+    await expect(page.getByText('This browser',{exact:true})).toBeVisible();
+    expect((await page.locator('.account-security-row > div').first().boundingBox())!.width).toBeGreaterThanOrEqual(160);
+    await expect(page.getByText('Verified',{exact:true})).toHaveCount(0);
+    const navigation=page.getByRole('navigation',{name:'Account sections',exact:true});
+    await expect(navigation.getByRole('button')).toHaveCount(5);
+    for(const label of ['Usage & Top-Up','Plan & Payment'])await expect(navigation.getByRole('button',{name:label,exact:true})).toHaveCount(0);
+    await expect(page.getByRole('tablist',{name:'Plan and payment'})).toHaveCount(0);
+    await navigation.getByRole('button',{name:'Plan & Upgrade',exact:true}).click();
+    await expect(page.getByRole('link',{name:'View plans & upgrades',exact:true})).toHaveAttribute('href','/dashboard/subscription');
+    await expect(page.getByRole('button',{name:'Add payment method',exact:true})).not.toBeVisible();
+    await navigation.getByRole('button',{name:'Payment Method',exact:true}).click();
+    await expect(page.getByRole('button',{name:'Add payment method',exact:true})).toBeDisabled();
+    await expect(page.getByRole('link',{name:'View plans & upgrades',exact:true})).not.toBeVisible();
+    for(const label of ['Plan & Upgrade','Payment Method','Invoices & Receipts','Store Portfolio']){
+      await navigation.getByRole('button',{name:label,exact:true}).click();
+      await expect(navigation.getByRole('button',{name:label,exact:true})).toHaveAttribute('aria-current','page');
+      await expect(page.getByRole('heading',{name:label,exact:true})).toBeVisible();
+      expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+    }
+    await expect(page.getByRole('button',{name:'Upgrade store limit',exact:true})).toBeDisabled();
+    await expect(page.getByRole('button',{name:'Create another store',exact:true})).toBeDisabled();
+    await expect(page.getByText('1/1 stores occupied',{exact:true})).toBeVisible();
+    await expect(page.getByRole('article',{name:shop.name,exact:true})).toBeVisible();
+    await navigation.getByRole('button',{name:'Invoices & Receipts',exact:true}).click();
+    await expect(page.getByRole('link',{name:'View billing history',exact:true})).toHaveAttribute('href','/dashboard/subscription#billing-history');
+  }
+  expect(mutations).toEqual([]);
+});
+
+test('portfolio preserves legacy stores and shared access without unlocking creation', async ({page}) => {
+  await mockMerchant(page);
+  const legacy={...shop,id:'shop-two',name:'Legacy store',slug:'legacy-store'};
+  const shared={...shop,id:'shared-shop',owner_user_id:'another-owner',name:'Shared store',slug:'shared-store'};
+  await page.route('**/api/v1/shops',route=>route.fulfill({json:[shop,legacy,shared]}));
+  await page.goto('/dashboard/account?section=stores');
+  await expect(page.getByText('2/1 stores occupied',{exact:true})).toBeVisible();
+  for(const name of [shop.name,legacy.name,shared.name])await expect(page.getByRole('article',{name,exact:true})).toBeVisible();
+  await expect(page.getByRole('button',{name:'Create another store',exact:true})).toBeDisabled();
+  await page.route('**/api/v1/shops',route=>route.fulfill({json:[shared]}));
+  await page.reload();
+  await expect(page.getByText('0/1 stores occupied',{exact:true})).toBeVisible();
+  await expect(page.getByRole('link',{name:'Create your store',exact:true}).last()).toHaveAttribute('href','/setup?new=1');
+  await expect(page.getByRole('button',{name:'Upgrade store limit',exact:true})).toBeDisabled();
 });
 
 test('merchant pages recover request failures and remain usable on mobile', async ({page}) => {
@@ -130,7 +315,7 @@ test('merchant completes store setup, fulfillment, billing request and store swi
   await expect(page.locator('aside').getByText('Updated Merchant Store',{exact:true})).toBeVisible();
   await page.locator('aside').getByRole('link',{name:'Overview',exact:true}).click();
   await page.getByRole('button',{name:'Publish store',exact:true}).click();
-  await expect(page.getByRole('link',{name:'View live store',exact:true})).toBeVisible();
+  await expect(page.locator('#merchant-content').getByRole('link',{name:'View storefront',exact:true})).toBeVisible();
   const order=await post('/public/orders',{customer_name:'Dashboard Customer',customer_phone:'01712345678',shipping_city:'Dhaka',shipping_address:'House 10, Dhaka',items:[{product_id:catalog[0].id,quantity:1}]},{'X-Shop-Slug':current.slug,'Idempotency-Key':`dashboard-${runId}`});
   await page.getByRole('button',{name:'Refresh overview',exact:true}).click();
   await page.getByRole('link',{name:'Orders to fulfill: 1',exact:true}).click();
@@ -153,11 +338,17 @@ test('merchant completes store setup, fulfillment, billing request and store swi
   await expect(page.getByText(/Awaiting payment confirmation:/)).toBeVisible();
   await expect(page.getByRole('button',{name:'Request Growth',exact:true})).toBeDisabled();
   const subscription=await (await page.request.get(`/api/v1/shops/${current.id}/subscription`)).json();expect(subscription.plan_name).toBe('Starter');
-  const second=await post('/shops',{name:'Second Dashboard Store',slug:`second-${runId}`});
+  const extra=await page.request.post('/api/v1/shops',{headers,data:{name:'Second Dashboard Store',slug:`second-${runId}`}});
+  expect(extra.status()).toBe(409);
+  // Existing multi-store accounts remain switchable; model that legacy response without creating another store.
+  const second={...current,id:'legacy-dashboard',name:'Legacy Dashboard Store',slug:`legacy-${runId}`};
+  await page.route('**/api/v1/shops',route=>route.fulfill({json:[current,second]}));
+  await page.route('**/api/v1/shops/legacy-dashboard/**',route=>route.fulfill({json:route.request().url().endsWith('/subscription')?subscription:[]}));
   await page.reload();await page.getByRole('combobox',{name:'Active website',exact:true}).selectOption(second.id);
   await expect(page.getByRole('combobox',{name:'Active website',exact:true})).toHaveValue(second.id);
   await page.goto('/dashboard');await expect(page.getByRole('link',{name:'Total orders: 0',exact:true})).toBeVisible();
   expect(await page.evaluate(()=>localStorage.getItem('arise_active_shop'))).toBe(second.slug);
+
 });
 
 test('settings preserve edits on failure and domain verification reports ownership separately from hosting', async ({page}) => {

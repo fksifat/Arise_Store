@@ -62,6 +62,16 @@ test('account first, resumable setup across browser sessions and safe creation r
     await resumed.getByLabel('Password', {exact:true}).fill(password);
     await submitAuth(resumed, 'login');
     await expect(resumed.getByRole('heading', {name:'Ready for your next chapter?'})).toBeVisible();
+    await resumed.route('**/api/v1/shops',route=>route.fulfill({status:400,json:{detail:'This URL is already taken'}}),{times:1});
+    await resumed.getByRole('button', {name:'Create website',exact:true}).click();
+    await expect(resumed.locator('main').getByRole('alert')).toContainText('already taken');
+    await resumed.reload();
+    await expect(resumed.getByRole('heading', {name:'Ready for your next chapter?'})).toBeVisible();
+    await resumed.getByRole('button', {name:'Back',exact:true}).click();
+    await resumed.getByRole('button', {name:'Back',exact:true}).click();
+    await resumed.getByLabel('Website URL name',{exact:true}).fill(`setup-${run}`);
+    await resumed.getByRole('button', {name:'Continue',exact:true}).click();
+    await resumed.getByRole('button', {name:'Continue',exact:true}).click();
     await resumed.getByRole('button', {name:'Create website',exact:true}).click();
     await expect(resumed).toHaveURL(/\/dashboard$/);
     expect(await (await resumed.request.get('/api/v1/setup')).json()).toBeNull();
@@ -71,24 +81,14 @@ test('account first, resumable setup across browser sessions and safe creation r
     await expect(resumed.getByRole('heading', {name:'Store overview',exact:true})).toBeVisible();
 
     await resumed.goto('/setup?new=1');
-    await resumed.getByRole('button', {name:'Continue',exact:true}).click();
-    await resumed.getByLabel('Website name', {exact:true}).fill('Another business');
-    await resumed.getByLabel('Website URL name', {exact:true}).fill(`setup-${run}`);
-    await resumed.getByRole('button', {name:'Continue',exact:true}).click();
-    await resumed.getByRole('button', {name:'Continue',exact:true}).click();
-    await resumed.getByRole('button', {name:'Create website',exact:true}).click();
-    await expect(resumed.locator('main').getByRole('alert')).toContainText('already taken');
-    await resumed.reload();
-    await expect(resumed.getByRole('heading', {name:'Ready for your next chapter?'})).toBeVisible();
-    await resumed.getByRole('button', {name:'Back',exact:true}).click();
-    await resumed.getByRole('button', {name:'Back',exact:true}).click();
-    await resumed.getByLabel('Website URL name', {exact:true}).fill(`setup-second-${run}`);
-    await resumed.getByRole('button', {name:'Continue',exact:true}).click();
-    await resumed.getByRole('button', {name:'Continue',exact:true}).click();
-    await resumed.getByRole('button', {name:'Create website',exact:true}).click();
-    await expect(resumed).toHaveURL(/\/dashboard$/);
-    expect((await (await resumed.request.get('/api/v1/shops')).json()).length).toBe(2);
-    expect(await (await resumed.request.get('/api/v1/setup')).json()).toBeNull();
+    await expect(resumed.getByRole('heading',{name:'Store limit reached',exact:true})).toBeVisible();
+    const extra=await resumed.request.post('/api/v1/shops',{headers:{Origin:new URL(baseURL!).origin},data:{name:'Second store',slug:`setup-second-${run}`}});
+    expect(extra.status()).toBe(409);
+    expect((await extra.json()).detail.code).toBe('store_limit_reached');
+    expect((await (await resumed.request.get('/api/v1/shops')).json()).length).toBe(1);
+    await resumed.getByRole('link',{name:'View Store Portfolio',exact:true}).click();
+    await expect(resumed.getByRole('heading',{name:'Store Portfolio',exact:true})).toBeVisible();
+    await expect(resumed.getByRole('button',{name:'Create another store',exact:true})).toBeDisabled();
   } finally { await fresh.close(); }
 });
 

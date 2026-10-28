@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Check, LogOut } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, LockKeyhole, LogOut } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { fetchApi } from '@/lib/api';
 import { initialSetup, type SetupProgress } from '@/lib/setup';
@@ -23,6 +23,7 @@ export default function SetupPage() {
   const [busy, setBusy] = useState(false);
   const [retry, setRetry] = useState(0);
   const [hasWebsites, setHasWebsites] = useState(false);
+  const [storeLimitReached, setStoreLimitReached] = useState(false);
   const lastSaved = useRef('');
   const queue = useRef<Promise<unknown>>(Promise.resolve());
   const saveNumber = useRef(0);
@@ -52,6 +53,7 @@ export default function SetupPage() {
     Promise.all([fetchApi<SetupProgress | null>('/setup'), fetchApi<any[]>('/shops')]).then(async ([saved, sites])=>{
       if (!active) return;
       setHasWebsites(sites.length > 0);
+      if (sites.some(site => site.owner_user_id === userId)) { setStoreLimitReached(true); return; }
       const query = new URLSearchParams(window.location.search);
       if (!saved && sites.length && !query.has('new') && !query.has('theme') && !query.has('type')) { router.replace('/dashboard'); return; }
       const progress = saved || await save(initialSetup(window.location.search));
@@ -118,6 +120,7 @@ export default function SetupPage() {
     catch (error: any) { setError(error.message || 'Sign out failed. Please try again.'); setBusy(false); }
   }
 
+  if (storeLimitReached) return <main className="platform-ui auth-shell flex min-h-screen items-center justify-center p-6"><section className="max-w-md rounded-2xl border bg-white p-7 text-center"><LockKeyhole size={28} className="mx-auto text-slate-500" aria-hidden="true"/><h1 className="mt-4 text-xl font-semibold">Store limit reached</h1><p className="mt-3 text-sm leading-7 text-slate-500">Your account can own one store. Creating additional stores and upgrading this limit are currently locked.</p><Link href="/dashboard/account?section=stores" className="primary-action mt-5">View Store Portfolio</Link></section></main>;
   if (!draft) return <main className="platform-ui auth-shell flex min-h-screen items-center justify-center p-6"><div role={error?'alert':'status'} className="max-w-md text-center"><p>{error || 'Opening your website setup…'}</p>{error && <button onClick={()=>setRetry(v=>v+1)} className="mt-5 rounded-xl border bg-white p-3">Try again</button>}</div></main>;
   const hasUnsavedChanges = JSON.stringify(draft) !== lastSaved.current;
   const themes = draft.website_type === 'online_store' ? storefrontThemes : websiteThemes.filter(theme=>theme.website_type===draft.website_type);

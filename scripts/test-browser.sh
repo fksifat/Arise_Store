@@ -13,6 +13,7 @@ from app.models.audit import AuditLog
 
 run = os.environ['E2E_RUN_ID']
 emails = [f'e2e-{run}-{kind}@example.com' for kind in ('registration','checkout','usability','themes','dashboard','promotions','operations','polish','builder','builder-content','builder-types','walkthrough-editor','walkthrough-images','setup','auth')]
+emails += [f'e2e-{run}-builder-types-{kind}@example.com' for kind in ('business','portfolio','blog','landing_page','agency','other')]
 with SessionLocal() as db:
     users = db.scalars(select(User.id).where(User.email.in_(emails))).all()
     shops = db.scalars(select(Shop.id).where(Shop.owner_user_id.in_(users))).all()

@@ -2,6 +2,7 @@ from typing import List
 from datetime import datetime, timezone, timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy import update
 from app.database import get_db
 from app.models.user import User
 from app.models.setup import SetupDraft
@@ -25,6 +26,8 @@ def create_shop(req: ShopCreate, current_user: User = Depends(get_current_user),
     theme = db.query(Theme).filter(Theme.theme_key == theme_key, Theme.is_active == True, Theme.website_type == req.website_type).first()
     if not theme:
         raise HTTPException(400, 'Choose an available theme for this website type')
+    # Serialize creation for this owner on both PostgreSQL and SQLite without changing account data.
+    db.execute(update(User).where(User.id == current_user.id).values(updated_at=User.updated_at), execution_options={"synchronize_session": False})
     # 1. Enforce unique slug across platform
     existing = db.query(Shop).filter(Shop.slug == req.slug).first()
     if existing:
@@ -32,6 +35,9 @@ def create_shop(req: ShopCreate, current_user: User = Depends(get_current_user),
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"The shop slug '{req.slug}' is already taken. Please choose another name."
         )
+
+    if db.query(Shop.id).filter(Shop.owner_user_id == current_user.id).first():
+        raise HTTPException(409, detail={"code": "store_limit_reached", "message": "Your account is limited to one store. Creating additional stores is locked."})
 
     # 2. Create the shop
     shop = Shop(

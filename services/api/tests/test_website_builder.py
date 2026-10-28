@@ -2,13 +2,19 @@ import json
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 import pytest
-from app.models import Shop, SitePage, ShopMembership, Subscription, Theme
+from app.models import Shop, SitePage, ShopMembership, Subscription, Theme, User
+from app.core.security import create_access_token
 from app.core.websites import CATALOG
 from tests.conftest import TestingSessionLocal
 from tests.test_hardening import client, store, isolated_rate_limits
 
 
 def new_site(client, store, kind='business'):
+    with TestingSessionLocal() as db:
+        owner = User(name='Website Owner', email=f'website-{uuid4().hex}@example.com', password_hash='unused-test-fixture')
+        db.add(owner)
+        db.commit()
+        store['owner'] = {'Authorization': f'Bearer {create_access_token(owner.id)}'}
     result = client.post('/api/v1/shops', headers=store['owner'], json={'name':'New website','slug':'web-'+uuid4().hex,'website_type':kind})
     assert result.status_code == 201, result.text
     return result.json()
@@ -93,7 +99,7 @@ def test_pages_are_tenant_scoped_and_role_guarded(client,store):
     assert client.get(content_path(site,page)).status_code==401
     assert client.get(content_path(site,page),headers=store['staff']).status_code==403
     wrong={'id':store['shop']}
-    assert client.get(content_path(wrong,page),headers=store['owner']).status_code==404
+    assert client.get(content_path(wrong,page),headers=store['owner']).status_code==403
     with TestingSessionLocal() as db:
         source=db.query(ShopMembership).filter(ShopMembership.shop_id==store['shop'],ShopMembership.role=='staff').one()
         membership=ShopMembership(shop_id=site['id'],user_id=source.user_id,role='staff')

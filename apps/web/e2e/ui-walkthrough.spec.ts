@@ -14,8 +14,11 @@ test('editor navigation preserves unsaved work and refreshes the published navig
   test.setTimeout(90000);
   await page.setViewportSize({ width: 1920, height: 1000 });
   const headers = await account(page, baseURL!, 'walkthrough-editor');
-  const target = await (await page.request.post('/api/v1/shops', { headers, data: { name: 'Other Workspace', slug: `walkthrough-other-${run}`, website_type: 'online_store' } })).json();
   const site = await (await page.request.post('/api/v1/shops', { headers, data: { name: 'Editor Workspace', slug: `editor-${run}`, website_type: 'business' } })).json();
+  // Preserve switching coverage for existing multi-store accounts using a legacy workspace response.
+  const target={...site,id:'legacy-workspace',name:'Other Workspace',slug:`walkthrough-other-${run}`,website_type:'online_store'};
+  await page.route('**/api/v1/shops',route=>route.fulfill({json:[site,target]}));
+  await page.route(url=>url.pathname==='/api/v1/shops/legacy-workspace/pages',route=>route.fulfill({json:{items:[],total:0,page:1,page_size:25}}));
   await page.goto('/dashboard/pages');
   await page.getByRole('link', { name: /Home.*Homepage/ }).click();
   await expect(page.getByRole('heading', { name: 'Page editor', exact: true })).toBeVisible();

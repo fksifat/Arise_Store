@@ -30,7 +30,7 @@ export default function LoginForm({ showDemoCredentials }: { showDemoCredentials
       if (data.user.role === 'platform_admin') router.push('/admin');
       else {
         const [draft, shops] = await Promise.all([fetchApi<SetupProgress | null>('/setup'), fetchApi<any[]>('/shops')]);
-        router.push(draft ? '/setup' : !shops.length || query ? '/setup' + setupSearch(window.location.search, !!shops.length) : '/dashboard');
+        router.push(shops.some(shop => shop.owner_user_id === data.user.id) ? '/dashboard' : draft ? '/setup' : !shops.length || query ? '/setup' + setupSearch(window.location.search, !!shops.length) : '/dashboard');
       }
     } catch (error: any) { setError(error.message || 'Sign in failed. Please check your details and try again.'); }
     finally { setLoading(false); }

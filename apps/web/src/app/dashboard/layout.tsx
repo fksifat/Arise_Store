@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { fetchApi } from '@/lib/api';
-import { isOnlineStore, publicSitePath } from '@/lib/sites';
+import { isOnlineStore } from '@/lib/sites';
 import { MerchantContext } from '@/lib/merchant';
 import { PageState } from './_components/PageState';
-import { Store, ShoppingBag, Package, FolderTree, Palette, Globe, CreditCard, Settings, ExternalLink, LogOut, Menu, X, Users, BarChart3, FileText, PenLine } from 'lucide-react';
+import { DashboardHeader } from './_components/DashboardHeader';
+import { Store, ShoppingBag, Package, FolderTree, Palette, Globe, CreditCard, Settings, PanelLeftClose, PanelLeftOpen, X, Users, BarChart3, FileText, PenLine } from 'lucide-react';
 
 const navItems = [
   { name: 'Overview', href: '/dashboard', icon: Store },
@@ -38,6 +39,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [logoutError, setLogoutError] = useState('');
   const [loggingOut, setLoggingOut] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const menu = useRef<HTMLDialogElement>(null);
   const [hasSetup, setHasSetup] = useState(false);
 
@@ -91,30 +93,33 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   if (loading || !user) return <PageState loading onRetry={loadShops} />;
   const visibleNav=navItems.filter(item=>isOnlineStore(shop||{})||!['Orders','Customers','Reports','Products','Categories'].includes(item.name));
+  const activeTab = pathname.startsWith('/dashboard/account') ? 'Account settings' : navItems.find(item => item.href === pathname || (item.href !== '/dashboard' && pathname.startsWith(item.href + '/')))?.name || 'Overview';
+  const storeLimitReached = shops.some(store => store.owner_user_id === userId);
   const NavLink=pathname.startsWith('/dashboard/pages/')?'a':Link;
   const sidebar = <>
-    <div className="border-b border-slate-800 p-5">
-      <NavLink href="/dashboard" className="flex items-center gap-2 pr-7 text-base font-semibold"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 font-bold">A</span>Arise</NavLink>
-      <p className="mt-4 text-[10px] font-semibold uppercase tracking-widest text-slate-500">Your workspace</p>
-      {shops.length > 1 ? <select aria-label="Active website" value={shop?.id || ''} onChange={event => selectShop(event.target.value)} className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-xs">{shops.map(store => <option key={store.id} value={store.id}>{store.name}</option>)}</select> : <p className="mt-2 truncate text-sm font-medium">{shop?.name || 'Your new website'}</p>}
-      {user.role === 'merchant' && <NavLink href={hasSetup ? "/setup" : "/setup?new=1"} className="mt-3 inline-block text-xs text-slate-400 hover:text-white">{hasSetup ? "Resume website setup" : "+ Create another website"}</NavLink>}
-      {shop && <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px]"><span className={`rounded-full px-2 py-1 font-semibold capitalize ${shop.status === 'published' ? 'bg-emerald-500/10 text-emerald-300' : 'bg-amber-500/10 text-amber-300'}`}>{shop.status}</span><span className="break-all text-slate-400">{publicSitePath(shop)}</span></div>}
+    <div className="console-sidebar-brand flex h-16 shrink-0 items-center justify-between px-3">
+      <NavLink href="/dashboard" className="console-sidebar-logo flex items-center gap-2 text-base font-semibold"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 font-bold">A</span>Arise</NavLink>
+      <button type="button" className="console-collapse-toggle" aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'} aria-expanded={!sidebarCollapsed} aria-controls="merchant-sidebar" onClick={() => setSidebarCollapsed(value => !value)}>{sidebarCollapsed ? <PanelLeftOpen size={19} aria-hidden="true"/> : <PanelLeftClose size={19} aria-hidden="true"/>}</button>
     </div>
-    <nav aria-label="Merchant navigation" className="flex-1 space-y-1 p-3">{visibleNav.map(({ name, href, icon: Icon }) => <NavLink key={href} href={href} aria-current={(pathname === href || (href !== '/dashboard' && pathname.startsWith(href + '/'))) ? 'page' : undefined} onClick={() => { menu.current?.close(); setMenuOpen(false); }} className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition ${(pathname === href || (href !== '/dashboard' && pathname.startsWith(href + '/'))) ? 'bg-slate-800 text-white' : 'text-slate-400 hover:bg-slate-800/60 hover:text-white'}`}><Icon size={17} /><span>{name}</span>{(pathname === href || (href !== '/dashboard' && pathname.startsWith(href + '/'))) && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-brand-500" />}</NavLink>)}</nav>
-    <div className="space-y-3 border-t border-slate-800 p-4">
-      {shop?.status === 'published' && <Link href={publicSitePath(shop)} target="_blank" className="flex items-center justify-center gap-2 rounded-lg border border-slate-700 px-3 py-2.5 text-xs font-medium text-slate-200">View {isOnlineStore(shop)?'live store':'website'} <ExternalLink size={14} /></Link>}
-      {logoutError && <p role="alert" className="text-xs text-rose-300">{logoutError}</p>}
-      <div className="flex items-center justify-between gap-2"><div className="min-w-0"><p className="truncate text-xs font-medium text-slate-200">{user.name}</p><p className="mt-1 truncate text-[10px] text-slate-500">Website owner</p></div><button type="button" aria-label="Sign out" disabled={loggingOut} onClick={signOut} className="rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white disabled:opacity-50"><LogOut size={17} /></button></div>
-    </div>
+    <nav aria-label="Merchant navigation" className="min-h-0 flex-1 space-y-1 overflow-y-auto p-3">{visibleNav.map(({ name, href, icon: Icon }) => <NavLink key={href} href={href} aria-label={name} title={name} aria-current={(pathname === href || (href !== '/dashboard' && pathname.startsWith(href + '/'))) ? 'page' : undefined} onClick={() => { menu.current?.close(); setMenuOpen(false); }} className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition ${(pathname === href || (href !== '/dashboard' && pathname.startsWith(href + '/'))) ? 'bg-slate-800 text-white' : 'text-slate-400 hover:bg-slate-800/60 hover:text-white'}`}><Icon size={17} aria-hidden="true"/><span className="console-nav-label">{name}</span>{(pathname === href || (href !== '/dashboard' && pathname.startsWith(href + '/'))) && <span className="console-active-marker ml-auto h-1.5 w-1.5 rounded-full bg-brand-500" />}</NavLink>)}</nav>
+    <section aria-label="Your workspace" className="shrink-0 border-t border-slate-800 p-5">
+      <button type="button" className="console-workspace-expand" aria-label="Expand workspace" onClick={() => setSidebarCollapsed(false)}><Store size={19} aria-hidden="true"/></button>
+      <div className="console-workspace-details">
+      {shops.length > 1 ? <select aria-label="Active website" value={shop?.id || ''} onChange={event => selectShop(event.target.value)} className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 text-xs">{shops.map(store => <option key={store.id} value={store.id}>{store.name}</option>)}</select> : <p className="truncate text-sm font-medium">{shop?.name || 'Your new website'}</p>}
+      {user.role === 'merchant' && !storeLimitReached && <NavLink href={hasSetup ? "/setup" : "/setup?new=1"} className="mt-3 inline-block text-xs text-slate-400 hover:text-white">{hasSetup ? "Resume website setup" : "+ Create your store"}</NavLink>}
+      </div>
+    </section>
   </>;
 
   return <div className="platform-ui merchant-dashboard min-h-screen bg-[#f6f7f9] md:flex">
     <a href="#merchant-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-white focus:p-3">Skip to dashboard content</a>
-    <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-slate-200 bg-white px-4 md:hidden"><button type="button" aria-label="Open navigation" aria-expanded={menuOpen} onClick={() => { menu.current?.showModal(); setMenuOpen(true); }} className="rounded-lg border border-slate-200 p-2"><Menu size={20} /></button><div className="min-w-0"><p className="truncate text-sm font-semibold text-slate-900">{shop?.name || 'Arise'}</p><p className="text-[10px] text-slate-500">{navItems.find(item => item.href === pathname || (item.href !== '/dashboard' && pathname.startsWith(item.href + '/')))?.name}</p></div></header>
-    <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col overflow-y-auto bg-slate-900 text-white md:flex">{sidebar}</aside>
-    <dialog ref={menu} aria-label="Dashboard navigation" onClose={() => setMenuOpen(false)} className="m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] border-0 bg-slate-900 p-0 text-white backdrop:bg-slate-950/60 md:hidden"><button type="button" aria-label="Close navigation" onClick={() => menu.current?.close()} className="absolute right-3 top-5 rounded p-1 text-slate-300"><X size={20} /></button><div className="flex min-h-full flex-col">{sidebar}</div></dialog>
-    <main id="merchant-content" className="min-w-0 flex-1">
-      {fetching || (error && !shop) ? <PageState loading={fetching} error={error} onRetry={loadShops} /> : !shop ? <PageState loading onRetry={loadShops} /> : <MerchantContext.Provider value={{ shop, updateShop }}>{children}</MerchantContext.Provider>}
-    </main>
+    <aside id="merchant-sidebar" data-collapsed={sidebarCollapsed || undefined} className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col overflow-hidden bg-slate-900 text-white md:flex">{sidebar}</aside>
+    <dialog ref={menu} aria-label="Dashboard navigation" onClose={() => setMenuOpen(false)} className="m-0 h-dvh max-h-none w-72 max-w-[calc(100vw-2rem)] overflow-hidden border-0 bg-slate-900 p-0 text-white backdrop:bg-slate-950/60 md:hidden"><button type="button" aria-label="Close navigation" onClick={() => menu.current?.close()} className="absolute right-3 top-5 rounded p-1 text-slate-300"><X size={20} /></button><div className="flex h-full min-h-0 flex-col">{sidebar}</div></dialog>
+    <div className="min-w-0 flex-1">
+      <DashboardHeader title={activeTab} websiteId={shop?.id} user={user} menuOpen={menuOpen} onOpenNavigation={() => { menu.current?.showModal(); setMenuOpen(true); }} onSignOut={signOut} loggingOut={loggingOut} logoutError={logoutError}/>
+      <main id="merchant-content" className="min-w-0">
+      {fetching || (error && !shop) ? <PageState loading={fetching} error={error} onRetry={loadShops} /> : !shop ? <PageState loading onRetry={loadShops} /> : <MerchantContext.Provider value={{ shop, shops, selectShop, updateShop }}>{children}</MerchantContext.Provider>}
+      </main>
+    </div>
   </div>;
 }

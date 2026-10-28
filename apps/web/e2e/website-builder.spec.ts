@@ -28,9 +28,12 @@ test('business onboarding, section editing and private-to-public publishing work
  await expect(page.getByRole('heading',{name:'Page editor',exact:true})).toBeVisible();
  await page.getByLabel('Section heading',{exact:true}).fill('A business worth discovering');
  await page.getByLabel('Section text',{exact:true}).fill('Real information about a real business.');
+ const toolbar=page.getByRole('banner',{name:'Console toolbar'});
+ await toolbar.getByRole('button',{name:'Account profile',exact:true}).click();
  page.once('dialog',async dialog=>{expect(dialog.message()).toContain('Discard unsaved changes');await dialog.dismiss();});
- await page.getByRole('button',{name:'Sign out',exact:true}).click();
+ await toolbar.getByRole('region',{name:'Account profile',exact:true}).getByRole('button',{name:'Sign out',exact:true}).click();
  await expect(page.getByLabel('Section heading',{exact:true})).toHaveValue('A business worth discovering');
+ await page.keyboard.press('Escape');
  await page.getByRole('button',{name:'Save draft',exact:true}).click();
  await expect(page.getByRole('status')).toContainText('Draft saved.');
  const privateTab=context.waitForEvent('page');await page.getByRole('link',{name:'Preview saved draft',exact:true}).click();const preview=await privateTab;
@@ -84,10 +87,9 @@ test('pages, blog posts, color choices and draft URLs keep their publication bou
  await page.getByRole('button',{name:'Unpublish content',exact:true}).click();await expect(page.getByRole('status')).toContainText('Content unpublished.');expect((await published.request.get(`/site/${site.slug}/our-story`)).status()).toBe(404);await published.close();
 });
 
-test('every non-store website type renders all three themes and keeps commerce separate',async({page,baseURL})=>{
- test.setTimeout(150000);page.setDefaultTimeout(15000);const headers=await account(page,baseURL!,'builder-types');
+for(const type of websiteTypes.filter(type=>type.key!=='online_store'))test(`${type.label} renders all three themes and keeps commerce separate`,async({page,baseURL})=>{
+ test.setTimeout(150000);page.setDefaultTimeout(15000);const headers=await account(page,baseURL!,`builder-types-${type.key}`);
  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
- for(const type of websiteTypes.filter(type=>type.key!=='online_store')){
   const site=await(await page.request.post('/api/v1/shops',{headers,data:{name:`${type.label} example`,slug:`${type.key.replaceAll('_','-')}-${run}`,website_type:type.key}})).json();
   const content=(await(await page.request.get(`/api/v1/shops/${site.id}/pages`)).json()).items[0];
   expect((await page.request.post(`/api/v1/shops/${site.id}/pages/${content.id}/publish`,{headers,data:{expected_revision:content.revision}})).status()).toBe(200);expect((await page.request.post(`/api/v1/shops/${site.id}/publish`,{headers})).status()).toBe(200);
@@ -96,6 +98,5 @@ test('every non-store website type renders all three themes and keeps commerce s
    for(const width of [1440,390]){await page.setViewportSize({width,height:width===1440?1000:844});expect((await page.goto(`/site/${site.slug}`))?.status()).toBe(200);await expect(page.locator('.wb h1')).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);}
   }
   expect((await page.request.get('/api/v1/public/products',{headers:{'X-Shop-Slug':site.slug}})).status()).toBe(404);
- }
  expect(errors).toEqual([]);
 });
