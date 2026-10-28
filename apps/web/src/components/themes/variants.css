@@ -41,10 +41,10 @@
 
 .sf--fashion-noir { --sf-paper: #fcfaf6; --sf-ink: #252525; --sf-muted: #665f58; }
 .sf--fashion-noir .sf-header, .sf--fashion-noir .sf-utility { background: #1d1d1b; color: #fff; }
-.sf--fashion-noir .sf-brand { font: 700 21px Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+.sf--fashion-noir .sf-brand { font: 700 21px var(--font-ui); text-transform: uppercase; letter-spacing: 1px; }
 .sf--fashion-noir .sf-brand small { color: #c6c1b8; }
 .sf--fashion-noir .sf-bag b { background: #fff; color: #252525; }
-.sf--fashion-noir .sf-hero h1 { font: 800 clamp(54px, 7vw, 104px)/.95 Arial, sans-serif; letter-spacing: -.06em; text-transform: uppercase; }
+.sf--fashion-noir .sf-hero h1 { font: 800 clamp(54px, 7vw, 104px)/.95 var(--font-ui); letter-spacing: -.06em; text-transform: uppercase; }
 .sf--fashion-noir .sf-hero-image { object-position: 65% 35%; }
 .sf--fashion-noir .sf-product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px 20px; }
 .sf--fashion-noir .sf-collection-image { height: 280px; }
@@ -59,9 +59,9 @@
 :is(.sf--fashion-runway, .sf--beauty-atelier) .sf-hero-caption { display: none; }
 .sf--fashion-runway { --sf-paper: #fffaf6; --sf-ink: #302421; --sf-muted: #6a554e; --sf-line: #e8dcd3; }
 .sf--fashion-runway .sf-utility { background: #b64238; }
-.sf--fashion-runway .sf-brand { font-family: Arial, sans-serif; font-weight: 800; }
+.sf--fashion-runway .sf-brand { font-family: var(--font-ui); font-weight: 800; }
 .sf--fashion-runway .sf-hero { background: #f3e5dc; }
-.sf--fashion-runway .sf-hero h1 { font: 800 clamp(50px, 6vw, 86px)/1 Arial, sans-serif; letter-spacing: -.06em; }
+.sf--fashion-runway .sf-hero h1 { font: 800 clamp(50px, 6vw, 86px)/1 var(--font-ui); letter-spacing: -.06em; }
 .sf--fashion-runway .sf-hero-image { object-position: center 45%; }
 .sf--fashion-runway .sf-product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 28px; }
 .sf--fashion-runway .sf-add-button { background: var(--sf-accent); color: var(--sf-on-accent); border: 0; }
@@ -73,7 +73,7 @@
 .sf--tech-circuit .sf-bag b { background: #d5e4ff; color: #101b2d; }
 .sf--tech-circuit .sf-hero { background: #101b2d; }
 .sf--tech-circuit .sf-hero-copy { color: #fff; }
-.sf--tech-circuit .sf-hero h1 { font: 750 clamp(48px, 5.5vw, 78px)/1.05 Arial, sans-serif; letter-spacing: -.05em; }
+.sf--tech-circuit .sf-hero h1 { font: 750 clamp(48px, 5.5vw, 78px)/1.05 var(--font-ui); letter-spacing: -.05em; }
 .sf--tech-circuit .sf-hero-copy > p, .sf--tech-circuit .sf-hero-caption, .sf--tech-circuit .sf-hero .sf-text-link, .sf--tech-circuit .sf-eyebrow { color: #bdcce0; }
 .sf--tech-circuit .sf-hero-media { margin: 40px; min-height: 440px; border-radius: 8px; background: #20334d; }
 .sf--tech-circuit .sf-product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
@@ -85,7 +85,7 @@
 .sf--tech-studio { --sf-paper: #f6fafb; --sf-ink: #19313a; --sf-muted: #48646f; --sf-line: #d9e6e9; }
 .sf--tech-studio .sf-hero { background: #e5f0f3; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
 .sf--tech-studio .sf-hero-media { order: -1; margin: 32px 0 32px 32px; border-radius: 3px; }
-.sf--tech-studio .sf-hero h1 { font: 500 clamp(48px, 5vw, 72px)/1.05 Arial, sans-serif; letter-spacing: -.06em; }
+.sf--tech-studio .sf-hero h1 { font: 500 clamp(48px, 5vw, 72px)/1.05 var(--font-ui); letter-spacing: -.06em; }
 .sf--tech-studio .sf-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 45px 30px; }
 .sf--tech-studio .sf-product-photo-button { aspect-ratio: 3/2; background: #e8f0f3; }
 .sf--tech-studio .sf-collection-image { border-radius: 0; }
@@ -110,7 +110,7 @@
 .sf--market-express .sf-hero-copy { padding: 40px; color: #393320; }
 .sf--market-express .sf-eyebrow, .sf--market-express .sf-hero .sf-text-link { color: #554513; }
 .sf--market-express .sf-hero-copy > p { color: #6e5e27; }
-.sf--market-express .sf-hero h1 { font: 750 clamp(45px, 4.8vw, 66px)/1 Arial, sans-serif; letter-spacing: -.05em; }
+.sf--market-express .sf-hero h1 { font: 750 clamp(45px, 4.8vw, 66px)/1 var(--font-ui); letter-spacing: -.05em; }
 .sf--market-express .sf-hero-media { min-height: 350px; margin: 20px; border-radius: 12px; }
 .sf--market-express .sf-hero-caption { display: none; }
 .sf--market-express .sf-product-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
@@ -131,8 +131,8 @@
 .sf--home-scandi { --sf-paper: #faf9f5; --sf-ink: #3c342d; --sf-muted: #665c51; --sf-line: #e5ddd2; }
 .sf--home-scandi .sf-hero { background: #ede5d9; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
 .sf--home-scandi .sf-hero-media { margin: 35px; border: 16px solid #faf9f5; }
-.sf--home-scandi .sf-hero h1 { font: 550 clamp(46px, 5vw, 74px)/1.1 Arial, sans-serif; letter-spacing: -.055em; }
-.sf--home-scandi .sf-brand { font-family: Arial, sans-serif; font-weight: 600; }
+.sf--home-scandi .sf-hero h1 { font: 550 clamp(46px, 5vw, 74px)/1.1 var(--font-ui); letter-spacing: -.055em; }
+.sf--home-scandi .sf-brand { font-family: var(--font-ui); font-weight: 600; }
 .sf--home-scandi .sf-product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 20px; }
 .sf--home-scandi .sf-product-photo-button { aspect-ratio: 1; }
 .sf--home-scandi .sf-collection-image { border-radius: 0; height: 210px; }
@@ -178,14 +178,14 @@
 .sf--sport-club .sf-monogram, .sf--sport-club .sf-bag b { background: #fff; color: #174c9a; }
 .sf--sport-club .sf-hero { background: #e4edf7; }
 .sf--sport-club .sf-hero-media { margin: 35px; min-height: 490px; border-radius: 90px 4px 4px; }
-.sf--sport-club .sf-hero h1 { font: 850 clamp(49px, 5.5vw, 80px)/1 Arial, sans-serif; letter-spacing: -.055em; }
+.sf--sport-club .sf-hero h1 { font: 850 clamp(49px, 5.5vw, 80px)/1 var(--font-ui); letter-spacing: -.055em; }
 .sf--sport-club .sf-eyebrow, .sf--sport-club .sf-hero .sf-text-link { color: #174c9a; }
 .sf--sport-club .sf-product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px 24px; }
 .sf--sport-club .sf-product-photo-button { aspect-ratio: 1; }
 .sf--sport-club .sf-add-button { background: var(--sf-accent); color: var(--sf-on-accent); border: 0; }
 .sf--sport-club .sf-collection-number { background: #174c9a; color: #fff; }
 
-.sf-preview-variants { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding: 14px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #334155; font: 12px/1.5 Arial, sans-serif; }
+.sf-preview-variants { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding: 14px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #334155; font: 12px/1.5 var(--font-ui); }
 .sf-preview-variants > span { margin-right: 10px; font-weight: 600; }
 .sf-preview-variants a { padding: 7px 12px; border: 1px solid #cbd5e1; border-radius: 20px; text-decoration: none; }
 .sf-preview-variants a[aria-current='page'] { color: #fff; background: #101827; border-color: #101827; }
@@ -229,7 +229,7 @@
   .sf-preview-variants > span { flex-basis: 100%; text-align: center; margin: 0 0 3px; }
 }
 
-.sf[data-font=sans] h1,.sf[data-font=sans] h2,.sf[data-font=sans] h3,.sf[data-font=sans] .sf-brand,.sf[data-font=sans] .sf-footer-brand>strong{font-family:Arial,Helvetica,sans-serif}
+.sf[data-font=sans] h1,.sf[data-font=sans] h2,.sf[data-font=sans] h3,.sf[data-font=sans] .sf-brand,.sf[data-font=sans] .sf-footer-brand>strong{font-family:var(--font-ui)}
 .sf[data-font=serif] h1,.sf[data-font=serif] h2,.sf[data-font=serif] h3,.sf[data-font=serif] .sf-brand,.sf[data-font=serif] .sf-footer-brand>strong{font-family:Georgia,'Times New Roman',serif;font-weight:400}
 
 .sf--sport-performance .sf-header .sf-brand small{color:#b8c3b1}

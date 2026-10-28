@@ -7,6 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: { sans: ["Manrope", "Noto Sans Bengali", "sans-serif"] },
       colors: {
         brand: {
           50: '#eff6ff',

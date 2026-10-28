@@ -18,5 +18,5 @@ export function Modal({ children, titleId, label, onClose, className, preventClo
     if (!first) { event.preventDefault(); event.currentTarget.focus(); }
     else if (event.shiftKey && (document.activeElement === first || !controls.includes(document.activeElement as HTMLElement))) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && (document.activeElement === last || !controls.includes(document.activeElement as HTMLElement))) { event.preventDefault(); first.focus(); }
-  }} onCancel={event => { event.preventDefault(); if (!preventClose) onClose(); }} className={className || "max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-lg overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/60"}>{children}</dialog>;
+  }} onCancel={event => { event.preventDefault(); if (!preventClose) onClose(); }} className={className || "glass-dialog max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-lg overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/60"}>{children}</dialog>;
 }

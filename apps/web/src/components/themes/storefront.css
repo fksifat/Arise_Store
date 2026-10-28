@@ -7,7 +7,7 @@
 --sf-on-accent:#fff;
 background:var(--sf-paper);
 color:var(--sf-ink);
-font-family:Arial,Helvetica,sans-serif;
+font-family:var(--font-ui);
 font-size:14px;
 line-height:1.5;
 overflow-x:clip}
@@ -778,7 +778,7 @@ min-height:52px;
 padding:10px 24px;
 background:#101827;
 color:white;
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-size:11px}
 .sf-preview-toolbar a{
 padding:7px 12px;
@@ -834,7 +834,7 @@ border-radius:10px;
 background:var(--sf-accent);
 color:var(--sf-on-accent);
 border:0;
-font-family:Arial;
+font-family:var(--font-ui);
 font-weight:700}
 .sf--general-store .sf-hero{
 max-width:1280px;
@@ -848,7 +848,7 @@ grid-template-columns:1fr 1fr}
 padding:55px;
 color:#fff}
 .sf--general-store .sf-hero h1{
-font-family:Arial,Helvetica,sans-serif;
+font-family:var(--font-ui);
 font-size:66px;
 font-weight:700;
 letter-spacing:-3px;
@@ -878,7 +878,7 @@ background:#f4f5dd}
 .sf--general-store .sf-image-caption{
 display:none}
 .sf--general-store .sf-section-heading h2,.sf--general-store .sf-story h2{
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-weight:600;
 letter-spacing:-1px}
 .sf--general-store .sf-collections{
@@ -913,7 +913,7 @@ border-radius:7px}
 .sf--general-store .sf-footer{
 background:#edf2e9}
 .sf--general-store .sf-footer-brand>strong{
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-weight:600}
 
 .sf--tech-cosmetics{
@@ -926,7 +926,7 @@ background:#172239}
 border-radius:10px;
 background:#f0f3f9;
 border:0;
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-weight:700;
 color:var(--sf-accent)}
 .sf--tech-cosmetics .sf-hero{
@@ -941,7 +941,7 @@ padding:65px 55px}
 .sf--tech-cosmetics .sf-eyebrow{
 color:var(--sf-accent)}
 .sf--tech-cosmetics .sf-hero h1{
-font-family:Arial,Helvetica,sans-serif;
+font-family:var(--font-ui);
 font-size:76px;
 font-weight:700;
 letter-spacing:-4px}
@@ -961,7 +961,7 @@ border-radius:30px}
 .sf--tech-cosmetics .sf-hero-caption{
 margin-top:45px}
 .sf--tech-cosmetics .sf-section-heading h2,.sf--tech-cosmetics .sf-story h2{
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-weight:600;
 letter-spacing:-1.4px}
 .sf--tech-cosmetics .sf-product-grid{
@@ -987,7 +987,7 @@ height:190px}
 .sf--tech-cosmetics .sf-footer{
 background:#f1f4f8}
 .sf--tech-cosmetics .sf-footer-brand>strong{
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-weight:600}
 
 .sf--home-living{
@@ -1126,7 +1126,7 @@ background:#141812;
 color:#fff;
 border-color:#ffffff1a}
 .sf--sport-performance .sf-brand{
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-weight:800;
 text-transform:uppercase;
 font-size:20px;
@@ -1136,7 +1136,7 @@ background:#c5ed56;
 color:#17200a;
 border:0;
 border-radius:5px;
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-weight:900;
 font-style:italic}
 .sf--sport-performance .sf-brand small{
@@ -1174,7 +1174,7 @@ min-height:660px}
 .sf--sport-performance .sf-eyebrow{
 color:#d1f275}
 .sf--sport-performance .sf-hero h1{
-font-family:Arial,Helvetica,sans-serif;
+font-family:var(--font-ui);
 font-size:100px;
 letter-spacing:-5px;
 line-height:.96;
@@ -1195,7 +1195,7 @@ margin-top:42px}
 .sf--sport-performance .sf-hero-stamp,.sf--sport-performance .sf-image-caption{
 display:none}
 .sf--sport-performance .sf-section-heading h2,.sf--sport-performance .sf-story h2{
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 font-weight:800;
 letter-spacing:-1.7px;
 text-transform:uppercase}
@@ -1216,7 +1216,7 @@ color:#17200a}
 background:#161c13;
 color:#fff}
 .sf--sport-performance .sf-footer-brand>strong{
-font-family:Arial,sans-serif;
+font-family:var(--font-ui);
 text-transform:uppercase;
 font-style:italic;
 font-weight:800}

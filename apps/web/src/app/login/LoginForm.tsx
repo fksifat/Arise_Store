@@ -54,15 +54,15 @@ export default function LoginForm({ showDemoCredentials }: { showDemoCredentials
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-slate-100 space-y-6">
+    <div className="platform-ui auth-shell min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      <div className="auth-card max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-slate-100 space-y-6">
         <div className="text-center space-y-1">
           <Link href="/" className="inline-block">
             <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-xl mx-auto shadow-md mb-2">
               A
             </div>
           </Link>
-          <h1 className="text-2xl font-black text-slate-900">Sign in to your workspace</h1>
+          <h1 className="text-2xl font-semibold text-slate-900">Sign in to your workspace</h1>
           <p className="text-xs text-slate-500">Manage your websites, content and publishing</p>
         </div>
 
@@ -144,7 +144,7 @@ export default function LoginForm({ showDemoCredentials }: { showDemoCredentials
 
         <p className="text-center text-xs text-slate-500">
           New to Arise?{' '}
-          <Link href="/register" className="text-rose-600 font-semibold hover:underline">
+          <Link href="/register" className="text-brand-700 font-semibold hover:underline">
             Create your website
           </Link>
         </p>

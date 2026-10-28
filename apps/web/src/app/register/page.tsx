@@ -77,15 +77,15 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 py-12">
-      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-slate-100 space-y-6">
+    <div className="platform-ui auth-shell min-h-screen bg-slate-50 flex items-center justify-center p-4 py-12">
+      <div className="auth-card max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-slate-100 space-y-6">
         <div className="text-center space-y-1">
           <Link href="/" className="inline-block">
             <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-xl mx-auto shadow-md mb-2">
               A
             </div>
           </Link>
-          <h1 className="text-2xl font-black text-slate-900">Create your website</h1>
+          <h1 className="text-2xl font-semibold text-slate-900">Create your website</h1>
           <p className="text-xs text-slate-500">14-day free trial • No credit card required</p>
         </div>
 

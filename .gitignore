@@ -18,3 +18,7 @@ apps/web/.next/
 .codex/
 apps/web/test-results/
 apps/web/playwright-report/
+
+# Local browser review artifacts
+.playwright-cli/
+output/playwright/

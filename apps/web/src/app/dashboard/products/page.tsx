@@ -164,7 +164,7 @@ export default function ProductsPage() {
 
         <button
           onClick={() => openProduct()}
-          className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold flex items-center space-x-2 transition shadow-sm self-start sm:self-auto"
+          className="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-semibold flex items-center space-x-2 transition shadow-sm self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Product</span>
@@ -409,7 +409,7 @@ export default function ProductsPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold transition disabled:opacity-50"
+                  className="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-semibold transition disabled:opacity-50"
                 >
                   {submitting ? 'Saving...' : 'Save Product'}
                 </button>
