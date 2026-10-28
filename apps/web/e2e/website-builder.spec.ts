@@ -6,7 +6,15 @@ const password='Builder-browser-password-123';
 
 async function account(page:any,baseURL:string,suffix:string){
  const headers={Origin:new URL(baseURL).origin};
- const response=await page.request.post('/api/v1/auth/register',{headers,data:{name:'Website Owner',email:`e2e-${run}-${suffix}@example.com`,password}});
+ const registration={headers,data:{name:'Website Owner',email:`e2e-${run}-${suffix}@example.com`,password}};
+ let response=await page.request.post('/api/v1/auth/register',registration);
+ // Each website type needs its own owner; respect the shared IP's registration limit.
+ if(response.status()===429){
+  const retryAfter=Number(response.headers()['retry-after']);
+  expect(retryAfter).toBeGreaterThan(0);expect(retryAfter).toBeLessThanOrEqual(60);
+  await new Promise(resolve=>setTimeout(resolve,retryAfter*1000));
+  response=await page.request.post('/api/v1/auth/register',registration);
+ }
  expect(response.status()).toBe(201);return headers;
 }
 
