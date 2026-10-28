@@ -13,6 +13,7 @@ def delivery_fee(value):
     return value
 
 class ShopCreate(BaseModel):
+    complete_setup: bool = False
     website_type: WebsiteType = 'online_store'
     name: str = Field(..., min_length=2, max_length=100)
     slug: str = Field(..., min_length=3, max_length=50)

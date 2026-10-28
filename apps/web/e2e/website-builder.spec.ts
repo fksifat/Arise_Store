@@ -1,3 +1,4 @@
+import { finishSetup } from './_helpers/setup';
 import {test,expect} from '@playwright/test';
 import {websiteTypes,websiteThemes} from '../src/lib/sites';
 const run=process.env.E2E_RUN_ID||Date.now().toString();
@@ -12,13 +13,13 @@ async function account(page:any,baseURL:string,suffix:string){
 test('business onboarding, section editing and private-to-public publishing work',async({page,context,baseURL})=>{
  test.setTimeout(120000);page.setDefaultTimeout(15000);const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
  await page.goto('/register');
- await expect(page.getByRole('radio',{name:'Business website',exact:true})).toBeChecked();
  await page.getByLabel('Your Full Name',{exact:false}).fill('Builder Owner');
  await page.getByLabel('Email Address',{exact:false}).fill(`e2e-${run}-builder@example.com`);
- await page.getByLabel('Password',{exact:false}).fill(password);
- await page.getByLabel('Website name',{exact:false}).fill('Builder Business');
- await page.getByLabel('Website URL name',{exact:true}).fill(`builder-${run}`);
- await page.getByRole('button',{name:'Create website',exact:true}).click();
+ await page.getByLabel('Password',{exact:true}).fill(password);
+ await page.getByLabel('Confirm Password',{exact:true}).fill(password);
+  await page.getByRole('checkbox', {name:/I agree to Arise/}).check();
+ await page.getByRole('button',{name:'Create account',exact:true}).click();
+ await finishSetup(page, 'Business website', 'Builder Business', `builder-${run}`);
  await expect(page.getByRole('heading',{name:'Website overview',exact:true})).toBeVisible();
  await expect(page.getByRole('link',{name:'Products',exact:true})).toHaveCount(0);
  const site=(await(await page.request.get('/api/v1/shops')).json())[0];expect(site.website_type).toBe('business');

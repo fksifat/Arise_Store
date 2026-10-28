@@ -1,3 +1,4 @@
+import { finishSetup } from './_helpers/setup';
 import { test, expect, type Page } from '@playwright/test';
 
 const runId = process.env.E2E_RUN_ID || Date.now().toString();
@@ -13,6 +14,7 @@ async function mockMerchant(page: Page) {
   await page.route('**/api/v1/**', route => {
     const path = new URL(route.request().url()).pathname;
     const data = path.endsWith('/auth/me') ? {id:'merchant',name:'Test Merchant',email:'merchant@example.com',role:'merchant'}
+      : path.endsWith('/setup') ? null
       : path.endsWith('/shops') ? [shop]
       : path.endsWith('/products') ? products
       : path.endsWith('/orders') ? orders
@@ -88,10 +90,7 @@ test('merchant completes store setup, fulfillment, billing request and store swi
   };
   await post('/auth/register',{name:'Dashboard Merchant',email:`e2e-${runId}-dashboard@example.com`,password:'Browser-test-password-123'});
   await page.goto('/dashboard');
-  await page.getByLabel('Website type',{exact:true}).selectOption('online_store');
-  await page.getByLabel('Website name',{exact:true}).fill('Dashboard Store');
-  await page.getByLabel('Website URL name',{exact:true}).fill(`dashboard-${runId}`);
-  await page.getByRole('button',{name:'Create website',exact:true}).click();
+  await finishSetup(page, 'Online store', 'Dashboard Store', `dashboard-${runId}`);
   await expect(page.getByRole('heading',{name:'Store overview',exact:true})).toBeVisible();
   const shopList=await (await page.request.get('/api/v1/shops')).json();const current=shopList[0];
   await page.goto('/dashboard/categories');

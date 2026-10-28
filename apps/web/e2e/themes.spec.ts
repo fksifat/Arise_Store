@@ -14,6 +14,8 @@ test('related previews switch between designs without carrying an open bag or pr
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(page.getByRole('link',{name:'Use this theme →',exact:true})).toHaveAttribute('href','/register?theme=fashion-runway');
   await page.getByRole('navigation',{name:'Fashion themes',exact:true}).getByRole('link',{name:'Fashion Noir',exact:true}).click();
+  await expect(page).toHaveURL(/\/themes\/fashion-noir$/);
+  await expect(page.locator('.sf-hero h1')).toHaveText('Make an entrance.');
   await page.getByRole('button',{name:'Open cart',exact:true}).click();
   await expect(page.getByRole('dialog',{name:'Your Shopping Bag',exact:true}).getByRole('heading',{name:/The Everyday Shirt/})).toBeVisible();
 });
@@ -48,7 +50,9 @@ test('all theme demos support mobile browsing, quick view and honest preview che
     await page.getByRole('button',{name:'Dismiss preview notice',exact:true}).click();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
     await page.getByRole('link',{name:'Use this theme →',exact:true}).click();
-    await expect(page.getByText(`Starting with ${preset.name}. You can change it anytime.`,{exact:true})).toBeVisible();
+    await expect(page.getByRole('heading',{name:'Create your account',exact:true})).toBeVisible();
+    await expect(page.getByRole('link',{name:'Sign in',exact:true})).toHaveAttribute('href',`/login?theme=${preset.key}`);
+    await expect(page.getByRole('radio')).toHaveCount(0);
   });
   expect(errors).toEqual([]);
 });

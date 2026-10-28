@@ -98,10 +98,11 @@ test('customer pagination and reporting failures are recoverable without leaking
   await page.route('**/api/v1/**',route=>{
     const url=new URL(route.request().url());const path=url.pathname;
     if(path.endsWith('/auth/me'))return route.fulfill({json:{id:'owner',name:'Owner',email:'owner@example.com',role:'merchant'}});
+    if(path.endsWith('/setup'))return route.fulfill({json:null});
     if(path.endsWith('/shops'))return route.fulfill({json:[{id:'shop-one',name:'One store',slug:'one-store',status:'draft'}]});
     if(path.endsWith('/customers'))return route.fulfill({json:{items:[{id:'buyer',name:url.searchParams.get('page')==='2'?'Second page customer':'First page customer',phone:'01712345678',email:null,total_orders:0,delivered_orders:0,delivered_value_minor:0}],total:26,page:Number(url.searchParams.get('page')),page_size:25}});
     if(path.endsWith('/reports')){
-      if(reportFails){reportFails=false;return route.fulfill({status:503,json:{detail:'Reports temporarily unavailable'}});}
+      if(reportFails)return route.fulfill({status:503,json:{detail:'Reports temporarily unavailable'}});
       return route.fulfill({json:{start_date:'2026-10-25',end_date:'2026-10-25',timezone:'Asia/Dhaka',metrics:{total_orders:0,delivered_value_minor:0,average_delivered_minor:0,customer_count:0,delivered_products_minor:0,delivered_delivery_minor:0,delivered_discounts_minor:0},statuses:{pending:0},daily:[{date:'2026-10-25',orders:0,delivered_value_minor:0}],top_products:[]}});
     }
     return route.fulfill({status:404,json:{detail:'Customer not found'}});
@@ -117,6 +118,7 @@ test('customer pagination and reporting failures are recoverable without leaking
   await page.goto('/dashboard/reports');
   await expect(page.locator('#merchant-content').getByRole('alert')).toContainText('Reports temporarily unavailable');
   await expect(page.getByRole('button',{name:'Export daily report',exact:true})).toBeDisabled();
+  reportFails=false;
   await page.getByRole('button',{name:'Try again',exact:true}).click();
   await expect(page.getByText('No orders were placed in this date range.',{exact:true})).toBeVisible();
 });

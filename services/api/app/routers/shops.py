@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import User
+from app.models.setup import SetupDraft
 from app.models.shop import Shop, ShopMembership, ShopDomain
 from app.models.theme import Theme, ShopThemeSetting
 from app.models.subscription import Plan, Subscription
@@ -102,6 +103,8 @@ def create_shop(req: ShopCreate, current_user: User = Depends(get_current_user),
     else:
         raise HTTPException(503, "Plans are not configured. Run the reference-data setup command.")
 
+    if req.complete_setup:
+        db.query(SetupDraft).filter(SetupDraft.user_id == current_user.id).delete()
     db.commit()
     db.refresh(shop)
     return ShopResponse.model_validate(shop)

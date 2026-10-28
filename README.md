@@ -20,7 +20,7 @@ Create a platform administrator explicitly:
 docker compose exec api python -m app.manage create-admin
 ```
 
-The command prompts for an email and a password of at least 12 characters. Log in through `/login`; administrators use `/admin`. Registration creates a draft website with a 14-day trial. Non-store sites start with an editable homepage. Save and publish the homepage in Pages, then publish the website from Overview. Websites use `/site/your-slug`; online stores retain `/store/your-slug`. [Builder guide and publishing rules](docs/WEBSITE_BUILDER.md).
+The command prompts for an email and a password of at least 12 characters. Log in through `/login`; administrators use `/admin`. Registration creates an account first. The authenticated four-step setup saves progress to that account and creates a private website with a 14-day trial only when completed. Non-store sites start with an editable homepage. Save and publish the homepage in Pages, then publish the website from Overview. Websites use `/site/your-slug`; online stores retain `/store/your-slug`. [Builder guide and publishing rules](docs/WEBSITE_BUILDER.md).
 
 ```bash
 docker compose ps
@@ -112,7 +112,7 @@ Exports protect spreadsheet formula-like text and preserve Bangla/quoted fields.
 
 The theme gallery at `/dashboard/themes` shows compatible designs for the current website type. Non-store sites have three choices per type and a brand-color control. Online stores have 18 designs: three each for Fashion, Electronics, Grocery & essentials, Home & furniture, Beauty & skincare, and Sport & outdoor. Enter a category to compare its designs, preview them and apply one. The homepage also browses by category, and each preview links to its related designs. Each theme has a responsive layout, working category navigation, search, sorting, option pricing and product quick views. Preview a design at `/themes/<theme-key>` using clearly labeled sample products; preview checkout cannot place orders.
 
-Apply a theme from the dashboard or choose one when registering. Website theme changes keep page/post content in place; general theme and contact settings update live pages immediately. Changing themes preserves custom brand colors and hero copy while refreshing unmodified defaults. Existing products, inventory, orders and draft/published status are preserved. [Design references and asset credits](docs/THEME_DESIGN.md).
+Apply a theme from the dashboard or choose one during website setup. Website theme changes keep page/post content in place; general theme and contact settings update live pages immediately. Changing themes preserves custom brand colors and hero copy while refreshing unmodified defaults. Existing products, inventory, orders and draft/published status are preserved. [Design references and asset credits](docs/THEME_DESIGN.md).
 
 ## Verification
 

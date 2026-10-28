@@ -1,4 +1,7 @@
+import type { Metadata } from 'next';
 import LoginForm from './LoginForm';
+
+export const metadata: Metadata = { title: 'Sign in | Arise', robots: { index: false, follow: false } };
 
 export const dynamic = 'force-dynamic';
 

@@ -1,3 +1,4 @@
+from app.models.setup import SetupDraft
 from app.models.user import User
 from app.models.shop import Shop, ShopMembership, ShopDomain
 from app.models.theme import Theme, ShopThemeSetting
@@ -10,6 +11,7 @@ from app.models.page import SitePage
 
 __all__ = [
     "User",
+    "SetupDraft",
     "Shop",
     "ShopMembership",
     "ShopDomain",

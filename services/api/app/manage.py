@@ -24,6 +24,8 @@ def main():
         password = getpass.getpass("Administrator password (at least 12 characters): ")
         if password != getpass.getpass("Confirm password: "):
             parser.error("Passwords do not match")
+        if len(password) < 12:
+            parser.error("Administrator passwords must contain at least 12 characters")
         req = RegisterRequest(name="Platform Administrator", email=email, password=password)
         with SessionLocal() as db:
             if db.query(User).filter(User.email == req.email.lower()).first():

@@ -6,6 +6,18 @@ from app.seeds import seed_data
 from tests.conftest import TestingSessionLocal
 
 
+def test_admin_setup_keeps_twelve_character_minimum(monkeypatch):
+    from app import manage
+    monkeypatch.setattr('sys.argv', ['manage', 'create-admin', '--email', 'admin@example.com'])
+    monkeypatch.setattr(manage.getpass, 'getpass', lambda prompt: 'eight123')
+    def forbidden():
+        raise AssertionError('Invalid admin password must not open a database session')
+    monkeypatch.setattr(manage, 'SessionLocal', forbidden)
+    with pytest.raises(SystemExit) as error:
+        manage.main()
+    assert error.value.code == 2
+
+
 def test_demo_seed_rejects_production_before_writes(monkeypatch):
     monkeypatch.setattr(settings, 'APP_ENV', 'production')
     def forbidden():

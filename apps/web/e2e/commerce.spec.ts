@@ -1,15 +1,17 @@
 import { test, expect } from '@playwright/test';
+import { finishSetup } from './_helpers/setup';
 const runId = process.env.E2E_RUN_ID || Date.now().toString();
 const password = 'Browser-test-password-123';
 
 test('merchant registration uses a cookie session and opens the dashboard', async ({ page }) => {
   await page.goto('/register');
-  await page.getByRole('radio',{name:'Online store',exact:true}).check();
-  await page.getByPlaceholder('e.g. Rahim Chowdhury').fill('Browser Merchant');
-  await page.getByPlaceholder('you@brand.com').fill(`e2e-${runId}-registration@example.com`);
-  await page.getByPlaceholder('At least 12 characters').fill(password);
-  await page.getByPlaceholder('e.g. Dhaka Artisan Silk').fill(`Browser Shop ${runId}`);
-  await page.getByRole('button', { name: 'Create website' }).click();
+  await page.getByLabel('Your Full Name',{exact:true}).fill('Browser Merchant');
+  await page.getByLabel('Email Address',{exact:true}).fill(`e2e-${runId}-registration@example.com`);
+  await page.getByLabel('Password',{exact:true}).fill(password);
+  await page.getByLabel('Confirm Password', {exact:true}).fill(password);
+  await page.getByRole('checkbox', {name:/I agree to Arise/}).check();
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await finishSetup(page, 'Online store', `Browser Shop ${runId}`, `browser-shop-${runId}`);
   await expect(page).toHaveURL(/\/dashboard$/);
   await expect(page.getByRole('button', { name: 'Publish store' })).toBeVisible();
   const cookie = (await page.context().cookies()).find(c => c.name === 'arise_session');

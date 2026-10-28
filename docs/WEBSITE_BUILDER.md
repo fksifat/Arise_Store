@@ -4,7 +4,7 @@ Arise supports business websites, portfolios, blogs, landing pages, online store
 
 ## Build a website locally
 
-1. Open `http://localhost:3000/register`, choose a website type, and create your account/website. Business website is the default. An existing owner can create another website from the workspace.
+1. Open `http://localhost:3000/register` and create an account with name, email, password and confirmation. Sign in with email/password if already registered. Then `/setup` guides you through website type, name/URL, theme and review. Business website is the default. Setup autosaves to the signed-in account; signing out or returning in another browser resumes the saved step. Website creation starts the 14-day trial. Existing owners use **Create another website** or **Resume website setup** in the workspace.
 2. Choose a design in **Themes**. There are three themes for each of the six non-store types, plus the existing 18 store themes. Non-store themes support a custom brand color.
 3. Open **Pages**, select Home, and customize its sections. Add, reorder, hide or remove sections and edit their text, images, links and items. Available sections include hero, text, services/features, image/project gallery, FAQ, testimonials, contact details, call to action and recent blog posts.
 4. Choose **Save draft**. The inline preview shows local edits; **Preview saved draft** opens an authenticated, non-indexable preview of the saved content. Neither updates the public page.
@@ -39,7 +39,7 @@ Published non-store pages render on the server and include their saved title and
 
 ## Architecture and compatibility
 
-The `shops` table and `/api/v1/shops` endpoints remain the tenant boundary for compatibility. Migration `0004` adds `website_type` to existing tenants and themes and creates `site_pages`. Existing tenants/themes default to `online_store`; no product or order tables are renamed or replaced. Each page/post has editable content, a published snapshot and a revision counter.
+The `shops` table and `/api/v1/shops` endpoints remain the tenant boundary for compatibility. Migration `0005` adds the per-account `setup_drafts` table; completing setup clears its draft in the same transaction as website creation. A failed creation preserves progress. Apply migrations before starting the updated API. Migration `0004` adds `website_type` to existing tenants and themes and creates `site_pages`. Existing tenants/themes default to `online_store`; no product or order tables are renamed or replaced. Each page/post has editable content, a published snapshot and a revision counter.
 
 `website_catalog.json` shares website types, theme presets and starter sections between the API and frontend. The existing storefront catalog stays intact. The shared `Website` renderer powers published pages, saved previews, editor previews and non-store theme demos. A website's type is chosen at creation and is not changed in place; create another website when a different type is needed.
 

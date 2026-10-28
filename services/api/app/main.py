@@ -12,7 +12,7 @@ from app.core.middleware import security_middleware, BodyLimitMiddleware
 from app.config import settings
 from app.database import engine, Base
 from app.routers import (
-    auth,
+    auth, setup,
     shops,
     themes,
     products,
@@ -68,6 +68,7 @@ app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads"
 
 # Include Routers under /api/v1
 app.include_router(auth.router, prefix="/api/v1")
+app.include_router(setup.router, prefix="/api/v1")
 app.include_router(shops.router, prefix="/api/v1")
 app.include_router(themes.router, prefix="/api/v1")
 app.include_router(products.router, prefix="/api/v1")

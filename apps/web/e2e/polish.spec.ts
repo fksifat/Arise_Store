@@ -14,13 +14,11 @@ test('mobile navigation, registration labels and password visibility work', asyn
   await annual.click();
   await expect(annual).toHaveAttribute('aria-checked', initial === 'true' ? 'false' : 'true');
   await page.goto('/register');
-  await page.getByRole('radio',{name:'Online store',exact:true}).check();
-  for (const label of ['Your Full Name', 'Email Address', 'Mobile Phone (Bangladesh)', 'Password', 'Shop Name', 'Store URL name']) {
-    await expect(page.getByLabel(label, { exact: false })).toBeVisible();
+  for (const label of ['Your Full Name', 'Email Address', 'Password', 'Confirm Password']) {
+    await expect(page.getByLabel(label, { exact: true })).toBeVisible();
   }
-  await page.getByLabel('Store URL name', { exact: false }).fill('chosen-store');
-  await page.getByPlaceholder('e.g. Dhaka Artisan Silk').fill('বাংলা দোকান');
-  await expect(page.getByLabel('Store URL name', { exact: false })).toHaveValue('chosen-store');
+  await expect(page.getByRole('radio')).toHaveCount(0);
+  await expect(page.getByLabel('Mobile Phone (Bangladesh)')).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
   await page.goto('/login');
   await page.getByLabel('Password', { exact: true }).fill('visible-password');

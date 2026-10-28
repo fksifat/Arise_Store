@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, Request, status
+from datetime import timedelta
 from app.config import settings
 from sqlalchemy.orm import Session
 from app.database import get_db
@@ -51,8 +52,9 @@ def login(req: LoginRequest, response: Response, db: Session = Depends(get_db)):
             detail="Your account has been deactivated"
         )
     
-    token = create_access_token(subject=user.id, role=user.role)
-    set_session(response, token)
+    duration = timedelta(days=7) if req.remember_me else timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    token = create_access_token(subject=user.id, role=user.role, expires_delta=duration)
+    set_session(response, token, max_age=int(duration.total_seconds()))
     return TokenResponse(
         access_token=token,
         user=UserResponse.model_validate(user)
@@ -62,8 +64,8 @@ def login(req: LoginRequest, response: Response, db: Session = Depends(get_db)):
 def get_me(current_user: User = Depends(get_current_user)):
     return UserResponse.model_validate(current_user)
 
-def set_session(response: Response, token: str):
-    response.set_cookie("arise_session", token, httponly=True, secure=settings.COOKIE_SECURE, samesite="lax", max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60, path="/")
+def set_session(response: Response, token: str, max_age: int | None = None):
+    response.set_cookie("arise_session", token, httponly=True, secure=settings.COOKIE_SECURE, samesite="lax", max_age=max_age if max_age is not None else settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60, path="/")
 
 @router.post("/logout", status_code=204)
 def logout(request: Request, response: Response):
