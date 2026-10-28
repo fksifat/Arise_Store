@@ -13,7 +13,7 @@ test('Themes and Live Demos navigate to separate design and store sections', asy
   });
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
-  const nav = page.getByRole('navigation');
+  const nav = page.getByRole('navigation', { name: 'Main navigation', exact: true });
   const themes = page.locator('#themes');
   const demos = page.locator('#demo');
   await nav.getByRole('link', { name: 'Themes', exact: true }).click();
